@@ -586,7 +586,7 @@ export default function Home() {
                   destination: 'Switzerland and Italy',
                   rating: 5,
                   text: 'We did both Switzerland and Italy - perfectly customized!',
-                  avatar_url: 'https://i.pravatar.cc/150?img=32',
+                  avatar_url: '/images/testimonial-avatar.jpg',
                 }}
               />
               {(testimonials || []).slice(0, 2).map((t) => (

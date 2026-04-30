@@ -15,9 +15,9 @@ const values = [
 ]
 
 const team = [
-  { name: 'Lena Fischer',   role: 'Route Operations Lead',     origin: 'Germany',     trips: 'Germany, Austria, Switzerland', img: 'https://i.pravatar.cc/300?img=25' },
-  { name: 'Sophie Laurent', role: 'Experience Designer',        origin: 'Switzerland', trips: 'Italy, Switzerland, Austria',   img: 'https://i.pravatar.cc/300?img=20' },
-  { name: 'Marco Bianchi',  role: 'Luxury and Golf Specialist', origin: 'Italy',       trips: 'Italy, Croatia, Golf + Europe', img: 'https://i.pravatar.cc/300?img=15' },
+  { name: 'Lena Fischer',   role: 'Route Operations Lead',     origin: 'Germany',     trips: 'Germany, Austria, Switzerland', img: '/images/team-lena.jpg' },
+  { name: 'Sophie Laurent', role: 'Experience Designer',        origin: 'Switzerland', trips: 'Italy, Switzerland, Austria',   img: '/images/team-sophie.jpg' },
+  { name: 'Marco Bianchi',  role: 'Luxury and Golf Specialist', origin: 'Italy',       trips: 'Italy, Croatia, Golf + Europe', img: '/images/team-marco.jpg' },
 ]
 
 export default function About() {
