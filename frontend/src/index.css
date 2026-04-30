@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-stone-50 text-stone-800 font-sans;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border-2 border-primary-700 text-primary-700 hover:bg-primary-700 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-lg;
+  }
+
+  .section-title {
+    @apply font-display text-4xl md:text-5xl font-bold text-stone-900 leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-stone-500 mt-4 max-w-2xl;
+  }
+
+  .card {
+    @apply bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-stone-100; }
+::-webkit-scrollbar-thumb { @apply bg-primary-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-primary-500; }
+
+/* Hero slideshow */
+@keyframes kenburns {
+  from { transform: scale(1) translate(0%, 0%); }
+  to   { transform: scale(1.13) translate(-1.5%, -1%); }
+}
+@keyframes kenburns-r {
+  from { transform: scale(1) translate(0%, 0%); }
+  to   { transform: scale(1.11) translate(1.5%, -1.5%); }
+}
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.kenburns   { animation: kenburns   6s ease-out forwards; }
+.kenburns-r { animation: kenburns-r 6s ease-out forwards; }
+.progress-fill { animation: progress-fill 5s linear forwards; }
