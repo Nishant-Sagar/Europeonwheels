@@ -61,6 +61,7 @@ const heroCountryCards = countryTours.map((tour, index) => ({
 const popularRoutes = [
   {
     label: '4 Countries · 14 Days',
+    slug: 'central-europe-loop',
     route: 'Germany → Austria → Czech Republic → Hungary',
     tagline: 'The classic Central Europe circuit',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest'],
@@ -71,6 +72,7 @@ const popularRoutes = [
   },
   {
     label: '6 Countries · 18 Days',
+    slug: 'central-extended',
     route: 'Germany → Austria → Czech → Hungary → Slovenia → Croatia',
     tagline: 'Central Europe extended with Adriatic beauty',
     cities: ['Munich', 'Vienna', 'Prague', 'Budapest', 'Ljubljana', 'Dubrovnik'],
@@ -81,6 +83,7 @@ const popularRoutes = [
   },
   {
     label: '3 Countries · 12 Days',
+    slug: 'western-highlights',
     route: 'Germany → Switzerland → Italy',
     tagline: 'Western highlights — Alps and Italian art',
     cities: ['Frankfurt', 'Zurich', 'Venice', 'Florence'],
@@ -91,6 +94,7 @@ const popularRoutes = [
   },
   {
     label: '3 Countries · 10 Days',
+    slug: 'alpine-luxury',
     route: 'Austria → Switzerland → Italy',
     tagline: 'Alpine luxury, lakes and culture',
     cities: ['Salzburg', 'Zurich', 'Milan', 'Venice'],
@@ -101,6 +105,7 @@ const popularRoutes = [
   },
   {
     label: '4 Countries · 12 Days',
+    slug: 'castle-capital-loop',
     route: 'Czech Republic → Austria → Slovakia → Hungary',
     tagline: 'Cities and castles in a Central Europe loop',
     cities: ['Prague', 'Vienna', 'Bratislava', 'Budapest'],
@@ -111,6 +116,7 @@ const popularRoutes = [
   },
   {
     label: '9 Countries · 25 Days',
+    slug: 'grand-nine',
     route: 'Grand 9-Country Europe Road Trip',
     tagline: 'Germany · Austria · Czech · Hungary · Slovenia · Slovakia · Croatia · Italy · Switzerland',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest', 'Bled', 'Split', 'Venice', 'Zurich'],
@@ -270,7 +276,7 @@ export default function Home() {
           <div className="overflow-x-auto pb-8 pl-5 pr-0 sm:pl-10 lg:pl-[70px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex gap-5">
               {heroCountryCards.map((tour) => (
-                <article key={tour.country} className="group h-[360px] w-[78vw] shrink-0 overflow-hidden rounded-2xl bg-stone-900 shadow-[0_24px_70px_rgba(0,0,0,0.34)] sm:w-[48vw] lg:w-[calc((100vw-180px)/4.25)]">
+                <Link key={tour.country} to={`/plan/${tour.country.toLowerCase().replace(/\s+/g, '-')}`} className="group h-[360px] w-[78vw] shrink-0 overflow-hidden rounded-2xl bg-stone-900 shadow-[0_24px_70px_rgba(0,0,0,0.34)] sm:w-[48vw] lg:w-[calc((100vw-180px)/4.25)]">
                   <div className="relative h-full">
                     <img src={tour.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
@@ -283,7 +289,7 @@ export default function Home() {
                       <p className="mt-3 text-sm leading-6 text-white/85">{tour.title}</p>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
@@ -323,9 +329,10 @@ export default function Home() {
           */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[290px]">
             {popularRoutes.map((item) => (
-              <article
+              <Link
                 key={item.route}
-                className={`group relative min-h-[290px] cursor-pointer overflow-hidden rounded-2xl shadow-xl transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 ${item.span}`}
+                to={`/plan-route/${item.slug}`}
+                className={`group relative block min-h-[290px] overflow-hidden rounded-2xl shadow-xl transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 ${item.span}`}
               >
                 {/* Scenic photo — fills box exactly */}
                 <img
@@ -377,7 +384,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -444,9 +451,10 @@ export default function Home() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {countryTours.map((tour) => (
-              <article
+              <Link
                 key={tour.country}
-                className="group relative h-52 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
+                to={`/plan/${tour.country.toLowerCase().replace(/\s+/g, '-')}`}
+                className="group relative block h-52 overflow-hidden rounded-2xl shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
               >
                 {/* Country photo */}
                 <img
@@ -478,7 +486,7 @@ export default function Home() {
                 <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-xs font-bold text-white backdrop-blur-sm ring-1 ring-white/20 transition-opacity duration-300 group-hover:opacity-0">
                   {tour.country.slice(0, 2).toUpperCase()}
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
 

@@ -63,6 +63,25 @@ class NewsletterSignup(BaseModel):
     email: EmailStr
 
 
+class TripEnquiry(BaseModel):
+    name: str
+    email: EmailStr
+    phone: Optional[str] = None
+    country: str
+    hotel_type: str          # "3star" | "4star" | "5star" | "boutique" | "heritage"
+    budget_eur: int          # total budget in EUR
+    group_size: int
+    travel_month: str        # e.g. "June 2025"
+    duration_days: int
+    special_requests: Optional[str] = None
+
+
+class TripEnquiryResponse(BaseModel):
+    success: bool
+    message: str
+    enquiry_id: str
+
+
 class ContactResponse(BaseModel):
     success: bool
     message: str

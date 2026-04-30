@@ -130,7 +130,11 @@ export default function SingleCountry() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {countries.map((c) => (
-              <div key={c.country} className="group relative overflow-hidden rounded-2xl">
+              <Link
+                key={c.country}
+                to={`/plan/${c.country.toLowerCase().replace(/\s+/g, '-')}`}
+                className="group relative block overflow-hidden rounded-2xl"
+              >
                 {/* Image */}
                 <div className="relative h-72 overflow-hidden">
                   <img
@@ -150,7 +154,7 @@ export default function SingleCountry() {
                     <h3 className="text-2xl font-bold text-white">{c.country}</h3>
                     <p className="mt-1 text-sm text-white/65">{c.tagline}</p>
 
-                    {/* Highlights — slide up on hover */}
+                    {/* Highlights + CTA — slide up on hover */}
                     <div className="mt-3 max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-40">
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {c.highlights.map((h) => (
@@ -162,16 +166,13 @@ export default function SingleCountry() {
                           </span>
                         ))}
                       </div>
-                      <Link
-                        to="/contact"
-                        className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-400 transition-all duration-200 hover:text-accent-300"
-                      >
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-400 group-hover:text-accent-300 transition-colors">
                         Plan this trip →
-                      </Link>
+                      </span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

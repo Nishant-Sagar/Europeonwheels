@@ -4,6 +4,7 @@ const routes = [
   {
     label: '4 Countries · 14 Days',
     name: 'Central Europe Loop',
+    slug: 'central-europe-loop',
     route: 'Germany → Austria → Czech Republic → Hungary',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest'],
     image: '/images/route-4-countries.jpg',
@@ -14,6 +15,7 @@ const routes = [
   {
     label: '6 Countries · 18 Days',
     name: 'Central Extended',
+    slug: 'central-extended',
     route: 'Germany → Austria → Czech → Hungary → Slovenia → Croatia',
     cities: ['Munich', 'Vienna', 'Prague', 'Budapest', 'Ljubljana', 'Dubrovnik'],
     image: '/images/slovenia.jpg',
@@ -24,6 +26,7 @@ const routes = [
   {
     label: '3 Countries · 12 Days',
     name: 'Western Highlights',
+    slug: 'western-highlights',
     route: 'Germany → Switzerland → Italy',
     cities: ['Frankfurt', 'Zurich', 'Venice', 'Florence'],
     image: '/images/route-ger-swi-ita.jpg',
@@ -34,6 +37,7 @@ const routes = [
   {
     label: '3 Countries · 10 Days',
     name: 'Alpine Luxury',
+    slug: 'alpine-luxury',
     route: 'Austria → Switzerland → Italy',
     cities: ['Salzburg', 'Zurich', 'Milan', 'Venice'],
     image: '/images/route-aut-swi-ita.jpg',
@@ -44,6 +48,7 @@ const routes = [
   {
     label: '4 Countries · 12 Days',
     name: 'Castle & Capital Loop',
+    slug: 'castle-capital-loop',
     route: 'Czech Republic → Austria → Slovakia → Hungary',
     cities: ['Prague', 'Vienna', 'Bratislava', 'Budapest'],
     image: '/images/route-central-loop.jpg',
@@ -54,6 +59,7 @@ const routes = [
   {
     label: '9 Countries · 25 Days',
     name: 'The Grand Nine',
+    slug: 'grand-nine',
     route: 'Germany · Austria · Czech · Hungary · Slovenia · Slovakia · Croatia · Italy · Switzerland',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest', 'Bled', 'Split', 'Venice', 'Zurich'],
     image: '/images/route-grand-9.jpg',
@@ -133,9 +139,10 @@ export default function MultiCountry() {
 
           <div className="grid auto-rows-[260px] gap-4 sm:auto-rows-[300px] sm:grid-cols-2 lg:grid-cols-3">
             {routes.map((r) => (
-              <article
+              <Link
                 key={r.name}
-                className={`group relative overflow-hidden rounded-2xl cursor-pointer ${r.span}`}
+                to={`/plan-route/${r.slug}`}
+                className={`group relative block overflow-hidden rounded-2xl cursor-pointer ${r.span}`}
               >
                 <img
                   src={r.image}
@@ -167,15 +174,12 @@ export default function MultiCountry() {
                         </span>
                       ))}
                     </div>
-                    <Link
-                      to="/contact"
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-400 transition-colors hover:text-accent-300"
-                    >
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-400 group-hover:text-accent-300 transition-colors">
                       Plan this circuit →
-                    </Link>
+                    </span>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

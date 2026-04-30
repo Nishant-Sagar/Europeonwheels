@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import destinations, trips, testimonials, stories, contact
+from app.routers import destinations, trips, testimonials, stories, contact, enquiries
 
 
 def get_allowed_origins():
@@ -30,6 +30,7 @@ app.include_router(trips.router, prefix="/api")
 app.include_router(testimonials.router, prefix="/api")
 app.include_router(stories.router, prefix="/api")
 app.include_router(contact.router, prefix="/api")
+app.include_router(enquiries.router, prefix="/api")
 
 
 @app.get("/")
