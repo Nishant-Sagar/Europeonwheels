@@ -10,6 +10,8 @@ import Stories from './pages/Stories'
 import Gallery from './pages/Gallery'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import SingleCountry from './pages/SingleCountry'
+import MultiCountry from './pages/MultiCountry'
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation()
@@ -45,6 +47,8 @@ export default function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/single-country" element={<SingleCountry />} />
+            <Route path="/multi-country" element={<MultiCountry />} />
           </Routes>
         </main>
         <Footer />

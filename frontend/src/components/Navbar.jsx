@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 const leftLinks = [
-  { to: '/#country-cards', label: 'Destinations' },
-  { to: '/calendar', label: 'Calendar' },
+  { to: '/', label: 'Home' },
+  { to: '/destinations', label: 'Destinations' },
   { to: '/stories', label: 'Stories' },
 ]
 
