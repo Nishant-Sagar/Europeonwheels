@@ -94,6 +94,8 @@ export default function SingleCountry() {
           src="/images/single-country-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
+          fetchpriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-stone-950" />
 

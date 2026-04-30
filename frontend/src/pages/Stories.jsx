@@ -268,6 +268,8 @@ export default function Stories() {
           src="/images/dubrovnik-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
+          fetchpriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/30 to-stone-900" />
 

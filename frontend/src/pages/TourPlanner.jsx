@@ -198,7 +198,8 @@ export default function TourPlanner() {
     setError("")
     setSubmitting(true)
     try {
-      const res = await fetch("http://localhost:8000/api/enquiries/", {
+      const apiBase = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiBase}/api/enquiries/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
