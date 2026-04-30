@@ -30,10 +30,9 @@ export default function About() {
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/90" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_35%,rgba(0,0,0,0.55)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/30 to-stone-900" />
 
-        <div className="relative z-10 flex flex-col items-center justify-center px-5 pb-16 pt-24 text-center sm:px-6 sm:pt-28" style={{ minHeight: '78vh' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center px-5 pb-12 pt-24 text-center sm:px-6 sm:pt-28" style={{ minHeight: '78vh' }}>
           <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.42em] text-accent-400">Our story</p>
           <h1
             className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl"
@@ -67,7 +66,7 @@ export default function About() {
       </section>
 
       {/* ── Story ── image left, text right */}
-      <section className="bg-stone-900 px-5 pb-24 pt-12 sm:px-8">
+      <section className="bg-gradient-to-b from-stone-900 to-stone-950 px-5 pb-24 pt-6 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
 
@@ -130,6 +129,8 @@ export default function About() {
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stone-950 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-stone-950 to-transparent" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="max-w-2xl text-xl font-bold italic text-white/90 sm:text-3xl" style={{ textShadow: '0 2px 24px rgba(0,0,0,0.6)' }}>
             "Every road has a story. We help you live the right one."
@@ -144,7 +145,7 @@ export default function About() {
       </div>
 
       {/* ── Values ── 2×2 numbered cards */}
-      <section className="bg-stone-950 px-5 pb-24 pt-12 sm:px-8">
+      <section className="bg-gradient-to-b from-stone-950 to-stone-900 px-5 pb-24 pt-12 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 flex items-end justify-between">
             <div>
@@ -183,7 +184,7 @@ export default function About() {
       </section>
 
       {/* ── Team ── */}
-      <section className="bg-stone-900 px-5 pb-24 pt-12 sm:px-8">
+      <section className="bg-gradient-to-b from-stone-900 to-stone-950 px-5 pb-24 pt-12 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14">
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-400">The people</p>
