@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import TestimonialCard from '../components/TestimonialCard'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -56,6 +55,7 @@ const heroCountryCards = countryTours.map((tour, index) => ({
   ...tour,
   tag: index === 0 ? 'Grand routes' : index === 5 ? 'Scenic stays' : index === 8 ? 'Luxury' : 'Private tour',
 }))
+
 
 // span = lg bento grid class; imgPos = object-position for scenic framing
 const popularRoutes = [
@@ -213,64 +213,59 @@ function WhyIcon({ type }) {
 export default function Home() {
   const { data: testimonials, loading: tLoading } = useApi('/testimonials')
 
-  // Play video once per browser session, then freeze on last frame.
-  // On refresh the sessionStorage is cleared so it plays again.
-  const [videoSeen] = useState(() => sessionStorage.getItem('heroSeen') === '1')
-
-  function handleVideoEnd() {
-    sessionStorage.setItem('heroSeen', '1')
-    // video naturally freezes on last frame — no action needed
-  }
-
   return (
     <>
       <section className="relative min-h-[100svh] overflow-visible text-white">
-        <div className="absolute inset-0 overflow-hidden">
-          {videoSeen ? (
-            /* Already played this session — show poster image, zero computation */
-            <img
-              src="/images/cta-bg.jpg"
-              alt=""
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            /* First visit — play video once, freeze on last frame */
-            <video
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-              onEnded={handleVideoEnd}
-              poster="/images/cta-bg.jpg"
-              className="h-full w-full object-cover"
-            >
-              <source src="/videos/hero.mp4" type="video/mp4" />
-            </video>
-          )}
-        </div>
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-black/60 to-transparent" />
 
+        {/* Single background image — infinite slow drift like macOS wallpaper */}
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="/images/swiss-alps.jpg"
+            alt=""
+            className="h-full w-full object-cover hero-drift"
+          />
+        </div>
+
+        {/* Gradient overlays for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-black/80" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_75%_at_50%_50%,transparent_35%,rgba(0,0,0,0.55)_100%)]" />
+
+        {/* Hero text */}
         <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-center justify-center px-5 pb-40 pt-28 text-center sm:px-6 lg:pt-32">
           <div className="max-w-6xl">
-            <h1 className="text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl md:text-8xl">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-accent-400 sm:text-sm">
+              Chauffeur-driven · 9 countries · Private journeys
+            </p>
+            <h1
+              className="text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl md:text-8xl"
+              style={{ textShadow: '0 4px 40px rgba(0,0,0,0.7)' }}
+            >
               Private Europe Tours
             </h1>
-            <p className="mx-auto mt-5 max-w-4xl text-base leading-7 text-white/90 sm:text-xl sm:leading-8 md:text-3xl">
+            <p
+              className="mx-auto mt-5 max-w-4xl text-base leading-7 text-white/90 sm:text-xl sm:leading-8 md:text-3xl"
+              style={{ textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}
+            >
               One country or grand multi-country journeys with private chauffeur, curated stays and complete flexibility.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a href="#country-cards" className="rounded-lg bg-black/85 px-8 py-4 text-base font-semibold text-white shadow-2xl transition hover:bg-black sm:text-lg">
+              <a
+                href="#country-cards"
+                className="rounded-full bg-white/10 px-8 py-4 text-base font-semibold text-white shadow-2xl backdrop-blur-sm ring-1 ring-white/25 transition-all duration-300 hover:bg-white/20 hover:scale-105 sm:text-lg"
+              >
                 View All Destinations
               </a>
-              <Link to="/contact" className="rounded-lg bg-white px-8 py-4 text-base font-semibold text-stone-950 shadow-2xl transition hover:bg-accent-400 sm:text-lg">
-                Plan My Trip
+              <Link
+                to="/contact"
+                className="rounded-full bg-accent-400 px-8 py-4 text-base font-semibold text-stone-950 shadow-2xl transition-all duration-300 hover:bg-accent-300 hover:scale-105 sm:text-lg"
+              >
+                Plan My Trip →
               </Link>
             </div>
           </div>
         </div>
 
+        {/* Country cards carousel */}
         <div id="country-cards" className="absolute inset-x-0 bottom-0 z-20 translate-y-[70%]">
           <div className="overflow-x-auto pb-8 pl-5 pr-0 sm:pl-10 lg:pl-[70px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex gap-5">

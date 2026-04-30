@@ -52,19 +52,16 @@
 ::-webkit-scrollbar-thumb { @apply bg-primary-300 rounded-full; }
 ::-webkit-scrollbar-thumb:hover { @apply bg-primary-500; }
 
-/* Hero slideshow */
-@keyframes kenburns {
-  from { transform: scale(1) translate(0%, 0%); }
-  to   { transform: scale(1.13) translate(-1.5%, -1%); }
+/* Hero infinite drift — macOS wallpaper style */
+@keyframes hero-drift {
+  0%   { transform: scale(1.06) translate(0%,    0%);    }
+  25%  { transform: scale(1.11) translate(-1.2%, -0.8%); }
+  50%  { transform: scale(1.14) translate(-2%,    0.7%); }
+  75%  { transform: scale(1.09) translate(0.9%,   1.2%); }
+  100% { transform: scale(1.06) translate(0%,    0%);    }
 }
-@keyframes kenburns-r {
-  from { transform: scale(1) translate(0%, 0%); }
-  to   { transform: scale(1.11) translate(1.5%, -1.5%); }
+.hero-drift {
+  animation: hero-drift 32s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
-@keyframes progress-fill {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-.kenburns   { animation: kenburns   6s ease-out forwards; }
-.kenburns-r { animation: kenburns-r 6s ease-out forwards; }
-.progress-fill { animation: progress-fill 5s linear forwards; }
