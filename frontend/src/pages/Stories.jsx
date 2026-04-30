@@ -3,7 +3,7 @@
     name: 'Germany',
     flag: '🇩🇪',
     tagline: 'Castles, autobahns and deep forest roads',
-    image: '/images/germany.jpg',
+    image: '/images/germany.webp',
     highlights: [
       'Neuschwanstein Castle, Bavaria',
       'Cologne Cathedral & Rhine River',
@@ -29,7 +29,7 @@
     name: 'Austria',
     flag: '🇦🇹',
     tagline: 'Alpine grandeur and imperial cities',
-    image: '/images/austria.jpg',
+    image: '/images/austria.webp',
     highlights: [
       'Schönbrunn Palace & Belvedere, Vienna',
       'Hallstatt — the world\'s most photographed village',
@@ -55,7 +55,7 @@
     name: 'Czech Republic',
     flag: '🇨🇿',
     tagline: 'Fairy-tale spires and medieval squares',
-    image: '/images/czech-republic.jpg',
+    image: '/images/czech-republic.webp',
     highlights: [
       'Prague Old Town Square & Astronomical Clock',
       'Charles Bridge at sunrise',
@@ -81,7 +81,7 @@
     name: 'Hungary',
     flag: '🇭🇺',
     tagline: 'Grand boulevards, river bends and thermal baths',
-    image: '/images/hungary.jpg',
+    image: '/images/hungary.webp',
     highlights: [
       'Budapest Parliament — one of Europe\'s finest buildings',
       'Fisherman\'s Bastion & Buda Castle',
@@ -107,7 +107,7 @@
     name: 'Slovenia',
     flag: '🇸🇮',
     tagline: 'Little country, extraordinary landscapes',
-    image: '/images/slovenia.jpg',
+    image: '/images/slovenia.webp',
     highlights: [
       'Lake Bled with its island church and clifftop castle',
       'Triglav National Park — the Julian Alps',
@@ -133,7 +133,7 @@
     name: 'Slovakia',
     flag: '🇸🇰',
     tagline: 'Quiet castles and unhurried Central European charm',
-    image: '/images/slovakia.jpg',
+    image: '/images/slovakia.webp',
     highlights: [
       'Bratislava Old Town — compact and walkable',
       'Spiš Castle — largest castle ruins in Central Europe',
@@ -159,7 +159,7 @@
     name: 'Croatia',
     flag: '🇭🇷',
     tagline: 'Walled cities, waterfalls and the Adriatic coast',
-    image: '/images/croatia.jpg',
+    image: '/images/croatia.webp',
     highlights: [
       'Dubrovnik Old City — the pearl of the Adriatic',
       'Plitvice Lakes National Park — turquoise waterfalls',
@@ -185,7 +185,7 @@
     name: 'Italy',
     flag: '🇮🇹',
     tagline: 'Art, history and the world\'s most loved food',
-    image: '/images/italy.jpg',
+    image: '/images/italy.webp',
     highlights: [
       'Venice — canals, gondolas and Piazza San Marco',
       'Florence — Uffizi Gallery, Duomo and Ponte Vecchio',
@@ -211,7 +211,7 @@
     name: 'Switzerland',
     flag: '🇨🇭',
     tagline: 'Precision, luxury and landscapes that overwhelm',
-    image: '/images/switzerland.jpg',
+    image: '/images/switzerland.webp',
     highlights: [
       'Lucerne — Chapel Bridge, lake and Alpine backdrop',
       'Jungfraujoch — "Top of Europe" at 3,454 m',
@@ -265,7 +265,7 @@ export default function Stories() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '50vh' }}>
         <img
-          src="/images/dubrovnik-hero.jpg"
+          src="/images/dubrovnik-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -319,7 +319,7 @@ export default function Stories() {
                     <img
                       src={c.image}
                       alt={c.name}
-                      className="h-full w-full object-cover ken-burns group-hover:[animation-play-state:paused] group-hover:scale-[1.08] transition-transform duration-700 ease-out"
+                      className="h-full w-full object-cover ken-burns group-hover:[animation-play-state:paused] group-hover:scale-[1.08] transition-transform duration-700 ease-out" loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 

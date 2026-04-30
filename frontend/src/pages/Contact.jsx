@@ -53,7 +53,7 @@ export default function Contact() {
       <section className="relative min-h-screen overflow-hidden bg-stone-950">
         <div className="absolute inset-0 overflow-hidden">
           <img
-            src="/images/swiss-alps.jpg"
+            src="/images/swiss-alps.webp"
             alt=""
             className="h-full w-full object-cover hero-drift"
           />

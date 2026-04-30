@@ -63,7 +63,7 @@ export default function Calendar() {
               {(trips || []).map((trip) => (
                 <div key={trip.id} className="card flex flex-col md:flex-row overflow-hidden">
                   <div className="md:w-48 h-40 md:h-auto shrink-0 overflow-hidden">
-                    <img src={trip.image_url} alt={trip.destination_name} className="w-full h-full object-cover" />
+                    <img src={trip.image_url} alt={trip.destination_name} className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="flex flex-col md:flex-row flex-1 p-6 gap-6 items-start md:items-center justify-between">
                     <div>

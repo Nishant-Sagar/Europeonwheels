@@ -1,30 +1,30 @@
 const featured = [
-  { url: '/images/swiss-alps.jpg',     caption: 'Swiss Alps',            location: 'Switzerland' },
-  { url: '/images/gallery-amalfi.jpg', caption: 'Amalfi Coastline',      location: 'Italy' },
-  { url: '/images/neuschwanstein.jpg', caption: 'Neuschwanstein Castle', location: 'Germany' },
+  { url: '/images/swiss-alps.webp',     caption: 'Swiss Alps',            location: 'Switzerland' },
+  { url: '/images/gallery-amalfi.webp', caption: 'Amalfi Coastline',      location: 'Italy' },
+  { url: '/images/neuschwanstein.webp', caption: 'Neuschwanstein Castle', location: 'Germany' },
 ]
 
 const photos = [
-  { url: '/images/venice.jpg',            caption: 'Venice Canals',        location: 'Italy' },
-  { url: '/images/hallstatt.jpg',         caption: 'Hallstatt Village',    location: 'Austria' },
-  { url: '/images/prague-night.jpg',      caption: 'Prague Old Town',      location: 'Czech Republic' },
-  { url: '/images/dubrovnik-walls.jpg',   caption: 'Dubrovnik Walls',      location: 'Croatia' },
-  { url: '/images/florence.jpg',          caption: 'Florence Skyline',     location: 'Italy' },
-  { url: '/images/budapest.jpg',          caption: 'Budapest Parliament',  location: 'Hungary' },
-  { url: '/images/switzerland.jpg',       caption: 'Lake Lucerne',         location: 'Switzerland' },
-  { url: '/images/slovenia.jpg',          caption: 'Lake Bled',            location: 'Slovenia' },
-  { url: '/images/croatia.jpg',           caption: 'Dubrovnik Coast',      location: 'Croatia' },
-  { url: '/images/austria.jpg',           caption: 'Austrian Alps',        location: 'Austria' },
-  { url: '/images/germany.jpg',           caption: 'Rhine Valley',         location: 'Germany' },
-  { url: '/images/italy.jpg',             caption: 'Tuscany',              location: 'Italy' },
-  { url: '/images/exp-family.jpg',        caption: 'Alpine Road',          location: 'Austria' },
-  { url: '/images/dest-grand-europe.jpg', caption: 'Grand Europe Route',   location: 'Europe' },
-  { url: '/images/exp-luxury.jpg',        caption: 'Luxury Stay',          location: 'Switzerland' },
-  { url: '/images/exp-golf.jpg',          caption: 'Golf & Europe',        location: 'Germany' },
-  { url: '/images/cta-bg.jpg',            caption: 'Swiss Highlands',      location: 'Switzerland' },
-  { url: '/images/czech-republic.jpg',    caption: 'Charles Bridge',       location: 'Czech Republic' },
-  { url: '/images/hungary.jpg',           caption: 'Budapest at Dusk',     location: 'Hungary' },
-  { url: '/images/slovakia.jpg',          caption: 'Bratislava Castle',    location: 'Slovakia' },
+  { url: '/images/venice.webp',            caption: 'Venice Canals',        location: 'Italy' },
+  { url: '/images/hallstatt.webp',         caption: 'Hallstatt Village',    location: 'Austria' },
+  { url: '/images/prague-night.webp',      caption: 'Prague Old Town',      location: 'Czech Republic' },
+  { url: '/images/dubrovnik-walls.webp',   caption: 'Dubrovnik Walls',      location: 'Croatia' },
+  { url: '/images/florence.webp',          caption: 'Florence Skyline',     location: 'Italy' },
+  { url: '/images/budapest.webp',          caption: 'Budapest Parliament',  location: 'Hungary' },
+  { url: '/images/switzerland.webp',       caption: 'Lake Lucerne',         location: 'Switzerland' },
+  { url: '/images/slovenia.webp',          caption: 'Lake Bled',            location: 'Slovenia' },
+  { url: '/images/croatia.webp',           caption: 'Dubrovnik Coast',      location: 'Croatia' },
+  { url: '/images/austria.webp',           caption: 'Austrian Alps',        location: 'Austria' },
+  { url: '/images/germany.webp',           caption: 'Rhine Valley',         location: 'Germany' },
+  { url: '/images/italy.webp',             caption: 'Tuscany',              location: 'Italy' },
+  { url: '/images/exp-family.webp',        caption: 'Alpine Road',          location: 'Austria' },
+  { url: '/images/dest-grand-europe.webp', caption: 'Grand Europe Route',   location: 'Europe' },
+  { url: '/images/exp-luxury.webp',        caption: 'Luxury Stay',          location: 'Switzerland' },
+  { url: '/images/exp-golf.webp',          caption: 'Golf & Europe',        location: 'Germany' },
+  { url: '/images/cta-bg.webp',            caption: 'Swiss Highlands',      location: 'Switzerland' },
+  { url: '/images/czech-republic.webp',    caption: 'Charles Bridge',       location: 'Czech Republic' },
+  { url: '/images/hungary.webp',           caption: 'Budapest at Dusk',     location: 'Hungary' },
+  { url: '/images/slovakia.webp',          caption: 'Bratislava Castle',    location: 'Slovakia' },
 ]
 
 export default function Gallery() {
@@ -33,7 +33,7 @@ export default function Gallery() {
       {/* Hero — compact so images are immediately visible below */}
       <section className="relative h-[40vh] overflow-hidden text-white">
         <img
-          src="/images/swiss-alps.jpg"
+          src="/images/swiss-alps.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -59,7 +59,7 @@ export default function Gallery() {
                 <img
                   src={p.url}
                   alt={p.caption}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" loading="lazy"
                 />
                 {/* Gradient + text — hover only */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -85,7 +85,7 @@ export default function Gallery() {
                 <img
                   src={p.url}
                   alt={p.caption}
-                  className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                  className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]" loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="absolute inset-x-0 bottom-0 translate-y-3 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">

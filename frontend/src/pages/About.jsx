@@ -15,9 +15,9 @@ const values = [
 ]
 
 const team = [
-  { name: 'Lena Fischer',   role: 'Route Operations Lead',     origin: 'Germany',     trips: 'Germany, Austria, Switzerland', img: '/images/team-lena.jpg' },
-  { name: 'Sophie Laurent', role: 'Experience Designer',        origin: 'Switzerland', trips: 'Italy, Switzerland, Austria',   img: '/images/team-sophie.jpg' },
-  { name: 'Marco Bianchi',  role: 'Luxury and Golf Specialist', origin: 'Italy',       trips: 'Italy, Croatia, Golf + Europe', img: '/images/team-marco.jpg' },
+  { name: 'Lena Fischer',   role: 'Route Operations Lead',     origin: 'Germany',     trips: 'Germany, Austria, Switzerland', img: '/images/team-lena.webp' },
+  { name: 'Sophie Laurent', role: 'Experience Designer',        origin: 'Switzerland', trips: 'Italy, Switzerland, Austria',   img: '/images/team-sophie.webp' },
+  { name: 'Marco Bianchi',  role: 'Luxury and Golf Specialist', origin: 'Italy',       trips: 'Italy, Croatia, Golf + Europe', img: '/images/team-marco.webp' },
 ]
 
 export default function About() {
@@ -26,7 +26,7 @@ export default function About() {
       {/* ── Hero ── full-screen, drifting image, stats band */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '78vh' }}>
         <img
-          src="/images/swiss-alps.jpg"
+          src="/images/swiss-alps.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -73,9 +73,9 @@ export default function About() {
             {/* Image */}
             <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl">
               <img
-                src="/images/hallstatt.jpg"
+                src="/images/hallstatt.webp"
                 alt="Hallstatt, Austria"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               {/* Location badge */}
@@ -124,9 +124,9 @@ export default function About() {
       {/* ── Scenic break ── GoT Dubrovnik */}
       <div className="relative h-72 overflow-hidden sm:h-[420px]">
         <img
-          src="/images/dubrovnik-got.jpg"
+          src="/images/dubrovnik-got.webp"
           alt="Dubrovnik, Croatia — King's Landing"
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center" loading="lazy"
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stone-950 to-transparent" />
@@ -200,7 +200,7 @@ export default function About() {
                 <img
                   src={img}
                   alt={name}
-                  className="h-20 w-20 rounded-full object-cover ring-2 ring-accent-400/30 ring-offset-2 ring-offset-stone-900 transition-all duration-300 group-hover:ring-accent-400/60"
+                  className="h-20 w-20 rounded-full object-cover ring-2 ring-accent-400/30 ring-offset-2 ring-offset-stone-900 transition-all duration-300 group-hover:ring-accent-400/60" loading="lazy"
                 />
                 <h3 className="mt-6 text-xl font-bold text-white">{name}</h3>
                 <p className="mt-1 text-sm font-semibold text-accent-400">{role}</p>

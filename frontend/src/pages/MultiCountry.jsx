@@ -7,7 +7,7 @@ const routes = [
     slug: 'central-europe-loop',
     route: 'Germany → Austria → Czech Republic → Hungary',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest'],
-    image: '/images/route-4-countries.jpg',
+    image: '/images/route-4-countries.webp',
     tag: 'Most Popular',
     tagline: 'The classic Central Europe circuit — cities, culture and grand architecture',
     span: 'lg:col-span-2',
@@ -18,7 +18,7 @@ const routes = [
     slug: 'central-extended',
     route: 'Germany → Austria → Czech → Hungary → Slovenia → Croatia',
     cities: ['Munich', 'Vienna', 'Prague', 'Budapest', 'Ljubljana', 'Dubrovnik'],
-    image: '/images/slovenia.jpg',
+    image: '/images/slovenia.webp',
     tag: 'Fan Favourite',
     tagline: 'Central Europe with Adriatic beauty — from Alps to the coast',
     span: 'lg:row-span-2',
@@ -29,7 +29,7 @@ const routes = [
     slug: 'western-highlights',
     route: 'Germany → Switzerland → Italy',
     cities: ['Frankfurt', 'Zurich', 'Venice', 'Florence'],
-    image: '/images/route-ger-swi-ita.jpg',
+    image: '/images/route-ger-swi-ita.webp',
     tag: 'Scenic',
     tagline: 'Alps, art and Italian culture in one sweeping arc',
     span: '',
@@ -40,7 +40,7 @@ const routes = [
     slug: 'alpine-luxury',
     route: 'Austria → Switzerland → Italy',
     cities: ['Salzburg', 'Zurich', 'Milan', 'Venice'],
-    image: '/images/route-aut-swi-ita.jpg',
+    image: '/images/route-aut-swi-ita.webp',
     tag: 'Luxury',
     tagline: 'Alpine lakes, luxury hotels and Italian elegance',
     span: '',
@@ -51,7 +51,7 @@ const routes = [
     slug: 'castle-capital-loop',
     route: 'Czech Republic → Austria → Slovakia → Hungary',
     cities: ['Prague', 'Vienna', 'Bratislava', 'Budapest'],
-    image: '/images/route-central-loop.jpg',
+    image: '/images/route-central-loop.webp',
     tag: 'Compact',
     tagline: 'Four capitals and countless castles in a compact, efficient circuit',
     span: '',
@@ -62,7 +62,7 @@ const routes = [
     slug: 'grand-nine',
     route: 'Germany · Austria · Czech · Hungary · Slovenia · Slovakia · Croatia · Italy · Switzerland',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest', 'Bled', 'Split', 'Venice', 'Zurich'],
-    image: '/images/route-grand-9.jpg',
+    image: '/images/route-grand-9.webp',
     tag: 'Grand Tour',
     tagline: 'All nine countries in one epic private journey — the definitive Europe road trip',
     span: 'lg:col-span-2',
@@ -100,7 +100,7 @@ export default function MultiCountry() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '68vh' }}>
         <img
-          src="/images/multi-country-hero.jpg"
+          src="/images/multi-country-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -147,7 +147,7 @@ export default function MultiCountry() {
                 <img
                   src={r.image}
                   alt={r.name}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
@@ -242,7 +242,7 @@ export default function MultiCountry() {
 
       {/* ── CTA ── */}
       <section className="relative overflow-hidden">
-        <img src="/images/dubrovnik-got.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/images/dubrovnik-got.webp" alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-950/75 to-stone-950/25" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 py-24 sm:px-8">
           <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-400">Ready for the grand circuit?</p>

@@ -53,7 +53,7 @@ export default function Destinations() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '62vh' }}>
         <img
-          src="/images/dubrovnik-hero.jpg"
+          src="/images/dubrovnik-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -140,9 +140,9 @@ export default function Destinations() {
             {/* Image */}
             <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl">
               <img
-                src="/images/switzerland.jpg"
+                src="/images/switzerland.webp"
                 alt="Lake Lucerne, Switzerland"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               <div className="absolute bottom-6 left-6 flex items-center gap-2">
@@ -163,9 +163,9 @@ export default function Destinations() {
             {/* Image — left on large */}
             <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl lg:order-first">
               <img
-                src="/images/dest-grand-europe.jpg"
+                src="/images/dest-grand-europe.webp"
                 alt="Grand Europe Route"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               <div className="absolute bottom-6 left-6 flex items-center gap-2">
@@ -225,9 +225,9 @@ export default function Destinations() {
       {/* ── 03 Custom Tour ── full-bleed with overlay */}
       <section id="custom" className="relative overflow-hidden">
         <img
-          src="/images/exp-luxury.jpg"
+          src="/images/exp-luxury.webp"
           alt="Luxury Custom Tour"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover" loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-950/70 to-stone-950/20" />
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-stone-900 to-transparent" />

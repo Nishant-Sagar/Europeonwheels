@@ -25,7 +25,7 @@ export default function DestinationDetail() {
     <>
       {/* Hero image */}
       <section className="relative h-[70vh] overflow-hidden">
-        <img src={dest.image_url} alt={dest.name} className="w-full h-full object-cover" />
+        <img src={dest.image_url} alt={dest.name} className="w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 max-w-4xl">
           <div className="flex gap-3 mb-4">

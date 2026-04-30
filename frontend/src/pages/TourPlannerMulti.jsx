@@ -5,7 +5,7 @@ const routeData = {
   "central-europe-loop": {
     name: "Central Europe Loop",
     label: "4 Countries - 14 Days",
-    image: "/images/route-4-countries.jpg",
+    image: "/images/route-4-countries.webp",
     tagline: "The classic Central Europe circuit -- cities, culture and grand architecture",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary"],
     itinerary: [
@@ -28,7 +28,7 @@ const routeData = {
   "central-extended": {
     name: "Central Extended",
     label: "6 Countries - 18 Days",
-    image: "/images/slovenia.jpg",
+    image: "/images/slovenia.webp",
     tagline: "Central Europe with Adriatic beauty -- from Alps to the coast",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary", "Slovenia", "Croatia"],
     itinerary: [
@@ -55,7 +55,7 @@ const routeData = {
   "western-highlights": {
     name: "Western Highlights",
     label: "3 Countries - 12 Days",
-    image: "/images/route-ger-swi-ita.jpg",
+    image: "/images/route-ger-swi-ita.webp",
     tagline: "Alps, art and Italian culture in one sweeping arc",
     countries: ["Germany", "Switzerland", "Italy"],
     itinerary: [
@@ -76,7 +76,7 @@ const routeData = {
   "alpine-luxury": {
     name: "Alpine Luxury",
     label: "3 Countries - 10 Days",
-    image: "/images/route-aut-swi-ita.jpg",
+    image: "/images/route-aut-swi-ita.webp",
     tagline: "Alpine lakes, luxury hotels and Italian elegance",
     countries: ["Austria", "Switzerland", "Italy"],
     itinerary: [
@@ -95,7 +95,7 @@ const routeData = {
   "castle-capital-loop": {
     name: "Castle and Capital Loop",
     label: "4 Countries - 12 Days",
-    image: "/images/route-central-loop.jpg",
+    image: "/images/route-central-loop.webp",
     tagline: "Four capitals and countless castles in a compact, efficient circuit",
     countries: ["Czech Republic", "Austria", "Slovakia", "Hungary"],
     itinerary: [
@@ -116,7 +116,7 @@ const routeData = {
   "grand-nine": {
     name: "The Grand Nine",
     label: "9 Countries - 25 Days",
-    image: "/images/route-grand-9.jpg",
+    image: "/images/route-grand-9.webp",
     tagline: "All nine countries in one epic private journey -- the definitive Europe road trip",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary", "Slovenia", "Slovakia", "Croatia", "Italy", "Switzerland"],
     itinerary: [
@@ -225,7 +225,7 @@ export default function TourPlannerMulti() {
 
       {/* Hero */}
       <section className="relative z-10 overflow-hidden" style={{ minHeight: "60vh" }}>
-        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" />
+        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-stone-950" />
         <div className="relative z-10 flex flex-col items-center justify-center px-5 text-center pb-16 pt-24 sm:pt-32" style={{ minHeight: "60vh" }}>
           <Link to="/multi-country" className="mb-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.38em] text-white/50 hover:text-accent-400 transition-colors">

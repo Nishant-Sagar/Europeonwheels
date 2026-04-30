@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom"
 const countryData = {
   germany: {
     name: "Germany",
-    image: "/images/germany.jpg",
+    image: "/images/germany.webp",
     tagline: "Castles, autobahns and timeless culture",
     highlights: ["Neuschwanstein Castle", "Munich Altstadt", "Rhine Valley", "Black Forest"],
     itinerary: [
@@ -19,7 +19,7 @@ const countryData = {
   },
   austria: {
     name: "Austria",
-    image: "/images/austria.jpg",
+    image: "/images/austria.webp",
     tagline: "Vienna, Salzburg and the Alps",
     highlights: ["Vienna Old Town", "Hallstatt Village", "Salzburg", "Alpine Drives"],
     itinerary: [
@@ -34,7 +34,7 @@ const countryData = {
   },
   "czech-republic": {
     name: "Czech Republic",
-    image: "/images/czech-republic.jpg",
+    image: "/images/czech-republic.webp",
     tagline: "Fairy-tale Prague and beyond",
     highlights: ["Prague Old Town", "Charles Bridge", "Cesky Krumlov", "Karlovy Vary"],
     itinerary: [
@@ -49,7 +49,7 @@ const countryData = {
   },
   hungary: {
     name: "Hungary",
-    image: "/images/hungary.jpg",
+    image: "/images/hungary.webp",
     tagline: "Culture, spas and river views",
     highlights: ["Budapest Parliament", "Thermal Baths", "Danube Bend", "Castle Hill"],
     itinerary: [
@@ -64,7 +64,7 @@ const countryData = {
   },
   slovenia: {
     name: "Slovenia",
-    image: "/images/slovenia.jpg",
+    image: "/images/slovenia.webp",
     tagline: "Lake Bled and alpine-green drives",
     highlights: ["Lake Bled", "Ljubljana", "Triglav National Park", "Soca Valley"],
     itinerary: [
@@ -79,7 +79,7 @@ const countryData = {
   },
   slovakia: {
     name: "Slovakia",
-    image: "/images/slovakia.jpg",
+    image: "/images/slovakia.webp",
     tagline: "Bratislava, castles and quiet roads",
     highlights: ["Bratislava Old Town", "Spis Castle", "High Tatras", "Slovak Karst"],
     itinerary: [
@@ -94,7 +94,7 @@ const countryData = {
   },
   croatia: {
     name: "Croatia",
-    image: "/images/croatia.jpg",
+    image: "/images/croatia.webp",
     tagline: "Dubrovnik walls and coastal drives",
     highlights: ["Dubrovnik Old City", "Split", "Plitvice Lakes", "Istrian Coast"],
     itinerary: [
@@ -109,7 +109,7 @@ const countryData = {
   },
   italy: {
     name: "Italy",
-    image: "/images/italy.jpg",
+    image: "/images/italy.webp",
     tagline: "Venice, Florence, Rome and Tuscany",
     highlights: ["Venice Canals", "Florence & Uffizi", "Tuscany Roads", "Amalfi Coast"],
     itinerary: [
@@ -124,7 +124,7 @@ const countryData = {
   },
   switzerland: {
     name: "Switzerland",
-    image: "/images/switzerland.jpg",
+    image: "/images/switzerland.webp",
     tagline: "Luxury, mountains and scenic railways",
     highlights: ["Lake Lucerne", "Jungfrau Region", "Zurich", "Interlaken"],
     itinerary: [
@@ -226,7 +226,7 @@ export default function TourPlanner() {
 
       {/* Hero */}
       <section className="relative z-10 overflow-hidden" style={{ minHeight: "60vh" }}>
-        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" />
+        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-stone-950" />
         <div className="relative z-10 flex flex-col items-center justify-center px-5 text-center pb-16 pt-24 sm:pt-32" style={{ minHeight: "60vh" }}>
           <Link to="/single-country" className="mb-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.38em] text-white/50 hover:text-accent-400 transition-colors">

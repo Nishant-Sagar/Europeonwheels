@@ -3,63 +3,63 @@ import { Link } from 'react-router-dom'
 const countries = [
   {
     country: 'Germany',
-    image: '/images/germany.jpg',
+    image: '/images/germany.webp',
     tagline: 'Castles, autobahns and culture',
     duration: '7–10 days',
     highlights: ['Neuschwanstein Castle', 'Munich Altstadt', 'Rhine Valley', 'Black Forest'],
   },
   {
     country: 'Austria',
-    image: '/images/austria.jpg',
+    image: '/images/austria.webp',
     tagline: 'Vienna, Salzburg and the Alps',
     duration: '7–10 days',
     highlights: ['Vienna Old Town', 'Hallstatt Village', 'Salzburg', 'Alpine Drives'],
   },
   {
     country: 'Czech Republic',
-    image: '/images/czech-republic.jpg',
+    image: '/images/czech-republic.webp',
     tagline: 'Fairy-tale Prague and beyond',
     duration: '5–8 days',
     highlights: ['Prague Old Town', 'Charles Bridge', 'Český Krumlov', 'Karlovy Vary'],
   },
   {
     country: 'Hungary',
-    image: '/images/hungary.jpg',
+    image: '/images/hungary.webp',
     tagline: 'Culture, spas and river views',
     duration: '5–8 days',
     highlights: ['Budapest Parliament', 'Thermal Baths', 'Danube Bend', 'Castle Hill'],
   },
   {
     country: 'Slovenia',
-    image: '/images/slovenia.jpg',
+    image: '/images/slovenia.webp',
     tagline: 'Lake Bled and alpine-green drives',
     duration: '5–7 days',
     highlights: ['Lake Bled', 'Ljubljana', 'Triglav National Park', 'Soča Valley'],
   },
   {
     country: 'Slovakia',
-    image: '/images/slovakia.jpg',
+    image: '/images/slovakia.webp',
     tagline: 'Bratislava, castles and quiet roads',
     duration: '4–6 days',
     highlights: ['Bratislava Old Town', 'Spiš Castle', 'High Tatras', 'Slovak Karst'],
   },
   {
     country: 'Croatia',
-    image: '/images/croatia.jpg',
+    image: '/images/croatia.webp',
     tagline: 'Dubrovnik walls and coastal drives',
     duration: '7–10 days',
     highlights: ["King's Landing · Dubrovnik", 'Split', 'Plitvice Lakes', 'Istrian Coast'],
   },
   {
     country: 'Italy',
-    image: '/images/italy.jpg',
+    image: '/images/italy.webp',
     tagline: 'Venice, Florence, Rome and Tuscany',
     duration: '10–14 days',
     highlights: ['Venice Canals', 'Florence & Uffizi', 'Tuscany Countryside', 'Amalfi Coast'],
   },
   {
     country: 'Switzerland',
-    image: '/images/switzerland.jpg',
+    image: '/images/switzerland.webp',
     tagline: 'Luxury, mountains and scenic railways',
     duration: '7–10 days',
     highlights: ['Lake Lucerne', 'Jungfrau Region', 'Zurich', 'Interlaken'],
@@ -91,7 +91,7 @@ export default function SingleCountry() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '68vh' }}>
         <img
-          src="/images/single-country-hero.jpg"
+          src="/images/single-country-hero.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover hero-drift"
         />
@@ -140,7 +140,7 @@ export default function SingleCountry() {
                   <img
                     src={c.image}
                     alt={c.country}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
 
@@ -212,7 +212,7 @@ export default function SingleCountry() {
 
       {/* ── CTA ── */}
       <section className="relative overflow-hidden">
-        <img src="/images/winter-alps.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/images/winter-alps.webp" alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-950/75 to-stone-950/30" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 py-24 sm:px-8">
           <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-400">Ready to go?</p>

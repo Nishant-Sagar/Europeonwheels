@@ -7,47 +7,47 @@ const countryTours = [
   {
     country: 'Germany',
     title: 'Frankfurt, Munich, scenic drives and castles',
-    image: '/images/germany.jpg',
+    image: '/images/germany.webp',
   },
   {
     country: 'Austria',
     title: 'Vienna, Salzburg and alpine beauty',
-    image: '/images/austria.jpg',
+    image: '/images/austria.webp',
   },
   {
     country: 'Czech Republic',
     title: 'Fairy-tale charm of Prague',
-    image: '/images/czech-republic.jpg',
+    image: '/images/czech-republic.webp',
   },
   {
     country: 'Hungary',
     title: 'Culture, river views and spas in Budapest',
-    image: '/images/hungary.jpg',
+    image: '/images/hungary.webp',
   },
   {
     country: 'Slovenia',
     title: 'Lake Bled, Ljubljana and alpine-green drives',
-    image: '/images/slovenia.jpg',
+    image: '/images/slovenia.webp',
   },
   {
     country: 'Slovakia',
     title: 'Bratislava, castles and relaxed Central Europe routing',
-    image: '/images/slovakia.jpg',
+    image: '/images/slovakia.webp',
   },
   {
     country: 'Croatia',
     title: 'Zagreb, coastal extensions and scenic leisure days',
-    image: '/images/croatia.jpg',
+    image: '/images/croatia.webp',
   },
   {
     country: 'Italy',
     title: 'Venice, Florence, Milan and Rome',
-    image: '/images/italy.jpg',
+    image: '/images/italy.webp',
   },
   {
     country: 'Switzerland',
     title: 'Luxury, mountains and scenic experiences',
-    image: '/images/switzerland.jpg',
+    image: '/images/switzerland.webp',
   },
 ]
 
@@ -65,7 +65,7 @@ const popularRoutes = [
     route: 'Germany → Austria → Czech Republic → Hungary',
     tagline: 'The classic Central Europe circuit',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest'],
-    image: '/images/route-4-countries.jpg',
+    image: '/images/route-4-countries.webp',
     imgPos: 'object-center',
     tag: 'Most Popular',
     span: 'lg:col-span-2',
@@ -76,7 +76,7 @@ const popularRoutes = [
     route: 'Germany → Austria → Czech → Hungary → Slovenia → Croatia',
     tagline: 'Central Europe extended with Adriatic beauty',
     cities: ['Munich', 'Vienna', 'Prague', 'Budapest', 'Ljubljana', 'Dubrovnik'],
-    image: '/images/slovenia.jpg',
+    image: '/images/slovenia.webp',
     imgPos: 'object-center',
     tag: 'Fan Favourite',
     span: 'lg:row-span-2',
@@ -87,7 +87,7 @@ const popularRoutes = [
     route: 'Germany → Switzerland → Italy',
     tagline: 'Western highlights — Alps and Italian art',
     cities: ['Frankfurt', 'Zurich', 'Venice', 'Florence'],
-    image: '/images/route-ger-swi-ita.jpg',
+    image: '/images/route-ger-swi-ita.webp',
     imgPos: 'object-center',
     tag: 'Scenic',
     span: '',
@@ -98,7 +98,7 @@ const popularRoutes = [
     route: 'Austria → Switzerland → Italy',
     tagline: 'Alpine luxury, lakes and culture',
     cities: ['Salzburg', 'Zurich', 'Milan', 'Venice'],
-    image: '/images/route-aut-swi-ita.jpg',
+    image: '/images/route-aut-swi-ita.webp',
     imgPos: 'object-center',
     tag: 'Luxury',
     span: '',
@@ -109,7 +109,7 @@ const popularRoutes = [
     route: 'Czech Republic → Austria → Slovakia → Hungary',
     tagline: 'Cities and castles in a Central Europe loop',
     cities: ['Prague', 'Vienna', 'Bratislava', 'Budapest'],
-    image: '/images/route-central-loop.jpg',
+    image: '/images/route-central-loop.webp',
     imgPos: 'object-bottom',
     tag: 'Compact',
     span: '',
@@ -120,7 +120,7 @@ const popularRoutes = [
     route: 'Grand 9-Country Europe Road Trip',
     tagline: 'Germany · Austria · Czech · Hungary · Slovenia · Slovakia · Croatia · Italy · Switzerland',
     cities: ['Frankfurt', 'Vienna', 'Prague', 'Budapest', 'Bled', 'Split', 'Venice', 'Zurich'],
-    image: '/images/route-grand-9.jpg',
+    image: '/images/route-grand-9.webp',
     imgPos: 'object-center',
     tag: 'Grand Tour',
     span: 'lg:col-span-2',
@@ -152,7 +152,7 @@ const experiences = [
     title: 'Grand Europe Road Journey',
     body: 'Drive across Europe\'s most iconic cities with a private vehicle, flexible itinerary and premium stays.',
     points: ['Frankfurt to Switzerland', 'Private chauffeur', 'Flexible planning'],
-    image: '/images/exp-grand-road.jpg',
+    image: '/images/exp-grand-road.webp',
     overlay: 'bg-primary-900/65',
   },
   {
@@ -161,7 +161,7 @@ const experiences = [
     title: 'Luxury Country Experiences',
     body: 'Switzerland escapes, Italy food and culture journeys, and Austria plus Salzburg premium stays.',
     points: ['Scenic hotels', 'Curated dining', 'Relaxed pacing'],
-    image: '/images/exp-luxury.jpg',
+    image: '/images/exp-luxury.webp',
     overlay: 'bg-amber-900/65',
   },
   {
@@ -170,7 +170,7 @@ const experiences = [
     title: 'Family and Leisure',
     body: 'Kid-friendly Europe with theme parks, scenic routes, shorter drives and downtime built in.',
     points: ['Family-ready stays', 'Comfortable drives', 'Flexible days'],
-    image: '/images/exp-family.jpg',
+    image: '/images/exp-family.webp',
     overlay: 'bg-emerald-900/65',
   },
   {
@@ -179,7 +179,7 @@ const experiences = [
     title: 'Golf + Europe',
     body: 'Play across top European golf courses while your sightseeing, transfers and stays are handled.',
     points: ['Golf plus sightseeing', 'Premium courses', 'Private transfers'],
-    image: '/images/exp-golf.jpg',
+    image: '/images/exp-golf.webp',
     overlay: 'bg-stone-900/60',
   },
 ]
@@ -226,7 +226,7 @@ export default function Home() {
         {/* Single background image — infinite slow drift like macOS wallpaper */}
         <div className="absolute inset-0 overflow-hidden">
           <img
-            src="/images/swiss-alps.jpg"
+            src="/images/swiss-alps.webp"
             alt=""
             className="h-full w-full object-cover hero-drift"
           />
@@ -278,7 +278,7 @@ export default function Home() {
               {heroCountryCards.map((tour) => (
                 <Link key={tour.country} to={`/plan/${tour.country.toLowerCase().replace(/\s+/g, '-')}`} className="group h-[360px] w-[78vw] shrink-0 overflow-hidden rounded-2xl bg-stone-900 shadow-[0_24px_70px_rgba(0,0,0,0.34)] sm:w-[48vw] lg:w-[calc((100vw-180px)/4.25)]">
                   <div className="relative h-full">
-                    <img src={tour.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <img src={tour.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
                     <div className="absolute right-5 top-5 rounded-full bg-accent-400 px-5 py-2 text-xs font-bold uppercase tracking-wide text-stone-950">
                       {tour.tag}
@@ -338,7 +338,7 @@ export default function Home() {
                 <img
                   src={item.image}
                   alt={item.route}
-                  className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08] ${item.imgPos}`}
+                  className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08] ${item.imgPos}`} loading="lazy"
                 />
 
                 {/* Subtle gradient so image stays bright above the text box */}
@@ -460,7 +460,7 @@ export default function Home() {
                 <img
                   src={tour.image}
                   alt={tour.country}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]" loading="lazy"
                 />
 
                 {/* Gradient — stronger at bottom for text, lighter at top to show scenery */}
@@ -513,7 +513,7 @@ export default function Home() {
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]" loading="lazy"
                 />
 
                 {/* Colour overlay — unique per experience */}
@@ -586,7 +586,7 @@ export default function Home() {
                   destination: 'Switzerland and Italy',
                   rating: 5,
                   text: 'We did both Switzerland and Italy - perfectly customized!',
-                  avatar_url: '/images/testimonial-avatar.jpg',
+                  avatar_url: '/images/testimonial-avatar.webp',
                 }}
               />
               {(testimonials || []).slice(0, 2).map((t) => (
@@ -600,7 +600,7 @@ export default function Home() {
       <section className="relative overflow-hidden px-5 py-16 text-white sm:px-6 sm:py-20 md:py-32">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/cta-bg.jpg')" }}
+          style={{ backgroundImage: "url('/images/cta-bg.webp')" }}
         />
         <div className="absolute inset-0 bg-primary-900/80" />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
