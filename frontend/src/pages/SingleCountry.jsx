@@ -105,7 +105,7 @@ export default function SingleCountry() {
         >
           <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.42em] text-accent-400">Single Country Tour</p>
           <h1
-            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl"
+            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:whitespace-nowrap"
             style={{ textShadow: '0 4px 40px rgba(0,0,0,0.65)' }}
           >
             One country. Done properly.

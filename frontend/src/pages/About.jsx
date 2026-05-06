@@ -1,5 +1,18 @@
 import { Link } from 'react-router-dom'
 
+const FRAME_STYLE = `
+  @keyframes shimmerSweep {
+    0%   { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(250%)  skewX(-12deg); }
+  }
+  @keyframes borderGlow {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1;    }
+  }
+  .founder-frame { animation: borderGlow 3s ease-in-out infinite; }
+  .founder-shimmer { animation: shimmerSweep 3.5s ease-in-out infinite; }
+`
+
 const stats = [
   { value: '500+', label: 'Travellers hosted' },
   { value: '9',    label: 'Countries covered' },
@@ -15,9 +28,32 @@ const values = [
 ]
 
 const team = [
-  { name: 'Lena Fischer',   role: 'Route Operations Lead',     origin: 'Germany',     trips: 'Germany, Austria, Switzerland', img: '/images/team-lena.webp' },
-  { name: 'Sophie Laurent', role: 'Experience Designer',        origin: 'Switzerland', trips: 'Italy, Switzerland, Austria',   img: '/images/team-sophie.webp' },
-  { name: 'Marco Bianchi',  role: 'Luxury and Golf Specialist', origin: 'Italy',       trips: 'Italy, Croatia, Golf + Europe', img: '/images/team-marco.webp' },
+  {
+    name: 'Kritika',
+    role: 'Founder & Travel Designer',
+    origin: 'India',
+    bio: 'A born traveller turned travel designer, I craft seamless European road trip experiences backed by years in event planning. Every itinerary I build is personal, immersive, and effortless so you can simply enjoy the journey.',
+    details: [
+      'Kritika works closely with every traveller to understand dates, pace, hotel comfort, food preferences and the places that matter most before shaping the route.',
+      'Her strength is turning complicated Europe plans into calm, well-paced journeys with scenic drives, thoughtful breaks and dependable support throughout.',
+    ],
+    tagline: 'Driven by passion. Designed for unforgettable journeys.',
+    img: '/images/team-operations.jpeg',
+    imgPos: '50% 0%',
+  },
+  {
+    name: 'Antonio',
+    role: 'Co-Founder & Local European Expert',
+    origin: 'Croatia',
+    bio: 'Born and raised in Croatia, Antonio brings deep local knowledge and a genuine instinct for uncovering Europe\'s most scenic routes and authentic experiences. Travelling with him feels like exploring the continent with a trusted local friend who knows exactly where the magic lies.',
+    details: [
+      'Antonio leads the local side of the planning, checking routes, drive times, seasonal details and the small stops that make a private European journey feel special.',
+      'His on-ground network helps travellers go beyond standard sightseeing with better viewpoints, smoother transfers, local restaurant ideas and flexible day plans.',
+    ],
+    tagline: 'Where local knowledge meets unforgettable adventure.',
+    img: '/images/team-experience.jpeg',
+    imgPos: '50% 25%',
+  },
 ]
 
 export default function About() {
@@ -184,6 +220,7 @@ export default function About() {
       </section>
 
       {/* ── Team ── */}
+      <style>{FRAME_STYLE}</style>
       <section className="bg-gradient-to-b from-stone-900 to-stone-950 px-5 pb-24 pt-12 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14">
@@ -191,24 +228,69 @@ export default function About() {
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Behind the plans</h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {team.map(({ name, role, origin, trips, img }) => (
+          <div className="mx-auto max-w-3xl">
+            {team.map(({ name, role, origin, bio, details, tagline, img, imgPos }, i) => (
               <div
                 key={name}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.06]"
+                className={`flex flex-col gap-7 sm:flex-row sm:items-start sm:gap-10 ${i > 0 ? 'mt-12 border-t border-white/[0.06] pt-12' : ''}`}
               >
-                <img
-                  src={img}
-                  alt={name}
-                  className="h-20 w-20 rounded-full object-cover ring-2 ring-accent-400/30 ring-offset-2 ring-offset-stone-900 transition-all duration-300 group-hover:ring-accent-400/60" loading="lazy"
-                />
-                <h3 className="mt-6 text-xl font-bold text-white">{name}</h3>
-                <p className="mt-1 text-sm font-semibold text-accent-400">{role}</p>
-                <div className="mt-5 space-y-1.5">
-                  <p className="text-sm text-stone-500">From {origin}</p>
-                  <p className="text-xs text-stone-600">Plans: {trips}</p>
+                {/* Photo frame */}
+                <div className="relative shrink-0">
+                  {/* Ambient glow behind the frame */}
+                  <div className="absolute -inset-2 rounded-3xl blur-xl"
+                    style={{ background: 'linear-gradient(135deg,rgba(245,158,11,0.35),rgba(120,53,15,0.2))' }} />
+
+                  {/* Gradient border */}
+                  <div
+                    className="founder-frame relative rounded-2xl p-[1.5px]"
+                    style={{ background: 'linear-gradient(145deg,rgba(245,158,11,0.8),rgba(120,53,15,0.4) 50%,rgba(245,158,11,0.6))' }}
+                  >
+                    <div className="relative overflow-hidden rounded-[14px]">
+                      <img
+                        src={img}
+                        alt={name}
+                        className="h-48 w-36 object-cover"
+                        style={{ objectPosition: imgPos }}
+                        loading="lazy"
+                      />
+                      {/* Shimmer sweep */}
+                      <div className="founder-shimmer pointer-events-none absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                    </div>
+                  </div>
+
+                  {/* Corner accents */}
+                  {[['top-0 left-0','top-0 left-0','top-0 left-0'],
+                    ['top-0 right-0','top-0 right-0','top-0 right-0'],
+                    ['bottom-0 left-0','bottom-0 left-0','bottom-0 left-0'],
+                    ['bottom-0 right-0','bottom-0 right-0','bottom-0 right-0'],
+                  ].map((_, ci) => {
+                    const pos  = ['-top-2 -left-2','-top-2 -right-2','-bottom-2 -left-2','-bottom-2 -right-2'][ci]
+                    const vBar = ['top-0 left-0','top-0 right-0','bottom-0 left-0','bottom-0 right-0'][ci]
+                    const hBar = ['top-0 left-0','top-0 right-0','bottom-0 left-0','bottom-0 right-0'][ci]
+                    return (
+                      <div key={ci} className={`absolute ${pos} h-5 w-5`}>
+                        <div className={`absolute ${vBar} h-full w-[1.5px] bg-accent-400/80`} />
+                        <div className={`absolute ${hBar} h-[1.5px] w-full bg-accent-400/80`} />
+                      </div>
+                    )
+                  })}
                 </div>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-accent-400/60 transition-all duration-500 group-hover:w-full" />
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-white">{name}</h3>
+                  <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-400">{role}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-stone-400">{bio}</p>
+                  {details?.length > 0 && (
+                    <div className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400">
+                      {details.map((line) => (
+                        <p key={line}>{line}</p>
+                      ))}
+                    </div>
+                  )}
+                  {tagline && (
+                    <p className="mt-3 text-sm italic text-stone-300">"{tagline}"</p>
+                  )}
+                  <p className="mt-3 text-xs font-medium text-stone-500">{origin}</p>
+                </div>
               </div>
             ))}
           </div>

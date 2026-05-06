@@ -18,6 +18,7 @@ const SingleCountry   = lazy(() => import('./pages/SingleCountry'))
 const MultiCountry    = lazy(() => import('./pages/MultiCountry'))
 const TourPlanner     = lazy(() => import('./pages/TourPlanner'))
 const TourPlannerMulti = lazy(() => import('./pages/TourPlannerMulti'))
+const CustomTour       = lazy(() => import('./pages/CustomTour'))
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation()
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="/multi-country" element={<MultiCountry />} />
               <Route path="/plan/:country" element={<TourPlanner />} />
               <Route path="/plan-route/:slug" element={<TourPlannerMulti />} />
+              <Route path="/custom-tour" element={<CustomTour />} />
             </Routes>
           </Suspense>
         </main>
