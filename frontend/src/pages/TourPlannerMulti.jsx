@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useParams, Link } from "react-router-dom"
+import LeafletRouteMap from "../components/LeafletRouteMap"
 
 const routeData = {
   "central-europe-loop": {
@@ -216,6 +217,7 @@ const carOptions = [
 
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 const EUR_TO_INR = 90
+const EUR_TO_USD  = 1.08
 
 function budgetLabel(v) {
   if (v < 2000)  return "Budget Explorer"
@@ -347,6 +349,18 @@ export default function TourPlannerMulti() {
           <p className="mt-6 text-center text-sm text-stone-500">Sample outline -- your actual itinerary is custom-built from your preferences below.</p>
         </div>
       </section>
+
+      {/* Map */}
+      {data.mapStops && (
+        <section className="relative z-10 bg-stone-950 px-4 py-12 sm:px-8 sm:py-16">
+          <div className="mx-auto max-w-4xl">
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-400">Route overview</p>
+            <h2 className="mb-6 text-3xl font-bold sm:text-4xl">Your journey, mapped</h2>
+            <LeafletRouteMap stops={data.mapStops} />
+            <p className="mt-3 text-center text-xs text-stone-500">Click any pin to see the stop detail. Map data &copy; OpenStreetMap contributors.</p>
+          </div>
+        </section>
+      )}
 
       {/* Planner */}
       <section className="relative z-10 bg-stone-900 px-4 py-12 sm:px-8 sm:py-16 overflow-hidden">
@@ -498,19 +512,19 @@ export default function TourPlannerMulti() {
                 <div className="mb-3 flex items-center justify-between">
                   <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Total budget</p>
                   <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 text-xs font-bold">
-                    <button type="button" onClick={() => setCurrency("EUR")}
-                      className={"rounded-full px-3 py-1 transition-all duration-200 " + (currency === "EUR" ? "bg-accent-400 text-stone-950" : "text-stone-400 hover:text-white")}>
-                      EUR
-                    </button>
-                    <button type="button" onClick={() => setCurrency("INR")}
-                      className={"rounded-full px-3 py-1 transition-all duration-200 " + (currency === "INR" ? "bg-accent-400 text-stone-950" : "text-stone-400 hover:text-white")}>
-                      INR
-                    </button>
+                    {["EUR","USD","INR"].map(c => (
+                      <button key={c} type="button" onClick={() => setCurrency(c)}
+                        className={"rounded-full px-3 py-1 transition-all duration-200 " + (currency === c ? "bg-accent-400 text-stone-950" : "text-stone-400 hover:text-white")}>
+                        {c}
+                      </button>
+                    ))}
                   </div>
                 </div>
                 <div className="mb-3 flex items-end justify-between">
                   <p className="text-lg font-semibold text-white">
-                    {currency === "EUR" ? ("\u20AC" + budget.toLocaleString("en-IN")) : ("\u20B9" + (budget * EUR_TO_INR).toLocaleString("en-IN"))}
+                    {currency === "EUR" && <>{"€"}{budget.toLocaleString()}</>}
+                    {currency === "USD" && <>${Math.round(budget * EUR_TO_USD).toLocaleString()}</>}
+                    {currency === "INR" && <>{"₹"}{(budget * EUR_TO_INR).toLocaleString("en-IN")}</>}
                     <span className="ml-2 text-sm font-normal text-stone-400">per person</span>
                   </p>
                   <span className="rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-0.5 text-xs font-bold text-accent-400">{budgetLabel(budget)}</span>
@@ -519,10 +533,9 @@ export default function TourPlannerMulti() {
                   onChange={e => setBudget(Number(e.target.value))}
                   className="w-full cursor-pointer" style={{ accentColor: "#f59e0b" }} />
                 <div className="mt-1 flex justify-between text-[10px] text-stone-500">
-                  {currency === "EUR"
-                    ? <><span>{"\u20AC"}500</span><span>{"\u20AC"}6k</span><span>{"\u20AC"}12k</span><span>{"\u20AC"}25k+</span></>
-                    : <><span>{"\u20B9"}45k</span><span>{"\u20B9"}5.4L</span><span>{"\u20B9"}10.8L</span><span>{"\u20B9"}22.5L+</span></>
-                  }
+                  {currency === "EUR" && <><span>{"\u20AC"}500</span><span>{"\u20AC"}6k</span><span>{"\u20AC"}12k</span><span>{"\u20AC"}25k+</span></>}
+                  {currency === "USD" && <><span>$540</span><span>$6.5k</span><span>$13k</span><span>$27k+</span></>}
+                  {currency === "INR" && <><span>{"\u20B9"}45k</span><span>{"\u20B9"}5.4L</span><span>{"\u20B9"}10.8L</span><span>{"\u20B9"}22.5L+</span></>}
                 </div>
               </div>
 
@@ -557,19 +570,19 @@ export default function TourPlannerMulti() {
 
               {/* Summary */}
               <div className="rounded-2xl border border-accent-400/20 bg-gradient-to-br from-accent-400/[0.07] to-stone-950/40 p-6 shadow-lg shadow-accent-400/5">
-                <p className="mb-4 text-xs font-bold uppercase tracking-widest text-stone-400">Your trip summary</p>
-                <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-                  <div className="sm:col-span-2"><span className="text-stone-500">Route</span><br /><span className="font-semibold text-white">{data.name}</span></div>
-                  {hotel && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
-                  {car && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
-                  <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === "EUR" ? ("\u20AC" + budget.toLocaleString("en-IN")) : ("\u20B9" + (budget * EUR_TO_INR).toLocaleString("en-IN"))}/person</span></div>
-                  <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{data.label}</span></div>
-                  <div><span className="text-stone-500">Group</span><br /><span className="font-semibold text-white">{groupSize} {groupSize === 1 ? "person" : "people"}</span></div>
-                  {month && <div><span className="text-stone-500">Month</span><br /><span className="font-semibold text-white">{month} 2026</span></div>}
-                  <div><span className="text-stone-500">Boot bags</span><br /><span className="font-semibold text-white">{bootLuggage}</span></div>
-                  <div><span className="text-stone-500">Cabin bags</span><br /><span className="font-semibold text-white">{cabinLuggage}</span></div>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-widest text-stone-400">Your trip summary</p>
+                  <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+                    <div><span className="text-stone-500">Route</span><br /><span className="font-semibold text-white">{data.name}</span></div>
+                    {hotel && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
+                    {car && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
+                    <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === "EUR" ? `€${budget.toLocaleString()}` : currency === "USD" ? `$${Math.round(budget * EUR_TO_USD).toLocaleString()}` : `₹${(budget * EUR_TO_INR).toLocaleString("en-IN")}`}/person</span></div>
+                    <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{duration} days</span></div>
+                    <div><span className="text-stone-500">Group</span><br /><span className="font-semibold text-white">{groupSize} {groupSize === 1 ? "person" : "people"}</span></div>
+                    <div><span className="text-stone-500">Boot bags</span><br /><span className="font-semibold text-white">{bootLuggage}</span></div>
+                    <div><span className="text-stone-500">Cabin bags</span><br /><span className="font-semibold text-white">{cabinLuggage}</span></div>
+                    {month && <div><span className="text-stone-500">Month</span><br /><span className="font-semibold text-white">{month} 2026</span></div>}
+                  </div>
                 </div>
-              </div>
 
               {error && (
                 <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">{error}</p>
