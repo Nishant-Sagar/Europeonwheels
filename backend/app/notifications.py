@@ -1,35 +1,27 @@
 import os
-import smtplib
 import urllib.parse
 import urllib.request
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
-SMTP_HOST = "smtp.gmail.com"
-SMTP_PORT = 587
-SMTP_USER = os.getenv("SMTP_USER")
-SMTP_PASS = os.getenv("SMTP_PASS")
-NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL")
-WHATSAPP_PHONE = os.getenv("WHATSAPP_PHONE")   # e.g. 918210564714
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+NOTIFY_EMAIL   = os.getenv("NOTIFY_EMAIL")
+WHATSAPP_PHONE = os.getenv("WHATSAPP_PHONE")
 GREEN_API_INSTANCE = os.getenv("GREEN_API_INSTANCE")
-GREEN_API_TOKEN = os.getenv("GREEN_API_TOKEN")
+GREEN_API_TOKEN    = os.getenv("GREEN_API_TOKEN")
 
 
 def send_email(subject: str, html_body: str) -> None:
-    if not SMTP_USER or not SMTP_PASS or not NOTIFY_EMAIL:
+    if not RESEND_API_KEY or not NOTIFY_EMAIL:
         print("[notify] Email env vars missing — skipping.")
         return
     try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = subject
-        msg["From"] = f"Europe on Wheels <{SMTP_USER}>"
-        msg["To"] = NOTIFY_EMAIL
-        msg.attach(MIMEText(html_body, "html"))
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as smtp:
-            smtp.ehlo()
-            smtp.starttls()
-            smtp.login(SMTP_USER, SMTP_PASS)
-            smtp.sendmail(SMTP_USER, NOTIFY_EMAIL, msg.as_string())
+        import resend
+        resend.api_key = RESEND_API_KEY
+        resend.Emails.send({
+            "from": "Europe on Wheels <onboarding@resend.dev>",
+            "to": [NOTIFY_EMAIL],
+            "subject": subject,
+            "html": html_body,
+        })
         print(f"[notify] Email sent to {NOTIFY_EMAIL}")
     except Exception as e:
         print(f"[notify] Email error: {e}")
