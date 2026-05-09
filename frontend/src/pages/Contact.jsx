@@ -107,6 +107,30 @@ export default function Contact() {
                     <p className="text-xs font-medium text-white">Chat with our team</p>
                   </div>
                 </a>
+
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-accent-400 text-sm">🇮🇳</span>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-white/35">India Office</p>
+                    <p className="text-xs font-medium leading-relaxed text-white">
+                      2859, 3rd Main, 17th Cross<br />
+                      Banashankari 2nd Stage<br />
+                      Bangalore – 560070
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-accent-400 text-sm">🇭🇷</span>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-white/35">European Office</p>
+                    <p className="text-xs font-medium leading-relaxed text-white">
+                      Perkova ulica<br />
+                      21214 Kaštel Kambelovac<br />
+                      Croatia
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Trust strip */}
