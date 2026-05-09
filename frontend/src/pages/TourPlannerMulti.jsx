@@ -8,6 +8,14 @@ const routeData = {
     image: "/images/route-4-countries.webp",
     tagline: "The classic Central Europe circuit -- cities, culture and grand architecture",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary"],
+    mapStops: [
+      { day: 1,  title: "Frankfurt",  coords: [50.1109, 8.6821],  desc: "Land at FRA. Private transfer to your hotel." },
+      { day: 3,  title: "Cologne",    coords: [50.9333, 6.9500],  desc: "Cologne Cathedral and the old town." },
+      { day: 4,  title: "Munich",     coords: [48.1351, 11.5820], desc: "Marienplatz, Viktualienmarkt and beer gardens." },
+      { day: 6,  title: "Vienna",     coords: [48.2082, 16.3738], desc: "Schoenbrunn Palace, Hofburg and Naschmarkt." },
+      { day: 8,  title: "Prague",     coords: [50.0755, 14.4378], desc: "Prague Castle, Charles Bridge and Old Town." },
+      { day: 11, title: "Budapest",   coords: [47.4979, 19.0402], desc: "Buda Castle, Fisherman Bastion and thermal baths." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Frankfurt",      desc: "Land at FRA. Private transfer to your hotel. Evening walk along the River Main." },
       { day: 2,  title: "Frankfurt to Rhine",     desc: "Explore the old town, then drive the scenic Rhine Valley -- vineyards and medieval castles." },
@@ -31,6 +39,16 @@ const routeData = {
     image: "/images/slovenia.webp",
     tagline: "Central Europe with Adriatic beauty -- from Alps to the coast",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary", "Slovenia", "Croatia"],
+    mapStops: [
+      { day: 1,  title: "Munich",      coords: [48.1351, 11.5820], desc: "Private airport transfer. Evening in Marienplatz." },
+      { day: 3,  title: "Vienna",      coords: [48.2082, 16.3738], desc: "Schoenbrunn, Hofburg and evening opera." },
+      { day: 5,  title: "Prague",      coords: [50.0755, 14.4378], desc: "Castle, Charles Bridge and Jewish Quarter." },
+      { day: 7,  title: "Budapest",    coords: [47.4979, 19.0402], desc: "Buda side, thermal baths and ruin bars." },
+      { day: 9,  title: "Ljubljana",   coords: [46.0569, 14.5058], desc: "Dragon Bridge, castle and riverside market." },
+      { day: 11, title: "Lake Bled",   coords: [46.3683, 14.0934], desc: "Island church, cliff castle and kremsnita." },
+      { day: 14, title: "Dubrovnik",   coords: [42.6507, 18.0944], desc: "Walk the ancient walls at sunset." },
+      { day: 17, title: "Split",       coords: [43.5147, 16.4435], desc: "Diocletian Palace and coastal farewell dinner." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Munich",          desc: "Private airport transfer. Evening in Marienplatz." },
       { day: 2,  title: "Neuschwanstein",         desc: "The fairy-tale castle that inspired Disney. Afternoon in Augsburg." },
@@ -58,6 +76,16 @@ const routeData = {
     image: "/images/route-ger-swi-ita.webp",
     tagline: "Alps, art and Italian culture in one sweeping arc",
     countries: ["Germany", "Switzerland", "Italy"],
+    mapStops: [
+      { day: 1,  title: "Frankfurt",  coords: [50.1109, 8.6821],  desc: "Transfer and settle in. Evening along the Main." },
+      { day: 2,  title: "Baden-Baden",coords: [48.7606, 8.2394],  desc: "Black Forest drive and thermal baths." },
+      { day: 3,  title: "Zurich",     coords: [47.3769, 8.5417],  desc: "Cross the Rhine into Switzerland." },
+      { day: 4,  title: "Lucerne",    coords: [47.0502, 8.3093],  desc: "Chapel Bridge and Lake Lucerne cruise." },
+      { day: 6,  title: "Milan",      coords: [45.4642, 9.1900],  desc: "Duomo, Galleria and last supper." },
+      { day: 7,  title: "Venice",     coords: [45.4408, 12.3155], desc: "St Mark, Doge Palace and gondola." },
+      { day: 9,  title: "Florence",   coords: [43.7696, 11.2558], desc: "Uffizi, Ponte Vecchio and Tuscany." },
+      { day: 11, title: "Rome",       coords: [41.9028, 12.4964], desc: "Colosseum, Forum and Trastevere." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Frankfurt",       desc: "Transfer and settle in. Evening stroll along the Main." },
       { day: 2,  title: "Black Forest Drive",     desc: "Cuckoo clocks, forest roads and Baden-Baden thermal baths." },
@@ -79,6 +107,16 @@ const routeData = {
     image: "/images/route-aut-swi-ita.webp",
     tagline: "Alpine lakes, luxury hotels and Italian elegance",
     countries: ["Austria", "Switzerland", "Italy"],
+    mapStops: [
+      { day: 1, title: "Vienna",    coords: [48.2082, 16.3738], desc: "Private transfer. Ringstrasse and welcome dinner." },
+      { day: 3, title: "Salzburg",  coords: [47.8095, 13.0550], desc: "Mozart, fortress and Sound-of-Music drive." },
+      { day: 4, title: "Grossglockner", coords: [47.0746, 12.6954], desc: "Europe's most scenic mountain pass." },
+      { day: 5, title: "Zurich",    coords: [47.3769, 8.5417],  desc: "Cross into Switzerland. Lake Zurich evening." },
+      { day: 6, title: "Lucerne",   coords: [47.0502, 8.3093],  desc: "Chapel Bridge and Jungfrau panorama." },
+      { day: 7, title: "Zermatt",   coords: [46.0207, 7.7491],  desc: "Car-free village under the Matterhorn." },
+      { day: 8, title: "Milan",     coords: [45.4642, 9.1900],  desc: "Cross into Italy. Duomo and Brera." },
+      { day: 9, title: "Lake Como", coords: [45.9848, 9.2713],  desc: "Bellagio and the most beautiful lake." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Vienna",          desc: "Private transfer. Ringstrasse and welcome dinner." },
       { day: 2,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg and Sachertorte at Cafe Central." },
@@ -98,6 +136,14 @@ const routeData = {
     image: "/images/route-central-loop.webp",
     tagline: "Four capitals and countless castles in a compact, efficient circuit",
     countries: ["Czech Republic", "Austria", "Slovakia", "Hungary"],
+    mapStops: [
+      { day: 1,  title: "Prague",       coords: [50.0755, 14.4378], desc: "Transfer to Old Town. Evening river cruise." },
+      { day: 3,  title: "Cesky Krumlov",coords: [48.8127, 14.3175], desc: "UNESCO Baroque town and castle." },
+      { day: 4,  title: "Vienna",       coords: [48.2082, 16.3738], desc: "Schoenbrunn, Hofburg and Naschmarkt." },
+      { day: 6,  title: "Bratislava",   coords: [48.1486, 17.1077], desc: "Old Town, castle and halusky." },
+      { day: 8,  title: "High Tatras",  coords: [49.1194, 20.0609], desc: "Slovakia's alpine playground." },
+      { day: 10, title: "Budapest",     coords: [47.4979, 19.0402], desc: "Parliament, Fisherman Bastion and baths." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Prague",          desc: "Transfer to Old Town. Evening river cruise on the Vltava." },
       { day: 2,  title: "Prague",                 desc: "Castle, Charles Bridge and Jewish Quarter." },
@@ -119,6 +165,20 @@ const routeData = {
     image: "/images/route-grand-9.webp",
     tagline: "All nine countries in one epic private journey -- the definitive Europe road trip",
     countries: ["Germany", "Austria", "Czech Republic", "Hungary", "Slovenia", "Slovakia", "Croatia", "Italy", "Switzerland"],
+    mapStops: [
+      { day: 1,  title: "Frankfurt",   coords: [50.1109, 8.6821],  desc: "Begin the grand journey." },
+      { day: 3,  title: "Munich",      coords: [48.1351, 11.5820], desc: "Neuschwanstein and beer gardens." },
+      { day: 5,  title: "Vienna",      coords: [48.2082, 16.3738], desc: "Imperial Austria." },
+      { day: 7,  title: "Prague",      coords: [50.0755, 14.4378], desc: "Fairy-tale Bohemia." },
+      { day: 9,  title: "Budapest",    coords: [47.4979, 19.0402], desc: "Pearl of the Danube." },
+      { day: 11, title: "Bratislava",  coords: [48.1486, 17.1077], desc: "Slovak capital." },
+      { day: 13, title: "Ljubljana",   coords: [46.0569, 14.5058], desc: "Slovenia and Lake Bled." },
+      { day: 15, title: "Dubrovnik",   coords: [42.6507, 18.0944], desc: "Croatia coast." },
+      { day: 17, title: "Venice",      coords: [45.4408, 12.3155], desc: "Canals and gondolas." },
+      { day: 19, title: "Florence",    coords: [43.7696, 11.2558], desc: "Uffizi and Tuscany." },
+      { day: 21, title: "Rome",        coords: [41.9028, 12.4964], desc: "The eternal city." },
+      { day: 23, title: "Zurich",      coords: [47.3769, 8.5417],  desc: "Swiss alpine finale." },
+    ],
     itinerary: [
       { day: 1,  title: "Arrive Frankfurt",       desc: "Begin the grand journey. Rhine Valley and Cologne en route south." },
       { day: 3,  title: "Munich",                 desc: "The Bavarian gateway -- beer gardens, Neuschwanstein and BMW World." },
@@ -146,6 +206,14 @@ const hotelOptions = [
   { id: "heritage", label: "Heritage", sub: "Historic palaces",  icon: "🏰" },
 ]
 
+const carOptions = [
+  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 3, img: "/images/cars/sedan.webp"        },
+  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 4, img: "/images/cars/luxury-sedan.webp" },
+  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 7, img: "/images/cars/mpv.webp"          },
+  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 9, img: "/images/cars/std-van.webp"      },
+  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 8, img: "/images/cars/luxury-van.webp"   },
+]
+
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 const EUR_TO_INR = 90
 
@@ -161,11 +229,15 @@ export default function TourPlannerMulti() {
   const { slug } = useParams()
   const data = routeData[slug]
 
-  const [hotel,      setHotel]      = useState("")
-  const [budget,     setBudget]     = useState(7000)
-  const [currency,   setCurrency]   = useState("EUR")
-  const [month,      setMonth]      = useState("")
-  const [groupSize,  setGroupSize]  = useState(2)
+  const [hotel,        setHotel]        = useState("")
+  const [car,          setCar]          = useState("")
+  const [bootLuggage,  setBootLuggage]  = useState(2)
+  const [cabinLuggage, setCabinLuggage] = useState(1)
+  const [budget,       setBudget]       = useState(7000)
+  const [currency,     setCurrency]     = useState("EUR")
+  const [month,        setMonth]        = useState("")
+  const [duration,     setDuration]     = useState(data?.itinerary?.length ?? 14)
+  const [groupSize,    setGroupSize]    = useState(2)
   const [name,       setName]       = useState("")
   const [email,      setEmail]      = useState("")
   const [phone,      setPhone]      = useState("")
@@ -203,10 +275,13 @@ export default function TourPlannerMulti() {
           country: data.name,
           form_type: "multi_country",
           hotel_type: hotel,
+          vehicle_type: car,
+          luggage_boot: bootLuggage,
+          luggage_cabin: cabinLuggage,
           budget_eur: budget,
           group_size: groupSize,
           travel_month: month + " 2026",
-          duration_days: data.itinerary.length,
+          duration_days: duration,
           special_requests: notes,
         }),
       })
@@ -310,6 +385,114 @@ export default function TourPlannerMulti() {
                 </div>
               </div>
 
+              {/* Car */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
+                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  {carOptions.map(c => (
+                    <button key={c.id} type="button" onClick={() => setCar(c.id)}
+                      className={"group relative overflow-hidden rounded-2xl border text-left transition-all duration-200 " + (car === c.id ? "border-accent-400 shadow-lg shadow-accent-400/15" : "border-white/10 hover:border-white/25")}>
+                      <div className="relative h-28 overflow-hidden bg-stone-800">
+                        <img src={c.img} alt={c.label}
+                          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'flex' }} />
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 text-3xl">🚗</div>
+                        {car === c.id && <div className="absolute inset-0 bg-accent-400/10" />}
+                        {car === c.id && (
+                          <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent-400">
+                            <svg className="h-3 w-3 text-stone-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-2.5">
+                        <p className="font-bold text-white text-xs leading-tight">{c.label}</p>
+                        <p className="mt-0.5 text-[10px] leading-tight text-stone-400">{c.sub}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Duration · Group size */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    label: 'Duration', question: 'How many days?',
+                    value: duration, unit: duration === 1 ? 'day' : 'days',
+                    dec: () => setDuration(Math.max(1, duration - 1)),
+                    inc: () => setDuration(Math.min(60, duration + 1)),
+                  },
+                  {
+                    label: 'Group size', question: 'How many travelling?',
+                    value: groupSize, unit: groupLabel,
+                    dec: () => setGroupSize(Math.max(1, groupSize - 1)),
+                    inc: () => setGroupSize(Math.min(20, groupSize + 1)),
+                  },
+                ].map(({ label, question, value, unit, dec, inc }) => (
+                  <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                    <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">{label}</p>
+                    <p className="mb-6 text-base font-semibold text-white">{question}</p>
+                    <div className="flex items-center justify-between">
+                      <button type="button" onClick={dec}
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-2xl font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all">
+                        &minus;
+                      </button>
+                      <div className="text-center">
+                        <span className="text-4xl font-bold text-white">{value}</span>
+                        <p className="mt-0.5 text-xs text-stone-500">{unit}</p>
+                      </div>
+                      <button type="button" onClick={inc}
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-2xl font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Luggage */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">Luggage</p>
+                <p className="mb-6 text-base font-semibold text-white">How many luggages?</p>
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
+                  {[
+                    { key: 'boot',  label: 'Boot Luggage',  hint: 'Suitcases & check-in bags', value: bootLuggage,  dec: () => setBootLuggage(Math.max(0, bootLuggage - 1)),   inc: () => setBootLuggage(Math.min(20, bootLuggage + 1))   },
+                    { key: 'cabin', label: 'Cabin Luggage', hint: 'Hand bags & carry-ons',      value: cabinLuggage, dec: () => setCabinLuggage(Math.max(0, cabinLuggage - 1)), inc: () => setCabinLuggage(Math.min(20, cabinLuggage + 1)) },
+                  ].map(({ key, label, hint, value, dec, inc }) => (
+                    <div key={key} className="flex flex-col items-center gap-4 bg-white/[0.02] px-4 py-5">
+                      <div className="text-center">
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-stone-300">{label}</p>
+                        <p className="mt-1 text-[11px] text-stone-500">{hint}</p>
+                      </div>
+                      <div className="flex items-center gap-5">
+                        <button type="button" onClick={dec}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">−</button>
+                        <span className="w-8 text-center text-3xl font-bold text-white">{value}</span>
+                        <button type="button" onClick={inc}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">+</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Month */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
+                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
+                  {months.map(m => (
+                    <button key={m} type="button" onClick={() => setMonth(m)}
+                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Budget */}
               <div>
                 <div className="mb-3 flex items-center justify-between">
@@ -340,38 +523,6 @@ export default function TourPlannerMulti() {
                     ? <><span>{"\u20AC"}500</span><span>{"\u20AC"}6k</span><span>{"\u20AC"}12k</span><span>{"\u20AC"}25k+</span></>
                     : <><span>{"\u20B9"}45k</span><span>{"\u20B9"}5.4L</span><span>{"\u20B9"}10.8L</span><span>{"\u20B9"}22.5L+</span></>
                   }
-                </div>
-              </div>
-
-              {/* Group size */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Group size</p>
-                <p className="mb-4 text-lg font-semibold text-white">How many travelling?</p>
-                <div className="flex items-center gap-5">
-                  <button type="button" onClick={() => setGroupSize(Math.max(1, groupSize - 1))}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-colors">
-                    &minus;
-                  </button>
-                  <span className="min-w-[3rem] text-center text-3xl font-bold text-white">{groupSize}</span>
-                  <button type="button" onClick={() => setGroupSize(Math.min(20, groupSize + 1))}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-colors">
-                    +
-                  </button>
-                  <span className="text-stone-400 text-sm">{groupLabel}</span>
-                </div>
-              </div>
-
-              {/* Month */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
-                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
-                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
-                  {months.map(m => (
-                    <button key={m} type="button" onClick={() => setMonth(m)}
-                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
-                      {m}
-                    </button>
-                  ))}
                 </div>
               </div>
 
@@ -410,10 +561,13 @@ export default function TourPlannerMulti() {
                 <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                   <div className="sm:col-span-2"><span className="text-stone-500">Route</span><br /><span className="font-semibold text-white">{data.name}</span></div>
                   {hotel && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
+                  {car && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
                   <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === "EUR" ? ("\u20AC" + budget.toLocaleString("en-IN")) : ("\u20B9" + (budget * EUR_TO_INR).toLocaleString("en-IN"))}/person</span></div>
                   <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{data.label}</span></div>
                   <div><span className="text-stone-500">Group</span><br /><span className="font-semibold text-white">{groupSize} {groupSize === 1 ? "person" : "people"}</span></div>
                   {month && <div><span className="text-stone-500">Month</span><br /><span className="font-semibold text-white">{month} 2026</span></div>}
+                  <div><span className="text-stone-500">Boot bags</span><br /><span className="font-semibold text-white">{bootLuggage}</span></div>
+                  <div><span className="text-stone-500">Cabin bags</span><br /><span className="font-semibold text-white">{cabinLuggage}</span></div>
                 </div>
               </div>
 
