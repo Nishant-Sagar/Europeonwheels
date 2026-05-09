@@ -610,7 +610,7 @@ export default function Home() {
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Link to="/contact" className="btn-accent justify-center px-8 py-4">Get Custom Plan</Link>
-            <a href="https://wa.me/" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
+            <a href="https://wa.me/918210564714" target="_blank" rel="noopener noreferrer" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
           </div>
         </div>
       </section>

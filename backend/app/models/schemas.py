@@ -68,11 +68,16 @@ class TripEnquiry(BaseModel):
     email: EmailStr
     phone: Optional[str] = None
     country: str
-    hotel_type: str          # "3star" | "4star" | "5star" | "boutique" | "heritage"
-    budget_eur: int          # total budget in EUR
-    group_size: int
-    travel_month: str        # e.g. "June 2025"
-    duration_days: int
+    form_type: Optional[str] = None
+    hotel_type: Optional[str] = None
+    vehicle_type: Optional[str] = None
+    budget_eur: Optional[int] = None
+    currency: Optional[str] = None
+    group_size: Optional[int] = None
+    luggage_boot: Optional[int] = None
+    luggage_cabin: Optional[int] = None
+    travel_month: Optional[str] = None
+    duration_days: Optional[int] = None
     special_requests: Optional[str] = None
 
 

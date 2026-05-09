@@ -41,7 +41,7 @@ export default function Gallery() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_70%_at_50%_50%,transparent_40%,rgba(0,0,0,0.45)_100%)]" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.38em] text-accent-400">Visual Diary</p>
-          <h1 className="text-5xl font-bold md:text-6xl" style={{ textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="text-3xl sm:text-5xl font-bold md:text-6xl" style={{ textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
             Gallery
           </h1>
           <p className="mt-3 text-sm text-white/55 md:text-base">

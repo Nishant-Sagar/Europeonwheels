@@ -24,10 +24,10 @@ export default function Calendar() {
 
   return (
     <>
-      <section className="bg-primary-900 text-white pt-40 pb-20 px-6">
+      <section className="bg-primary-900 text-white pt-24 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-accent-400 font-medium uppercase tracking-widest text-sm mb-3">Plan ahead</p>
-          <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">Upcoming Trips</h1>
+          <h1 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">Upcoming Trips</h1>
           <p className="text-primary-200 text-lg">Spots are limited. Once a trip fills, it's gone.</p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function Calendar() {
         </div>
       </section>
 
-      <section className="py-16 px-6">
+      <section className="py-14 sm:py-16 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {loading ? (
             <LoadingSpinner />

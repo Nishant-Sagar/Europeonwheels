@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, BackgroundTasks
 from app.models.schemas import ContactMessage, ContactResponse, NewsletterSignup, NewsletterResponse
+from app.notifications import notify_contact
 
 router = APIRouter(tags=["contact"])
 
@@ -7,9 +8,8 @@ newsletter_subscribers: list[str] = []
 
 
 @router.post("/contact", response_model=ContactResponse)
-def send_contact(message: ContactMessage):
-    # In production, send an email here
-    print(f"Contact from {message.name} <{message.email}>: {message.subject}")
+def send_contact(message: ContactMessage, background_tasks: BackgroundTasks):
+    background_tasks.add_task(notify_contact, message.dict())
     return ContactResponse(success=True, message="Thank you! We'll be in touch within 24 hours.")
 
 

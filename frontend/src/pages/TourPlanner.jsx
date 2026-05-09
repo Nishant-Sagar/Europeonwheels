@@ -173,7 +173,8 @@ export default function TourPlanner() {
 
   const [hotel,    setHotel]    = useState("")
   const [car,      setCar]      = useState("")
-  const [luggage,  setLuggage]  = useState(2)
+  const [bootLuggage,  setBootLuggage]  = useState(2)
+  const [cabinLuggage, setCabinLuggage] = useState(1)
   const [budget,   setBudget]   = useState(5000)
   const [currency, setCurrency] = useState("EUR") // "EUR" | "INR" | "USD"
   const EUR_TO_INR = 90
@@ -215,8 +216,9 @@ export default function TourPlanner() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name, email, phone, country: data.name,
+          form_type: "single_country",
           hotel_type: hotel, vehicle_type: car, budget_eur: budget,
-          group_size: groupSize, luggage_pieces: luggage,
+          group_size: groupSize, luggage_boot: bootLuggage, luggage_cabin: cabinLuggage,
           travel_month: month + " 2026",
           duration_days: duration, special_requests: notes,
         }),
@@ -398,8 +400,8 @@ export default function TourPlanner() {
                 </div>
               </div>
 
-              {/* Duration \u00b7 Travellers \u00b7 Luggage */}
-              <div className="grid gap-4 sm:grid-cols-3">
+              {/* Duration \u00b7 Travellers */}
+              <div className="grid gap-4 sm:grid-cols-2">
                 {[
                   {
                     label: 'Duration', question: 'How many days?',
@@ -412,12 +414,6 @@ export default function TourPlanner() {
                     value: groupSize, unit: groupLabel,
                     dec: () => setGroupSize(Math.max(1, groupSize - 1)),
                     inc: () => setGroupSize(Math.min(20, groupSize + 1)),
-                  },
-                  {
-                    label: 'Luggage', question: 'Pieces of luggage?',
-                    value: luggage, unit: luggage === 1 ? 'piece' : 'pieces',
-                    dec: () => setLuggage(Math.max(0, luggage - 1)),
-                    inc: () => setLuggage(Math.min(30, luggage + 1)),
                   },
                 ].map(({ label, question, value, unit, dec, inc }) => (
                   <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -439,6 +435,58 @@ export default function TourPlanner() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Luggage \u2014 full-width card with Boot + Cabin sub-counters */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">Luggage</p>
+                <p className="mb-6 text-base font-semibold text-white">How many luggages?</p>
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
+                  {[
+                    {
+                      key: 'boot',
+                      label: 'Boot Luggage',
+                      hint: 'Suitcases & check-in bags',
+                      value: bootLuggage,
+                      dec: () => setBootLuggage(Math.max(0, bootLuggage - 1)),
+                      inc: () => setBootLuggage(Math.min(20, bootLuggage + 1)),
+                    },
+                    {
+                      key: 'cabin',
+                      label: 'Cabin Luggage',
+                      hint: 'Hand bags & carry-ons',
+                      value: cabinLuggage,
+                      dec: () => setCabinLuggage(Math.max(0, cabinLuggage - 1)),
+                      inc: () => setCabinLuggage(Math.min(20, cabinLuggage + 1)),
+                    },
+                  ].map(({ key, label, hint, value, dec, inc }) => (
+                    <div key={key} className="flex flex-col items-center gap-4 bg-white/[0.02] px-4 py-5">
+                      <div className="text-center">
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-stone-300">{label}</p>
+                        <p className="mt-1 text-[11px] text-stone-500">{hint}</p>
+                      </div>
+                      <div className="flex items-center gap-5">
+                        <button type="button" onClick={dec}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white transition-all hover:border-white/30 hover:bg-white/10">
+                          &minus;
+                        </button>
+                        <div className="min-w-[2rem] text-center">
+                          <span className="text-3xl font-bold text-white">{value}</span>
+                          <p className="mt-0.5 text-[10px] text-stone-500">{value === 1 ? 'bag' : 'bags'}</p>
+                        </div>
+                        <button type="button" onClick={inc}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white transition-all hover:border-white/30 hover:bg-white/10">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {(bootLuggage + cabinLuggage) > 0 && (
+                  <p className="mt-3 text-center text-xs text-stone-600">
+                    {bootLuggage + cabinLuggage} {bootLuggage + cabinLuggage === 1 ? 'bag' : 'bags'} total
+                  </p>
+                )}
               </div>
 
               {/* Month */}
@@ -526,7 +574,8 @@ export default function TourPlanner() {
                     <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === "EUR" ? `\u20AC${budget.toLocaleString()}` : currency === "USD" ? `$${Math.round(budget * EUR_TO_USD).toLocaleString()}` : `\u20B9${(budget * EUR_TO_INR).toLocaleString("en-IN")}`}/person</span></div>
                     <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{duration} days</span></div>
                     <div><span className="text-stone-500">Group</span><br /><span className="font-semibold text-white">{groupSize} {groupSize === 1 ? "person" : "people"}</span></div>
-                    <div><span className="text-stone-500">Luggage</span><br /><span className="font-semibold text-white">{luggage} {luggage === 1 ? "piece" : "pieces"}</span></div>
+                    <div><span className="text-stone-500">Boot bags</span><br /><span className="font-semibold text-white">{bootLuggage}</span></div>
+                    <div><span className="text-stone-500">Cabin bags</span><br /><span className="font-semibold text-white">{cabinLuggage}</span></div>
                     {month && <div><span className="text-stone-500">Month</span><br /><span className="font-semibold text-white">{month} 2026</span></div>}
                   </div>
                 </div>

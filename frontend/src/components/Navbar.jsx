@@ -65,10 +65,12 @@ function BrandLogo({ mobile = false }) {
   if (mobile) {
     return (
       <Link to="/" className="flex h-full items-center gap-3 xl:hidden">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/45 bg-white/90 p-0.5 shadow-lg">
-          <img src={logoSrc} alt="Europe on Wheels" className="h-full w-full rounded-full object-cover" />
-        </span>
-        <span className="text-base font-semibold text-white">Europe on Wheels</span>
+        <img
+          src={logoSrc}
+          alt="Europe on Wheels"
+          style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', boxShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
+        />
+        <span className="text-[15px] font-semibold text-white">Europe on Wheels</span>
       </Link>
     )
   }
@@ -77,16 +79,29 @@ function BrandLogo({ mobile = false }) {
     <Link
       to="/"
       aria-label="Europe on Wheels home"
-      className="group relative flex h-20 w-20 items-center justify-center"
+      className="group relative flex items-center justify-center"
     >
-      <span className="absolute inset-1 rounded-full bg-accent-400/0 blur-lg transition-all duration-300 group-hover:bg-accent-400/30" />
-      <span className="relative flex h-[76px] w-[76px] items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/95 p-1 shadow-[0_10px_34px_rgba(0,0,0,0.28)] ring-1 ring-black/10 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-accent-300 group-hover:bg-accent-100 group-hover:shadow-[0_14px_42px_rgba(245,158,11,0.32)]">
-        <img
-          src={logoSrc}
-          alt="Europe on Wheels"
-          className="h-full w-full rounded-full object-cover transition-all duration-300 group-hover:scale-[1.04] group-hover:saturate-[1.2] group-hover:sepia-[0.18]"
-        />
-      </span>
+      {/* Soft gold glow on hover */}
+      <span className="absolute -inset-3 rounded-full bg-amber-400/0 blur-2xl transition-all duration-500 group-hover:bg-amber-400/20" />
+      {/*
+        The logo image has a circular badge on a cream background.
+        We set an explicit width so the image scales proportionally (no distortion),
+        use padding so the badge sits inside a white ring, and add border-radius + bg
+        directly on the img element — zero overflow-hidden, so the badge is never clipped.
+      */}
+      <img
+        src={logoSrc}
+        alt="Europe on Wheels"
+        className="relative transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-[1.04]"
+        style={{
+          width: 76,
+          height: 76,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15)',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        }}
+      />
     </Link>
   )
 }
@@ -112,6 +127,23 @@ function DesktopLink({ to, label, transparent }) {
   )
 }
 
+const TOUR_ICONS = [
+  /* Single Country — location pin */
+  <svg key="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="h-[18px] w-[18px]">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z" />
+  </svg>,
+  /* Multi-Country — route flag */
+  <svg key="flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="h-[18px] w-[18px]">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v18m0-13.5 10.5-1.5L9 9l4.5 3L3 10.5" />
+  </svg>,
+  /* Custom Tour — compass */
+  <svg key="compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="h-[18px] w-[18px]">
+    <circle cx="12" cy="12" r="9" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z" />
+  </svg>,
+]
+
 function TourDropdown({ transparent }) {
   const { pathname } = useLocation()
   const isActive = tourLinks.some(l => pathname.startsWith(l.to))
@@ -130,30 +162,55 @@ function TourDropdown({ transparent }) {
               : 'text-stone-700 hover:text-stone-950 border-transparent'
         }`}
       >
-        Tours
+        Plan My Tour
         <svg className="h-2.5 w-2.5 transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 10 6" fill="none" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M1 1l4 4 4-4" />
         </svg>
       </button>
 
-      {/* Dropdown panel — shown on hover via CSS group */}
-      <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-5 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-        {/* Arrow caret */}
-        <div className="absolute left-1/2 top-[14px] h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-l border-t border-white/10 bg-stone-950" />
+      {/* Dropdown */}
+      <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+        {/* Caret pointer */}
+        <div className="absolute left-1/2 top-[11px] h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-l border-t border-white/[0.08] bg-stone-900" />
 
-        <div className="w-56 overflow-hidden rounded-2xl border border-white/10 bg-stone-950/95 shadow-2xl backdrop-blur-xl">
-          {tourLinks.map(({ to, label, desc }) => (
+        <div className="w-[248px] overflow-hidden rounded-xl border border-white/[0.08] bg-stone-900/95 shadow-[0_16px_48px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+          {/* Thin amber top rule */}
+          <div className="h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+
+          {tourLinks.map(({ to, label, desc }, i) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive: a }) =>
-                `flex flex-col gap-0.5 px-4 py-3 transition-colors ${a ? 'bg-white/10' : 'hover:bg-white/[0.07]'}`
+                `group/row relative flex items-center gap-3.5 px-5 py-[14px] transition-colors duration-150
+                 ${i < tourLinks.length - 1 ? 'border-b border-white/[0.05]' : ''}
+                 ${a ? 'bg-white/[0.05]' : 'hover:bg-white/[0.03]'}`
               }
             >
-              <span className="text-[12px] font-semibold uppercase tracking-[0.08em] text-white">{label}</span>
-              <span className="text-[11px] text-stone-400 leading-tight">{desc}</span>
+              {({ isActive: a }) => (
+                <>
+                  {/* Amber left edge — active only */}
+                  {a && <div className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-amber-400/80" />}
+
+                  {/* Icon — muted, warms on hover/active */}
+                  <span className={`shrink-0 transition-colors duration-150 ${a ? 'text-amber-400' : 'text-stone-500 group-hover/row:text-stone-300'}`}>
+                    {TOUR_ICONS[i]}
+                  </span>
+
+                  {/* Text */}
+                  <div className="min-w-0">
+                    <p className={`text-[13px] font-medium leading-none transition-colors duration-150 ${a ? 'text-amber-400' : 'text-white/80 group-hover/row:text-white'}`}>
+                      {label}
+                    </p>
+                    <p className="mt-1.5 text-[11px] leading-tight text-stone-500">{desc}</p>
+                  </div>
+                </>
+              )}
             </NavLink>
           ))}
+
+          {/* Thin amber bottom rule */}
+          <div className="h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent" />
         </div>
       </div>
     </div>
@@ -175,12 +232,12 @@ export default function Navbar() {
           transparent ? 'bg-transparent text-white' : 'bg-primary-900 text-white'
         }`}
       >
-        <div className={`h-[72px] border-b transition-colors ${transparent ? 'border-white/10' : 'border-white/10'}`}>
-          {/* 3-column layout: left links | center logo gap | right links + icons */}
-          <div className="mx-auto flex h-full max-w-7xl items-center px-10">
+        <div className={`h-[80px] border-b transition-colors ${transparent ? 'border-white/10' : 'border-white/10'}`}>
+          {/* 1fr | auto | 1fr grid — guarantees perfectly equal width on both sides of logo */}
+          <div className="mx-auto flex h-full max-w-7xl items-center px-10 xl:grid xl:grid-cols-[1fr_auto_1fr]">
 
-            {/* Left nav links — anchored to left */}
-            <div className="hidden flex-1 items-center gap-10 xl:flex">
+            {/* Col 1 — left nav */}
+            <div className="hidden items-center gap-10 xl:flex">
               {leftLinks.map((link) => (
                 <DesktopLink key={link.to} {...link} transparent={transparent} />
               ))}
@@ -188,13 +245,13 @@ export default function Navbar() {
               <DesktopLink to="/stories" label="Stories" transparent={transparent} />
             </div>
 
-            {/* Center logo */}
-            <div className="hidden w-48 justify-center xl:flex">
+            {/* Col 2 — center logo */}
+            <div className="hidden items-center justify-center px-10 xl:flex">
               <BrandLogo />
             </div>
 
-            {/* Right nav links + social icons — anchored to right */}
-            <div className="hidden flex-1 items-center justify-end gap-9 xl:flex">
+            {/* Col 3 — right nav + social icons */}
+            <div className="hidden items-center justify-end gap-9 xl:flex">
               {rightLinks.map((link) => (
                 <DesktopLink key={link.to} {...link} transparent={transparent} />
               ))}
@@ -215,7 +272,7 @@ export default function Navbar() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/"
+                href="https://wa.me/918210564714"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -271,7 +328,7 @@ export default function Navbar() {
                 onClick={() => setToursOpen(!toursOpen)}
                 className="flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors"
               >
-                <span>Tours</span>
+                <span>Plan My Tour</span>
                 <svg
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${toursOpen ? 'rotate-180' : ''}`}
                   viewBox="0 0 10 6" fill="none" stroke="currentColor" strokeWidth={2}
@@ -324,7 +381,7 @@ export default function Navbar() {
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/"
+        href="https://wa.me/918210564714"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"

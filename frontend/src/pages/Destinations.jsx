@@ -101,7 +101,7 @@ export default function Destinations() {
               <p className="select-none text-8xl font-black leading-none text-white/[0.04]">01</p>
               <div className="-mt-10">
                 <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.35em] text-accent-400">Single Country</p>
-                <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl">
+                <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
                   One destination.<br />Done properly.
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-stone-400">
@@ -181,7 +181,7 @@ export default function Destinations() {
               <p className="select-none text-8xl font-black leading-none text-white/[0.04]">02</p>
               <div className="-mt-10">
                 <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.35em] text-accent-400">Multi Country</p>
-                <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl">
+                <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
                   The grand<br />European circuit.
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-stone-400">

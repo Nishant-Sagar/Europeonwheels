@@ -27,18 +27,18 @@ export default function DestinationDetail() {
       <section className="relative h-[70vh] overflow-hidden">
         <img src={dest.image_url} alt={dest.name} className="w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 max-w-4xl">
+        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-16 max-w-4xl">
           <div className="flex gap-3 mb-4">
             <span className={`badge ${difficultyColor[dest.difficulty]}`}>{dest.difficulty}</span>
             <span className="badge bg-white/90 text-stone-700">{dest.transport}</span>
           </div>
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-white mb-2">{dest.name}</h1>
+          <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-2">{dest.name}</h1>
           <p className="text-white/70 text-lg">{dest.country}</p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Left: details */}
           <div className="lg:col-span-2 space-y-10">
@@ -74,7 +74,7 @@ export default function DestinationDetail() {
             <div className="bg-white rounded-2xl shadow-lg p-8 sticky top-28">
               <div className="text-center mb-6">
                 <p className="text-stone-400 text-sm">Starting from</p>
-                <p className="font-display text-4xl font-bold text-primary-700">€{dest.price_eur.toLocaleString()}</p>
+                <p className="font-display text-3xl sm:text-4xl font-bold text-primary-700">€{dest.price_eur.toLocaleString()}</p>
                 <p className="text-stone-400 text-sm">per person</p>
               </div>
 

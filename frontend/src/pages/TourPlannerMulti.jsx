@@ -201,6 +201,7 @@ export default function TourPlannerMulti() {
         body: JSON.stringify({
           name, email, phone,
           country: data.name,
+          form_type: "multi_country",
           hotel_type: hotel,
           budget_eur: budget,
           group_size: groupSize,

@@ -97,7 +97,9 @@ export default function Footer() {
                   hello@europeonwheels.com
                 </a>
                 <a
-                  href="https://wa.me/"
+                  href="https://wa.me/918210564714"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 text-sm text-stone-400 transition-colors hover:text-white"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-800 text-green-500">
@@ -207,9 +209,9 @@ export default function Footer() {
           <div className="mt-10 border-t border-stone-800 pt-7 flex flex-col items-center justify-between gap-4 sm:flex-row text-stone-600 text-xs">
             <p>© {new Date().getFullYear()} Europe on Wheels. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="#" className="transition-colors hover:text-stone-400">Privacy Policy</a>
-              <a href="#" className="transition-colors hover:text-stone-400">Terms of Service</a>
-              <a href="#" className="transition-colors hover:text-stone-400">Cookie Policy</a>
+              <Link to="/privacy-policy" className="transition-colors hover:text-stone-400">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="transition-colors hover:text-stone-400">Terms of Service</Link>
+              <Link to="/cookie-policy" className="transition-colors hover:text-stone-400">Cookie Policy</Link>
             </div>
           </div>
 

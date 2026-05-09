@@ -67,7 +67,7 @@ export default function Contact() {
           {/* Page label + heading */}
           <div className="mb-8 text-center text-white">
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-400">Get in touch</p>
-            <h1 className="text-4xl font-bold sm:text-5xl" style={{ textShadow: '0 4px 32px rgba(0,0,0,0.5)' }}>
+            <h1 className="text-3xl font-bold sm:text-4xl" style={{ textShadow: '0 4px 32px rgba(0,0,0,0.5)' }}>
               Plan your Europe journey
             </h1>
             <p className="mt-2 text-sm text-white/50">Tell us your dates, countries and budget — we reply within 24 hours.</p>
@@ -77,7 +77,7 @@ export default function Contact() {
           <div className="grid overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/20 md:grid-cols-[1fr_1.6fr]">
 
             {/* Left — contact info strip */}
-            <div className="flex flex-col justify-between gap-6 bg-primary-900/70 p-8 backdrop-blur-md">
+            <div className="flex flex-col justify-between gap-6 bg-primary-900/70 p-5 sm:p-8 backdrop-blur-md">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent-400">Contact us directly</p>
                 <p className="mt-3 text-sm leading-relaxed text-white/60">
@@ -97,7 +97,7 @@ export default function Contact() {
                   </div>
                 </a>
 
-                <a href="https://wa.me/" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/918210564714" target="_blank" rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 transition-all duration-200 hover:bg-white/10">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-green-400 group-hover:bg-[#25D366] group-hover:text-white transition-all duration-200">
                     <IconWhatsApp />
@@ -121,7 +121,7 @@ export default function Contact() {
             </div>
 
             {/* Right — form */}
-            <div className="bg-white/88 p-8 backdrop-blur-md">
+            <div className="bg-white/88 p-5 sm:p-8 backdrop-blur-md">
               {status ? (
                 <div className={`flex h-full flex-col items-center justify-center rounded-xl p-6 text-center ${status.ok ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
                   <p className="text-3xl mb-2">{status.ok ? '✉️' : '⚠️'}</p>

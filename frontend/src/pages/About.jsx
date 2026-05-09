@@ -29,12 +29,12 @@ const values = [
 
 const team = [
   {
-    name: 'Kritika',
+    name: 'Krithika',
     role: 'Founder & Travel Designer',
     origin: 'India',
     bio: 'A born traveller turned travel designer, I craft seamless European road trip experiences backed by years in event planning. Every itinerary I build is personal, immersive, and effortless so you can simply enjoy the journey.',
     details: [
-      'Kritika works closely with every traveller to understand dates, pace, hotel comfort, food preferences and the places that matter most before shaping the route.',
+      'Krithika works closely with every traveller to understand dates, pace, hotel comfort, food preferences and the places that matter most before shaping the route.',
       'Her strength is turning complicated Europe plans into calm, well-paced journeys with scenic drives, thoughtful breaks and dependable support throughout.',
     ],
     tagline: 'Driven by passion. Designed for unforgettable journeys.',
@@ -89,7 +89,7 @@ export default function About() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="flex flex-col items-center rounded-2xl border border-white/15 bg-white/10 px-7 py-5 backdrop-blur-md transition-all duration-300 hover:bg-white/15 hover:border-white/25"
+                className="flex flex-col items-center rounded-2xl border border-white/15 bg-white/10 px-5 py-4 sm:px-7 sm:py-5 backdrop-blur-md transition-all duration-300 hover:bg-white/15 hover:border-white/25"
               >
                 <p className="text-3xl font-black text-accent-400" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
                   {s.value}
@@ -202,7 +202,7 @@ export default function About() {
               return (
                 <div
                   key={v.num}
-                  className={`group relative overflow-hidden rounded-2xl border p-8 transition-all duration-300 ${t.wrap}`}
+                  className={`group relative overflow-hidden rounded-2xl border p-5 sm:p-8 transition-all duration-300 ${t.wrap}`}
                 >
                   <p className={`mb-1 select-none text-8xl font-black leading-none transition-colors duration-300 ${t.num}`}>
                     {v.num}
