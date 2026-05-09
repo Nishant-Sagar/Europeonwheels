@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const highlights = [
   { icon: '🗺️', title: 'Any Destination', desc: 'One country or ten — we plan it all' },
@@ -24,7 +24,21 @@ const carOptions = [
   { id: 'luxury-van',   label: 'Luxury Van',   sub: 'Mercedes V-Class or similar',     img: '/images/cars/luxury-van.webp'   },
 ]
 
+const countryOptions = [
+  { id: 'germany',        label: 'Germany',        flag: '🇩🇪' },
+  { id: 'austria',        label: 'Austria',         flag: '🇦🇹' },
+  { id: 'czech-republic', label: 'Czech Republic',  flag: '🇨🇿' },
+  { id: 'hungary',        label: 'Hungary',          flag: '🇭🇺' },
+  { id: 'slovenia',       label: 'Slovenia',         flag: '🇸🇮' },
+  { id: 'croatia',        label: 'Croatia',          flag: '🇭🇷' },
+  { id: 'italy',          label: 'Italy',            flag: '🇮🇹' },
+  { id: 'switzerland',    label: 'Switzerland',      flag: '🇨🇭' },
+  { id: 'slovakia',       label: 'Slovakia',         flag: '🇸🇰' },
+]
+
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December']
+const DAY_NAMES = ['Mo','Tu','We','Th','Fr','Sa','Su']
 
 const EUR_TO_INR = 90
 const EUR_TO_USD = 1.08
@@ -37,9 +51,30 @@ function budgetLabel(v) {
   return 'Ultra-Luxury'
 }
 
+function fmtDate(d) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+function getDaysInMonth(year, month) {
+  const firstDay = new Date(year, month, 1).getDay()
+  const offset = firstDay === 0 ? 6 : firstDay - 1
+  const total = new Date(year, month + 1, 0).getDate()
+  const days = Array(offset).fill(null)
+  for (let d = 1; d <= total; d++) days.push(new Date(year, month, d))
+  return days
+}
+
 export default function CustomTour() {
-  const [destinations, setDestinations] = useState('')
-  const [travelDates,  setTravelDates]  = useState('')
+  const [selectedCountries, setSelectedCountries] = useState([])
+  const [calOpen,    setCalOpen]    = useState(false)
+  const [calYear,    setCalYear]    = useState(() => new Date().getFullYear())
+  const [calMonth,   setCalMonth]   = useState(() => new Date().getMonth())
+  const [startDate,  setStartDate]  = useState(null)
+  const [endDate,    setEndDate]    = useState(null)
+  const [hoverDate,  setHoverDate]  = useState(null)
+  const [selecting,  setSelecting]  = useState(false)
+  const calRef = useRef(null)
+
   const [hotel,        setHotel]        = useState('')
   const [car,          setCar]          = useState('')
   const [bootLuggage,  setBootLuggage]  = useState(2)
@@ -59,10 +94,84 @@ export default function CustomTour() {
 
   const groupLabel = groupSize === 1 ? 'Solo traveller' : groupSize <= 2 ? 'Couple' : groupSize <= 4 ? 'Small group' : 'Large group'
 
+  // Close calendar on outside click
+  useEffect(() => {
+    if (!calOpen) return
+    function handler(e) {
+      if (calRef.current && !calRef.current.contains(e.target)) setCalOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [calOpen])
+
+  function toggleCountry(id) {
+    setSelectedCountries(prev => prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id])
+  }
+
+  function getDestinationsString() {
+    return selectedCountries.map(id => countryOptions.find(c => c.id === id)?.label).join(', ')
+  }
+
+  const today = new Date(); today.setHours(0, 0, 0, 0)
+
+  function handleDayClick(date) {
+    if (date < today) return
+    if (!selecting || !startDate || date < startDate) {
+      setStartDate(date)
+      setEndDate(null)
+      setSelecting(true)
+    } else {
+      setEndDate(date)
+      setSelecting(false)
+      setCalOpen(false)
+    }
+  }
+
+  function prevMonth() {
+    if (calMonth === 0) { setCalYear(y => y - 1); setCalMonth(11) }
+    else setCalMonth(m => m - 1)
+  }
+  function nextMonth() {
+    if (calMonth === 11) { setCalYear(y => y + 1); setCalMonth(0) }
+    else setCalMonth(m => m + 1)
+  }
+
+  const travelDatesStr = startDate && endDate
+    ? `${fmtDate(startDate)} – ${fmtDate(endDate)}`
+    : startDate ? `${fmtDate(startDate)} – select end date` : ''
+
+  const calDays = getDaysInMonth(calYear, calMonth)
+  const isPrevDisabled = calYear === today.getFullYear() && calMonth === today.getMonth()
+
+  function dayState(date) {
+    if (!date) return 'empty'
+    if (date < today) return 'past'
+    const isStart = startDate && date.toDateString() === startDate.toDateString()
+    const isEnd   = endDate   && date.toDateString() === endDate.toDateString()
+    const rangeEnd = endDate || (selecting && hoverDate)
+    const inRange = startDate && rangeEnd && date > Math.min(startDate, rangeEnd) && date < Math.max(startDate, rangeEnd)
+    if (isStart) return 'start'
+    if (isEnd)   return 'end'
+    if (inRange) return 'range'
+    if (date.toDateString() === today.toDateString()) return 'today'
+    return 'normal'
+  }
+
+  const dayStyles = {
+    empty:  '',
+    past:   'text-stone-700 cursor-not-allowed',
+    start:  'bg-accent-400 text-stone-950 font-bold rounded-lg cursor-pointer',
+    end:    'bg-accent-400 text-stone-950 font-bold rounded-lg cursor-pointer',
+    range:  'bg-accent-400/20 text-white cursor-pointer',
+    today:  'border border-accent-400/50 text-accent-400 rounded-lg cursor-pointer hover:bg-white/10',
+    normal: 'text-stone-300 rounded-lg cursor-pointer hover:bg-white/10',
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!destinations || !hotel || !month || !name || !email) {
-      setError('Please fill in destinations, your name, email, hotel type and travel month.')
+    const destinationsStr = getDestinationsString()
+    if (!destinationsStr || !hotel || !month || !name || !email) {
+      setError('Please select at least one country, your name, email, hotel type and travel month.')
       return
     }
     setError('')
@@ -74,8 +183,8 @@ export default function CustomTour() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, phone,
-          country: destinations,
-          form_type: "custom_tour",
+          country: destinationsStr,
+          form_type: 'custom_tour',
           hotel_type: hotel,
           vehicle_type: car,
           budget_eur: budget,
@@ -84,7 +193,7 @@ export default function CustomTour() {
           luggage_cabin: cabinLuggage,
           travel_month: month + ' 2026',
           duration_days: duration,
-          special_requests: [travelDates ? `Travel dates: ${travelDates}` : '', notes].filter(Boolean).join('\n'),
+          special_requests: [travelDatesStr ? `Travel dates: ${travelDatesStr}` : '', notes].filter(Boolean).join('\n'),
         }),
       })
       if (!res.ok) throw new Error('Server error')
@@ -143,30 +252,102 @@ export default function CustomTour() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
 
-              {/* Countries + Dates */}
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Destinations *</p>
-                  <p className="mb-3 text-base font-semibold text-white">Which countries?</p>
-                  <input
-                    type="text"
-                    value={destinations}
-                    onChange={e => setDestinations(e.target.value)}
-                    placeholder="e.g. Austria, Czech Republic, Italy…"
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder-stone-600 outline-none focus:border-accent-400/60 focus:ring-1 focus:ring-accent-400/30 transition-all"
-                  />
+              {/* Destinations */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Destinations *</p>
+                <p className="mb-4 text-lg font-semibold text-white">Which countries?</p>
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                  {countryOptions.map(c => {
+                    const selected = selectedCountries.includes(c.id)
+                    return (
+                      <button key={c.id} type="button" onClick={() => toggleCountry(c.id)}
+                        className={'relative rounded-xl border px-3 py-3 text-center transition-all duration-200 ' + (selected ? 'border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10' : 'border-white/10 bg-white/[0.03] hover:border-white/25')}>
+                        {selected && (
+                          <div className="absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent-400">
+                            <svg className="h-2.5 w-2.5 text-stone-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                        <div className="mb-1 text-xl leading-none">{c.flag}</div>
+                        <p className="text-[11px] font-semibold leading-tight text-white">{c.label}</p>
+                      </button>
+                    )
+                  })}
                 </div>
-                <div>
-                  <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel Dates</p>
-                  <p className="mb-3 text-base font-semibold text-white">When are you going?</p>
-                  <input
-                    type="text"
-                    value={travelDates}
-                    onChange={e => setTravelDates(e.target.value)}
-                    placeholder="e.g. 10 – 20 July 2026"
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder-stone-600 outline-none focus:border-accent-400/60 focus:ring-1 focus:ring-accent-400/30 transition-all"
-                  />
+                {selectedCountries.length > 0 && (
+                  <p className="mt-3 text-xs text-stone-500">
+                    Selected: <span className="text-accent-400 font-medium">{getDestinationsString()}</span>
+                    <button type="button" onClick={() => setSelectedCountries([])} className="ml-3 text-stone-600 hover:text-stone-400 underline">clear</button>
+                  </p>
+                )}
+              </div>
+
+              {/* Travel Dates */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel Dates</p>
+                <p className="mb-4 text-lg font-semibold text-white">When are you going?</p>
+                <div ref={calRef} className="relative">
+                  {/* Trigger */}
+                  <button type="button" onClick={() => setCalOpen(o => !o)}
+                    className={'w-full flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ' + (calOpen ? 'border-accent-400/60 ring-1 ring-accent-400/30' : 'border-white/10 hover:border-white/25') + ' bg-white/[0.04]'}>
+                    <svg className="h-4 w-4 shrink-0 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {travelDatesStr
+                      ? <span className="text-white">{travelDatesStr}</span>
+                      : <span className="text-stone-600">Select your travel dates</span>}
+                    {(startDate || endDate) && (
+                      <button type="button" onClick={e => { e.stopPropagation(); setStartDate(null); setEndDate(null); setSelecting(false) }}
+                        className="ml-auto text-stone-500 hover:text-stone-300">✕</button>
+                    )}
+                  </button>
+
+                  {/* Calendar dropdown */}
+                  {calOpen && (
+                    <div className="absolute left-0 top-full z-50 mt-2 w-full max-w-xs rounded-2xl border border-white/10 bg-stone-800 p-4 shadow-2xl shadow-black/60 sm:w-80">
+                      {/* Header */}
+                      <div className="mb-4 flex items-center justify-between">
+                        <button type="button" onClick={prevMonth} disabled={isPrevDisabled}
+                          className="flex h-8 w-8 items-center justify-center rounded-lg text-stone-400 transition hover:bg-white/10 disabled:opacity-30">
+                          ‹
+                        </button>
+                        <p className="text-sm font-semibold text-white">{MONTH_NAMES[calMonth]} {calYear}</p>
+                        <button type="button" onClick={nextMonth}
+                          className="flex h-8 w-8 items-center justify-center rounded-lg text-stone-400 transition hover:bg-white/10">
+                          ›
+                        </button>
+                      </div>
+
+                      {/* Day headers */}
+                      <div className="mb-1 grid grid-cols-7 text-center">
+                        {DAY_NAMES.map(d => (
+                          <div key={d} className="py-1 text-[10px] font-bold uppercase tracking-wider text-stone-500">{d}</div>
+                        ))}
+                      </div>
+
+                      {/* Days grid */}
+                      <div className="grid grid-cols-7 gap-px text-center text-sm">
+                        {calDays.map((date, i) => {
+                          const state = dayState(date)
+                          return (
+                            <div key={i}
+                              className={'flex h-8 items-center justify-center text-xs transition-all ' + dayStyles[state]}
+                              onClick={() => date && state !== 'past' && handleDayClick(date)}
+                              onMouseEnter={() => date && selecting && date >= today && setHoverDate(date)}
+                              onMouseLeave={() => setHoverDate(null)}>
+                              {date ? date.getDate() : ''}
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      {/* Hint */}
+                      <p className="mt-3 text-center text-[10px] text-stone-600">
+                        {!startDate ? 'Click to pick start date' : !endDate ? 'Now pick your end date' : 'Dates selected'}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -371,10 +552,10 @@ export default function CustomTour() {
               <div className="rounded-2xl border border-accent-400/20 bg-gradient-to-br from-accent-400/[0.07] to-stone-950/40 p-6 shadow-lg shadow-accent-400/5">
                 <p className="mb-4 text-xs font-bold uppercase tracking-widest text-stone-400">Your trip summary</p>
                 <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-                  {destinations && <div className="sm:col-span-2"><span className="text-stone-500">Destinations</span><br /><span className="font-semibold text-white">{destinations}</span></div>}
-                  {travelDates  && <div><span className="text-stone-500">Dates</span><br /><span className="font-semibold text-white">{travelDates}</span></div>}
-                  {hotel        && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
-                  {car          && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
+                  {selectedCountries.length > 0 && <div className="sm:col-span-2"><span className="text-stone-500">Destinations</span><br /><span className="font-semibold text-white">{getDestinationsString()}</span></div>}
+                  {travelDatesStr && endDate && <div><span className="text-stone-500">Dates</span><br /><span className="font-semibold text-white">{travelDatesStr}</span></div>}
+                  {hotel && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
+                  {car   && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
                   <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === 'EUR' ? `€${budget.toLocaleString()}` : currency === 'USD' ? `$${Math.round(budget * EUR_TO_USD).toLocaleString()}` : `₹${(budget * EUR_TO_INR).toLocaleString('en-IN')}`}/person</span></div>
                   <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{duration} days</span></div>
                   <div><span className="text-stone-500">Group</span><br /><span className="font-semibold text-white">{groupSize} {groupSize === 1 ? 'person' : 'people'}</span></div>
