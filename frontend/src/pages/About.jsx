@@ -32,10 +32,9 @@ const team = [
     name: 'Krithika',
     role: 'Founder & Travel Designer',
     origin: 'India',
-    bio: 'A born traveller turned travel designer, I craft seamless European road trip experiences backed by years in event planning. Every itinerary I build is personal, immersive, and effortless so you can simply enjoy the journey.',
+    bio: 'A passionate traveller and experienced travel designer, Krithika curates seamless European journeys filled with scenic routes, meaningful experiences, and effortless planning. With a strong background in event planning and personalized travel experiences, she carefully designs every itinerary around each traveller\'s pace, comfort, interests, and travel style.',
     details: [
-      'Krithika works closely with every traveller to understand dates, pace, hotel comfort, food preferences and the places that matter most before shaping the route.',
-      'Her strength is turning complicated Europe plans into calm, well-paced journeys with scenic drives, thoughtful breaks and dependable support throughout.',
+      'From charming countryside drives and iconic cities to hidden local experiences, every journey is created with attention to detail, comfort, and ease — allowing travellers to enjoy Europe stress-free while creating unforgettable memories along the way.',
     ],
     tagline: 'Driven by passion. Designed for unforgettable journeys.',
     img: '/images/team-operations.jpeg',
