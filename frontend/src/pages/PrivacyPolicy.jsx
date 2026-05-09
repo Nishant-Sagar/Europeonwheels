@@ -1,5 +1,5 @@
 const LAST_UPDATED = '8 May 2026'
-const EMAIL = 'hello@europeonwheels.com'
+const EMAIL = 'info.europeonwheels@gmail.com'
 
 function Section({ title, children }) {
   return (

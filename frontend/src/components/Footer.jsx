@@ -88,13 +88,13 @@ export default function Footer() {
               {/* Contact */}
               <div className="mt-7 space-y-3.5">
                 <a
-                  href="mailto:hello@europeonwheels.com"
+                  href="mailto:info.europeonwheels@gmail.com"
                   className="flex items-center gap-3 text-sm text-stone-400 transition-colors hover:text-white"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-800 text-stone-400">
                     <IconMail />
                   </span>
-                  hello@europeonwheels.com
+                  info.europeonwheels@gmail.com
                 </a>
                 <a
                   href="https://wa.me/918210564714"

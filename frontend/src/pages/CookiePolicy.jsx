@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const LAST_UPDATED = '8 May 2026'
 const COMPANY = 'Europe on Wheels'
-const EMAIL = 'hello@europeonwheels.com'
+const EMAIL = 'info.europeonwheels@gmail.com'
 
 const cookieTable = [
   {

@@ -77,56 +77,68 @@ export default function Contact() {
           <div className="grid overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/20 md:grid-cols-[1fr_1.6fr]">
 
             {/* Left — contact info strip */}
-            <div className="flex flex-col justify-between gap-6 bg-primary-900/70 p-5 sm:p-8 backdrop-blur-md">
+            <div className="flex flex-col gap-6 bg-primary-900/70 p-5 sm:p-8 backdrop-blur-md">
+
+              {/* Header */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent-400">Contact us directly</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">
-                  A small team, a real person — not a bot.
-                </p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent-400">Contact us directly</p>
+                <p className="mt-2 text-sm font-semibold text-white">A real person, not a bot.</p>
+                <p className="mt-1 text-xs leading-relaxed text-white/45">We reply within 24 hours — usually much faster.</p>
               </div>
 
-              <div className="space-y-4">
-                <a href="mailto:hello@europeonwheels.com"
+              {/* Reach us */}
+              <div className="space-y-2.5">
+                <a href="mailto:info.europeonwheels@gmail.com"
                   className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 transition-all duration-200 hover:bg-white/10">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white group-hover:bg-accent-400 group-hover:text-stone-950 transition-all duration-200">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white transition-all duration-200 group-hover:bg-accent-400 group-hover:text-stone-950">
                     <IconMail />
                   </span>
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-white/35">Email</p>
-                    <p className="text-xs font-medium text-white">hello@europeonwheels.com</p>
+                    <p className="text-xs font-medium text-white">info.europeonwheels@gmail.com</p>
                   </div>
                 </a>
-
                 <a href="https://wa.me/918210564714" target="_blank" rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 transition-all duration-200 hover:bg-white/10">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-green-400 group-hover:bg-[#25D366] group-hover:text-white transition-all duration-200">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-green-400 transition-all duration-200 group-hover:bg-[#25D366] group-hover:text-white">
                     <IconWhatsApp />
                   </span>
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-white/35">WhatsApp</p>
-                    <p className="text-xs font-medium text-white">Chat with our team</p>
+                    <p className="text-xs font-medium text-white">+91 82105 64714</p>
                   </div>
                 </a>
+              </div>
 
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-accent-400 text-sm">🇮🇳</span>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/35">India Office</p>
-                    <p className="text-xs font-medium leading-relaxed text-white">
-                      2859, 3rd Main, 17th Cross<br />
+              {/* Offices — highlighted */}
+              <div>
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-accent-400/20" />
+                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-accent-400/70">Our Offices</p>
+                  <span className="h-px flex-1 bg-accent-400/20" />
+                </div>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="rounded-xl border border-accent-400/25 bg-accent-400/[0.07] p-3.5">
+                    <div className="mb-2.5 flex items-center gap-1.5">
+                      <span className="text-base leading-none">🇮🇳</span>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-accent-400">India</p>
+                    </div>
+                    <p className="text-[11px] leading-[1.7] text-white/80">
+                      2859, 3rd Main<br />
+                      17th Cross<br />
                       Banashankari 2nd Stage<br />
                       Bangalore – 560070
                     </p>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-accent-400 text-sm">🇭🇷</span>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/35">European Office</p>
-                    <p className="text-xs font-medium leading-relaxed text-white">
+                  <div className="rounded-xl border border-accent-400/25 bg-accent-400/[0.07] p-3.5">
+                    <div className="mb-2.5 flex items-center gap-1.5">
+                      <span className="text-base leading-none">🇭🇷</span>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-accent-400">Europe</p>
+                    </div>
+                    <p className="text-[11px] leading-[1.7] text-white/80">
                       Perkova ulica<br />
-                      21214 Kaštel Kambelovac<br />
+                      21214 Kaštel<br />
+                      Kambelovac<br />
                       Croatia
                     </p>
                   </div>

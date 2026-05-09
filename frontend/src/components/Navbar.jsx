@@ -283,7 +283,7 @@ export default function Navbar() {
 
               {/* Email */}
               <a
-                href="mailto:hello@europeonwheels.com"
+                href="mailto:info.europeonwheels@gmail.com"
                 aria-label="Email us"
                 className="transition-all duration-200 hover:scale-110 hover:opacity-80"
               >
