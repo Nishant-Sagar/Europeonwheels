@@ -77,3 +77,15 @@
   will-change: transform;
   backface-visibility: hidden;
 }
+
+/* Dark Leaflet popups */
+.dark-popup .leaflet-popup-content-wrapper {
+  background: #1c1917;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  padding: 0;
+}
+.dark-popup .leaflet-popup-content { margin: 0; }
+.dark-popup .leaflet-popup-tip { background: #1c1917; }
+.dark-popup .leaflet-popup-close-button { color: #a8a29e; }
