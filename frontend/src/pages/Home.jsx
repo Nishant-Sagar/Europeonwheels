@@ -262,7 +262,7 @@ export default function Home() {
                 View All Destinations
               </a>
               <Link
-                to="/contact"
+                to="/custom-tour"
                 className="rounded-full bg-accent-400 px-8 py-4 text-base font-semibold text-stone-950 shadow-2xl transition-all duration-300 hover:bg-accent-300 hover:scale-105 sm:text-lg"
               >
                 Plan My Trip →
@@ -609,8 +609,8 @@ export default function Home() {
             Tell us your travel style, and we will design a personalized Europe experience around your time, budget and pace.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link to="/contact" className="btn-accent justify-center px-8 py-4">Get Custom Plan</Link>
-            <a href="https://wa.me/918210564714" target="_blank" rel="noopener noreferrer" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
+            <Link to="/custom-tour" className="btn-accent justify-center px-8 py-4">Get Custom Plan</Link>
+            <a href="https://wa.me/919108116181" target="_blank" rel="noopener noreferrer" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
           </div>
         </div>
       </section>

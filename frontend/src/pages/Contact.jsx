@@ -26,7 +26,7 @@ function IconWhatsApp() {
 }
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
   const [openFaq, setOpenFaq] = useState(null)
@@ -39,7 +39,7 @@ export default function Contact() {
     try {
       const res = await api.post('/contact', form)
       setStatus({ ok: res.data.success, msg: res.data.message })
-      if (res.data.success) setForm({ name: '', email: '', subject: '', message: '' })
+      if (res.data.success) setForm({ name: '', email: '', phone: '', subject: '', message: '' })
     } catch {
       setStatus({ ok: false, msg: 'Something went wrong. Please try again.' })
     } finally {
@@ -98,14 +98,14 @@ export default function Contact() {
                     <p className="text-xs font-medium text-white">info.europeonwheels@gmail.com</p>
                   </div>
                 </a>
-                <a href="https://wa.me/918210564714" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/919108116181" target="_blank" rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 transition-all duration-200 hover:bg-white/10">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-green-400 transition-all duration-200 group-hover:bg-[#25D366] group-hover:text-white">
                     <IconWhatsApp />
                   </span>
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-white/35">WhatsApp</p>
-                    <p className="text-xs font-medium text-white">+91 82105 64714</p>
+                    <p className="text-xs font-medium text-white">+91 91081 16181</p>
                   </div>
                 </a>
               </div>
@@ -157,51 +157,44 @@ export default function Contact() {
             </div>
 
             {/* Right — form */}
-            <div className="bg-white/88 p-5 sm:p-8 backdrop-blur-md">
+            <div className="flex flex-col bg-white/88 p-5 sm:p-8 backdrop-blur-md">
               {status ? (
-                <div className={`flex h-full flex-col items-center justify-center rounded-xl p-6 text-center ${status.ok ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+                <div className={`flex flex-1 flex-col items-center justify-center rounded-xl p-6 text-center ${status.ok ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
                   <p className="text-3xl mb-2">{status.ok ? '✉️' : '⚠️'}</p>
                   <p className="font-semibold">{status.msg}</p>
                   {!status.ok && <button onClick={() => setStatus(null)} className="mt-3 text-sm underline">Try again</button>}
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     {[
-                      { name: 'name',  label: 'Your name',     type: 'text',  placeholder: 'Jane Smith' },
-                      { name: 'email', label: 'Email address', type: 'email', placeholder: 'jane@example.com' },
-                    ].map(({ name, label, type, placeholder }) => (
+                      { name: 'name',  label: 'Your name',     type: 'text',  placeholder: 'Jane Smith',          required: true  },
+                      { name: 'email', label: 'Email address', type: 'email', placeholder: 'jane@example.com',    required: true  },
+                      { name: 'phone', label: 'Mobile number', type: 'tel',   placeholder: '+91 98765 43210',     required: false },
+                      { name: 'subject', label: 'Subject',     type: 'text',  placeholder: 'e.g. 10-day Italy tour', required: true },
+                    ].map(({ name, label, type, placeholder, required }) => (
                       <div key={name}>
-                        <label htmlFor={name} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.15em] text-stone-400">{label}</label>
+                        <label htmlFor={name} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.15em] text-stone-400">
+                          {label}{!required && <span className="ml-1 normal-case tracking-normal text-stone-300">(optional)</span>}
+                        </label>
                         <input
                           id={name} name={name} type={type}
                           value={form[name]} onChange={handleChange}
-                          placeholder={placeholder} required
+                          placeholder={placeholder} required={required}
                           className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-sm text-stone-800 placeholder-stone-300 transition-colors focus:border-primary-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100"
                         />
                       </div>
                     ))}
                   </div>
 
-                  <div>
-                    <label htmlFor="subject" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.15em] text-stone-400">Subject</label>
-                    <input
-                      id="subject" name="subject" type="text"
-                      value={form.subject} onChange={handleChange}
-                      placeholder="e.g. 10-day Switzerland & Italy private tour"
-                      required
-                      className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-sm text-stone-800 placeholder-stone-300 transition-colors focus:border-primary-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100"
-                    />
-                  </div>
-
-                  <div>
+                  <div className="flex flex-1 flex-col">
                     <label htmlFor="message" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.15em] text-stone-400">Message</label>
                     <textarea
                       id="message" name="message"
                       value={form.message} onChange={handleChange}
                       placeholder="Tell us your travel dates, group size, budget and any preferences..."
-                      required rows={4}
-                      className="w-full resize-none rounded-lg border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-sm text-stone-800 placeholder-stone-300 transition-colors focus:border-primary-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100"
+                      required
+                      className="flex-1 w-full resize-none rounded-lg border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-sm text-stone-800 placeholder-stone-300 transition-colors focus:border-primary-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100"
                     />
                   </div>
 

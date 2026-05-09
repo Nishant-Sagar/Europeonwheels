@@ -97,7 +97,7 @@ export default function Footer() {
                   info.europeonwheels@gmail.com
                 </a>
                 <a
-                  href="https://wa.me/918210564714"
+                  href="https://wa.me/919108116181"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-sm text-stone-400 transition-colors hover:text-white"

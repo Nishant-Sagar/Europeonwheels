@@ -272,7 +272,7 @@ export default function Navbar() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/918210564714"
+                href="https://wa.me/919108116181"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -381,7 +381,7 @@ export default function Navbar() {
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/918210564714"
+        href="https://wa.me/919108116181"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"

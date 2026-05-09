@@ -234,7 +234,7 @@ export default function About() {
                 className={`flex flex-col gap-7 sm:flex-row sm:items-start sm:gap-10 ${i > 0 ? 'mt-12 border-t border-white/[0.06] pt-12' : ''}`}
               >
                 {/* Photo frame */}
-                <div className="relative shrink-0">
+                <div className="relative shrink-0 mx-auto sm:mx-0">
                   {/* Ambient glow behind the frame */}
                   <div className="absolute -inset-2 rounded-3xl blur-xl"
                     style={{ background: 'linear-gradient(135deg,rgba(245,158,11,0.35),rgba(120,53,15,0.2))' }} />
@@ -248,7 +248,7 @@ export default function About() {
                       <img
                         src={img}
                         alt={name}
-                        className="h-48 w-36 object-cover"
+                        className="h-52 w-44 object-cover sm:h-48 sm:w-36"
                         style={{ objectPosition: imgPos }}
                         loading="lazy"
                       />
@@ -274,12 +274,12 @@ export default function About() {
                     )
                   })}
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-center sm:text-left">
                   <h3 className="text-lg font-bold text-white">{name}</h3>
                   <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-400">{role}</p>
-                  <p className="mt-4 text-sm leading-relaxed text-stone-400">{bio}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-stone-400 text-left">{bio}</p>
                   {details?.length > 0 && (
-                    <div className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400">
+                    <div className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400 text-left">
                       {details.map((line) => (
                         <p key={line}>{line}</p>
                       ))}
