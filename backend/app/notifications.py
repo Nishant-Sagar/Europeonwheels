@@ -23,7 +23,7 @@ def send_email(subject: str, html_body: str) -> None:
             "html": html_body,
         })
         print(f"[notify] Email sent to {NOTIFY_EMAIL}")
-    except Exception as e:
+    except (OSError, ValueError, RuntimeError) as e:
         print(f"[notify] Email error: {e}")
 
 
@@ -48,7 +48,7 @@ def send_whatsapp(text: str) -> None:
         )
         with urllib.request.urlopen(req, timeout=10) as resp:
             print(f"[notify] WhatsApp sent via Green API, status={resp.status}")
-    except Exception as e:
+    except (OSError, ValueError, RuntimeError) as e:
         print(f"[notify] WhatsApp error: {e}")
 
 
@@ -102,114 +102,170 @@ def notify_enquiry(data: dict) -> None:
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#0f0f0f;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#0f0f0f">
+<body style="margin:0;padding:0;background:#faf7f2;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#faf7f2">
     <tr><td align="center" style="padding:32px 16px;">
       <table width="600" cellpadding="0" cellspacing="0"
-             style="background:#1c1917;border-radius:12px;overflow:hidden;border:1px solid #292524;">
+             style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
-        <!-- Header -->
+        <!-- Header with amber gradient -->
         <tr>
-          <td style="background:linear-gradient(135deg,#1c1917,#292524);
-                     padding:28px 32px;border-bottom:1px solid #292524;">
-            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:4px;
-                      color:#f59e0b;text-transform:uppercase;">Europe on Wheels</p>
-            <h1 style="margin:8px 0 0;font-size:22px;color:#fff;">
+          <td style="background:linear-gradient(135deg,#f59e0b,#d97706,#b45309);padding:32px 36px;">
+            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:5px;
+                      color:rgba(255,255,255,0.85);text-transform:uppercase;">&#x1f30d; Europe on Wheels</p>
+            <h1 style="margin:10px 0 4px;font-size:24px;color:#ffffff;font-weight:800;">
               New {form_label}
             </h1>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; europeonwheels.in</p>
           </td>
         </tr>
 
-        <!-- Body -->
+        <!-- Customer info banner -->
         <tr>
-          <td style="padding:28px 32px;">
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+          <td style="padding:24px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:12px;border:1px solid #fde68a;">
               <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Name</p>
-                  <p style="margin:4px 0 0;font-size:16px;color:#fff;font-weight:600;">{name}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Email</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#f59e0b;">
-                    <a href="mailto:{email}" style="color:#f59e0b;text-decoration:none;">{email}</a>
+                <td style="padding:20px 24px;">
+                  <p style="margin:0;font-size:20px;font-weight:700;color:#92400e;">&#x1f464; {name}</p>
+                  <p style="margin:6px 0 0;font-size:14px;color:#b45309;">
+                    <a href="mailto:{email}" style="color:#b45309;text-decoration:none;">&#x2709;&#xfe0f; {email}</a>
+                    &nbsp;&nbsp;&middot;&nbsp;&nbsp;&#x1f4f1; {phone}
                   </p>
                 </td>
               </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Destination -->
+        <tr>
+          <td style="padding:20px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#fef9ee;border-radius:10px;border-left:4px solid #f59e0b;">
               <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Phone / WhatsApp</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{phone}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Destinations</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{country}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Travel Month / Dates</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{month}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Duration</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{duration} days</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Group Size</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{group} people</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Hotel Preference</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{hotel}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Car / Vehicle</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{car}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Luggage</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{luggage}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Budget</p>
-                  <p style="margin:4px 0 0;font-size:16px;color:#f59e0b;font-weight:700;">{currency} {budget}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Notes / Special Requests</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#d4cdc7;line-height:1.6;">{notes}</p>
+                <td style="padding:16px 20px;">
+                  <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:2px;color:#92400e;text-transform:uppercase;">&#x1f5fa;&#xfe0f; Destinations</p>
+                  <p style="margin:6px 0 0;font-size:17px;font-weight:700;color:#1c1917;">{country}</p>
                 </td>
               </tr>
             </table>
+          </td>
+        </tr>
 
+        <!-- Trip details grid -->
+        <tr>
+          <td style="padding:20px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" style="padding:0 8px 12px 0;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x1f4c5; Travel Month</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{month}</p>
+                    </td></tr>
+                  </table>
+                </td>
+                <td width="50%" style="padding:0 0 12px 8px;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x23f3; Duration</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{duration} days</p>
+                    </td></tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td width="50%" style="padding:0 8px 12px 0;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x1f465; Group Size</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{group} people</p>
+                    </td></tr>
+                  </table>
+                </td>
+                <td width="50%" style="padding:0 0 12px 8px;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x1f3e8; Hotel</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{hotel}</p>
+                    </td></tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td width="50%" style="padding:0 8px 12px 0;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x1f697; Vehicle</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{car}</p>
+                    </td></tr>
+                  </table>
+                </td>
+                <td width="50%" style="padding:0 0 12px 8px;vertical-align:top;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f3;border-radius:10px;">
+                    <tr><td style="padding:14px 16px;">
+                      <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8a29e;text-transform:uppercase;">&#x1f9f3; Luggage</p>
+                      <p style="margin:4px 0 0;font-size:15px;font-weight:600;color:#1c1917;">{luggage}</p>
+                    </td></tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Budget highlight -->
+        <tr>
+          <td style="padding:4px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:linear-gradient(135deg,#1c1917,#292524);border-radius:12px;">
+              <tr>
+                <td style="padding:18px 24px;">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:2px;color:#a8a29e;text-transform:uppercase;">&#x1f4b0; Budget</p>
+                      </td>
+                      <td align="right">
+                        <p style="margin:0;font-size:22px;font-weight:800;color:#f59e0b;">{currency} {budget}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Notes -->
+        <tr>
+          <td style="padding:20px 36px 0;">
+            <p style="margin:0 0 8px;font-size:10px;font-weight:700;letter-spacing:2px;color:#a8a29e;text-transform:uppercase;">&#x1f4dd; Notes / Special Requests</p>
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f8f6f3;border-radius:10px;border-left:3px solid #d6d3d1;">
+              <tr>
+                <td style="padding:14px 18px;">
+                  <p style="margin:0;font-size:14px;color:#44403c;line-height:1.7;font-style:italic;">{notes}</p>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
 
         <!-- Footer -->
         <tr>
-          <td style="padding:20px 32px;border-top:1px solid #292524;background:#161412;">
-            <p style="margin:0;font-size:12px;color:#57534e;">
-              Enquiry ID: {enquiry_id} &nbsp;·&nbsp; europeonwheels.com
-            </p>
+          <td style="padding:28px 36px;border-top:1px solid #e7e5e4;margin-top:24px;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <p style="margin:0;font-size:11px;color:#a8a29e;">Enquiry ID: <span style="color:#78716c;font-weight:600;">{enquiry_id}</span></p>
+                </td>
+                <td align="right">
+                  <p style="margin:0;font-size:11px;color:#a8a29e;">europeonwheels.in</p>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
 
@@ -248,56 +304,76 @@ def notify_contact(data: dict) -> None:
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#0f0f0f;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#0f0f0f">
+<body style="margin:0;padding:0;background:#faf7f2;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#faf7f2">
     <tr><td align="center" style="padding:32px 16px;">
       <table width="600" cellpadding="0" cellspacing="0"
-             style="background:#1c1917;border-radius:12px;overflow:hidden;border:1px solid #292524;">
+             style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <!-- Header -->
         <tr>
-          <td style="background:linear-gradient(135deg,#1c1917,#292524);
-                     padding:28px 32px;border-bottom:1px solid #292524;">
-            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:4px;
-                      color:#f59e0b;text-transform:uppercase;">Europe on Wheels</p>
-            <h1 style="margin:8px 0 0;font-size:22px;color:#fff;">New Contact Message</h1>
+          <td style="background:linear-gradient(135deg,#f59e0b,#d97706,#b45309);padding:32px 36px;">
+            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:5px;
+                      color:rgba(255,255,255,0.85);text-transform:uppercase;">&#x1f4e9; Europe on Wheels</p>
+            <h1 style="margin:10px 0 4px;font-size:24px;color:#ffffff;font-weight:800;">New Contact Message</h1>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; europeonwheels.in</p>
           </td>
         </tr>
+
+        <!-- Sender info -->
         <tr>
-          <td style="padding:28px 32px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
+          <td style="padding:24px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:12px;border:1px solid #fde68a;">
               <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">From</p>
-                  <p style="margin:4px 0 0;font-size:16px;color:#fff;font-weight:600;">{name}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Email</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#f59e0b;">
-                    <a href="mailto:{email}" style="color:#f59e0b;text-decoration:none;">{email}</a>
+                <td style="padding:20px 24px;">
+                  <p style="margin:0;font-size:20px;font-weight:700;color:#92400e;">&#x1f464; {name}</p>
+                  <p style="margin:6px 0 0;font-size:14px;color:#b45309;">
+                    <a href="mailto:{email}" style="color:#b45309;text-decoration:none;">&#x2709;&#xfe0f; {email}</a>
                   </p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #292524;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Subject</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#fff;">{subject}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;">
-                  <p style="margin:0;font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">Message</p>
-                  <p style="margin:4px 0 0;font-size:15px;color:#d4cdc7;line-height:1.6;">{message}</p>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
+
+        <!-- Subject -->
         <tr>
-          <td style="padding:20px 32px;border-top:1px solid #292524;background:#161412;">
-            <p style="margin:0;font-size:12px;color:#57534e;">europeonwheels.com</p>
+          <td style="padding:20px 36px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#fef9ee;border-radius:10px;border-left:4px solid #f59e0b;">
+              <tr>
+                <td style="padding:16px 20px;">
+                  <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:2px;color:#92400e;text-transform:uppercase;">&#x1f4cb; Subject</p>
+                  <p style="margin:6px 0 0;font-size:16px;font-weight:700;color:#1c1917;">{subject}</p>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
+
+        <!-- Message -->
+        <tr>
+          <td style="padding:20px 36px 0;">
+            <p style="margin:0 0 8px;font-size:10px;font-weight:700;letter-spacing:2px;color:#a8a29e;text-transform:uppercase;">&#x1f4ac; Message</p>
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f8f6f3;border-radius:10px;border-left:3px solid #d6d3d1;">
+              <tr>
+                <td style="padding:18px 20px;">
+                  <p style="margin:0;font-size:15px;color:#44403c;line-height:1.75;">{message}</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="padding:28px 36px;border-top:1px solid #e7e5e4;margin-top:24px;">
+            <p style="margin:0;font-size:11px;color:#a8a29e;text-align:center;">europeonwheels.in</p>
+          </td>
+        </tr>
+
       </table>
     </td></tr>
   </table>
