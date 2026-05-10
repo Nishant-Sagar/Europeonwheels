@@ -389,12 +389,12 @@ export default function TourPlanner() {
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent-400/40 bg-stone-900 text-xs font-bold text-accent-400 sm:h-14 sm:w-14 sm:text-sm">
                     {String(day.day).padStart(2, "0")}
                   </div>
-                  <div className="flex-1 overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5 sm:flex sm:h-24">
+                  <div className="flex-1 overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5 flex flex-col sm:flex-row sm:h-24">
                     <div className="flex-1 min-w-0 px-5 py-4 sm:px-6 overflow-hidden">
                       <p className="font-semibold text-white truncate">{day.title}</p>
                       <p className="mt-1 text-sm leading-relaxed text-stone-400 line-clamp-2">{day.desc}</p>
                     </div>
-                    <div className="hidden sm:block sm:w-36 shrink-0 overflow-hidden">
+                    <div className="h-28 sm:h-auto sm:w-36 shrink-0 overflow-hidden -order-1 sm:order-none rounded-t-2xl sm:rounded-t-none">
                       <img
                         src={day.image || getCityImage(day.title)}
                         alt={day.title}
