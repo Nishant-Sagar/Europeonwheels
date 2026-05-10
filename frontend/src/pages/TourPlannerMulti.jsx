@@ -1,6 +1,80 @@
 import { useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import LeafletRouteMap from "../components/LeafletRouteMap"
+import CarCard from "../components/CarCard"
+
+const CITY_PHOTOS = {
+  munich:        '/images/cities/munich.jpg',
+  neuschwanstein:'/images/cities/neuschwanstein.jpg',
+  rhine:         '/images/cities/rhine.jpg',
+  'black forest': '/images/cities/black-forest.jpg',
+  heidelberg:    '/images/cities/heidelberg.jpg',
+  cologne:       '/images/cities/cologne.jpg',
+  vienna:        '/images/cities/vienna.jpg',
+  hallstatt:     '/images/cities/hallstatt.jpg',
+  salzburg:      '/images/cities/salzburg.jpg',
+  grossglockner: '/images/cities/grossglockner.jpg',
+  innsbruck:     '/images/cities/innsbruck.jpg',
+  prague:        '/images/cities/prague.jpg',
+  'karlovy vary':'/images/cities/karlovy-vary.jpg',
+  'cesky krumlov':'/images/cities/cesky-krumlov.jpg',
+  'kutna hora':  '/images/cities/kutna-hora.jpg',
+  budapest:      '/images/cities/budapest.jpg',
+  balaton:       '/images/cities/balaton.jpg',
+  ljubljana:     '/images/cities/ljubljana-multi.jpg',
+  bled:          '/images/cities/bled-multi.jpg',
+  bohinj:        '/images/cities/bohinj.jpg',
+  soca:          '/images/cities/soca.jpg',
+  postojna:      '/images/cities/postojna.jpg',
+  piran:         '/images/cities/piran.jpg',
+  bratislava:    '/images/cities/bratislava-multi.jpg',
+  tatras:        '/images/cities/tatras.jpg',
+  spis:          '/images/cities/spis.jpg',
+  karst:         '/images/cities/karst.jpg',
+  'banska':      '/images/cities/banska.jpg',
+  dubrovnik:     '/images/cities/dubrovnik-multi.jpg',
+  split:         '/images/cities/split.jpg',
+  plitvice:      '/images/cities/plitvice.jpg',
+  hvar:          '/images/cities/hvar.jpg',
+  zagreb:        '/images/cities/zagreb.jpg',
+  warsaw:        '/images/cities/warsaw.jpg',
+  krakow:        '/images/cities/krakow.jpg',
+  gdansk:        '/images/cities/gdansk.jpg',
+  zakopane:      '/images/cities/zakopane.jpg',
+  frankfurt:     '/images/cities/frankfurt.jpg',
+  berlin:        '/images/cities/berlin.jpg',
+  amsterdam:     '/images/cities/amsterdam.jpg',
+  brussels:      '/images/cities/brussels.jpg',
+  paris:         '/images/cities/paris.jpg',
+  alps:          '/images/cities/alps-multi.jpg',
+  venice:        '/images/cities/venice.jpg',
+  florence:      '/images/cities/florence.jpg',
+  rome:          '/images/cities/rome.jpg',
+  departure:     '/images/cities/departure.jpg',
+  geneva:        '/images/cities/geneva.jpg',
+  zurich:        '/images/cities/zurich.jpg',
+  lucerne:       '/images/cities/lucerne.jpg',
+  jungfrau:      '/images/cities/jungfrau.jpg',
+  interlaken:    '/images/cities/interlaken.jpg',
+  bern:          '/images/cities/bern.jpg',
+  zermatt:       '/images/cities/zermatt.jpg',
+  siena:         '/images/cities/siena.jpg',
+  amalfi:        '/images/cities/amalfi.jpg',
+  milan:         '/images/cities/milan.jpg',
+  como:          '/images/cities/como.jpg',
+  korcula:       '/images/cities/korcula.jpg',
+  rovinj:        '/images/cities/rovinj.jpg',
+}
+
+const FALLBACK_PHOTO = '/images/cities/fallback.jpg'
+
+function getCityImage(title) {
+  const lower = title.toLowerCase()
+  for (const [key, url] of Object.entries(CITY_PHOTOS)) {
+    if (lower.includes(key)) return url
+  }
+  return FALLBACK_PHOTO
+}
 
 const routeData = {
   "central-europe-loop": {
@@ -22,15 +96,15 @@ const routeData = {
       { day: 2,  title: "Frankfurt to Rhine",     desc: "Explore the old town, then drive the scenic Rhine Valley -- vineyards and medieval castles." },
       { day: 3,  title: "Cologne",                desc: "Cologne Cathedral, the old town and a riverside dinner." },
       { day: 4,  title: "Drive to Munich",        desc: "Cross into Bavaria. Neuschwanstein detour optional en route. Check in Munich." },
-      { day: 5,  title: "Munich",                 desc: "Marienplatz, Viktualienmarkt, English Garden and evening in a beer garden." },
-      { day: 6,  title: "Munich to Vienna",       desc: "Scenic drive through the Alps. Arrive Vienna -- Ringstrasse and Opera House orientation." },
-      { day: 7,  title: "Imperial Vienna",        desc: "Schoenbrunn Palace, Hofburg, Naschmarkt and Cafe Central." },
-      { day: 8,  title: "Vienna to Prague",       desc: "Drive north through Bohemian countryside. Arrive Prague, evening river cruise." },
+      { day: 5,  title: "Munich",                 desc: "Marienplatz, Viktualienmarkt, English Garden and evening in a beer garden.", image: '/images/cities/marienplatz.jpg' },
+      { day: 6,  title: "Munich to Vienna",       desc: "Scenic drive through the Alps. Arrive Vienna -- Ringstrasse and Opera House orientation.", image: '/images/cities/alps-multi.jpg' },
+      { day: 7,  title: "Imperial Vienna",        desc: "Schoenbrunn Palace, Hofburg, Naschmarkt and Cafe Central.", image: '/images/cities/schoenbrunn.jpg' },
+      { day: 8,  title: "Vienna to Prague",       desc: "Drive north through Bohemian countryside. Arrive Prague, evening river cruise.", image: '/images/cities/prague-castle.jpg' },
       { day: 9,  title: "Prague",                 desc: "Prague Castle, Charles Bridge, Old Town Square and Astronomical Clock." },
       { day: 10, title: "Cesky Krumlov Day Trip", desc: "UNESCO Baroque town wrapped by a river bend -- the highlight of Bohemia." },
-      { day: 11, title: "Prague to Budapest",     desc: "Drive through the Slovak lowlands. Arrive Budapest, Danube Promenade dinner." },
+      { day: 11, title: "Prague to Budapest",     desc: "Drive through the Slovak lowlands. Arrive Budapest, Danube Promenade dinner.", image: '/images/cities/old-town-prague.jpg' },
       { day: 12, title: "Budapest",               desc: "Buda Castle, Fisherman Bastion, Parliament tour and thermal baths." },
-      { day: 13, title: "Danube Bend",            desc: "Day trip to Szentendre, Visegrad and Esztergom. Back for a farewell dinner." },
+      { day: 13, title: "Danube Bend",            desc: "Day trip to Szentendre, Visegrad and Esztergom. Back for a farewell dinner.", image: '/images/cities/danube-bend.jpg' },
       { day: 14, title: "Departure",              desc: "Transfer to Budapest Ferenc Liszt Airport. Safe travels." },
     ],
   },
@@ -53,20 +127,20 @@ const routeData = {
     itinerary: [
       { day: 1,  title: "Arrive Munich",          desc: "Private airport transfer. Evening in Marienplatz." },
       { day: 2,  title: "Neuschwanstein",         desc: "The fairy-tale castle that inspired Disney. Afternoon in Augsburg." },
-      { day: 3,  title: "Munich to Vienna",       desc: "Alpine highway crossing into Austria. Arrive Vienna." },
+      { day: 3,  title: "Munich to Vienna",       desc: "Alpine highway crossing into Austria. Arrive Vienna.", image: '/images/cities/alps-multi.jpg' },
       { day: 4,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg, Naschmarkt and evening opera." },
-      { day: 5,  title: "Vienna to Prague",       desc: "Morning coffee at Cafe Central, then drive to Prague." },
+      { day: 5,  title: "Vienna to Prague",       desc: "Morning coffee at Cafe Central, then drive to Prague.", image: '/images/cities/schoenbrunn.jpg' },
       { day: 6,  title: "Prague",                 desc: "Castle, Charles Bridge and Jewish Quarter." },
-      { day: 7,  title: "Prague to Budapest",     desc: "Full day drive with a Brno stopover." },
+      { day: 7,  title: "Prague to Budapest",     desc: "Full day drive with a Brno stopover.", image: '/images/cities/prague-castle.jpg' },
       { day: 8,  title: "Budapest",               desc: "Buda side, thermal baths and ruin bars." },
-      { day: 9,  title: "Budapest to Ljubljana",  desc: "Cross into Slovenia via Austria. Arrive Ljubljana." },
+      { day: 9,  title: "Budapest to Ljubljana",  desc: "Cross into Slovenia via Austria. Arrive Ljubljana.", image: '/images/cities/buda-castle.jpg' },
       { day: 10, title: "Ljubljana",              desc: "Dragon Bridge, castle and riverside market." },
       { day: 11, title: "Lake Bled",              desc: "Island church, cliff castle and traditional kremsnita." },
-      { day: 12, title: "Triglav Park",           desc: "Vintgar Gorge and Lake Bohinj -- total alpine serenity." },
+      { day: 12, title: "Triglav Park",           desc: "Vintgar Gorge and Lake Bohinj -- total alpine serenity.", image: '/images/cities/bohinj.jpg' },
       { day: 13, title: "Soca Valley",            desc: "Electric-blue river and WWI history." },
       { day: 14, title: "Drive to Dubrovnik",     desc: "Coastal road through Croatia. Arrive Dubrovnik." },
-      { day: 15, title: "Dubrovnik",              desc: "Walk the ancient walls at sunset -- best view in Europe." },
-      { day: 16, title: "Korcula Island",         desc: "Marco Polo island, fresh fish and local wine." },
+      { day: 15, title: "Dubrovnik",              desc: "Walk the ancient walls at sunset -- best view in Europe.", image: '/images/cities/dubrovnik-walls.jpg' },
+      { day: 16, title: "Korcula Island",         desc: "Marco Polo island, fresh fish and local wine.", image: '/images/cities/korcula.jpg' },
       { day: 17, title: "Split",                  desc: "Diocletian Palace and coastal farewell dinner." },
       { day: 18, title: "Departure",              desc: "Transfer to Split or Dubrovnik Airport." },
     ],
@@ -93,11 +167,11 @@ const routeData = {
       { day: 3,  title: "Drive to Zurich",        desc: "Cross the Rhine into Switzerland. Zurich evening on the Limmat." },
       { day: 4,  title: "Lucerne",                desc: "Chapel Bridge, Lion Monument and boat cruise." },
       { day: 5,  title: "Jungfrau",               desc: "Cogwheel train to the Top of Europe. Grindelwald glaciers." },
-      { day: 6,  title: "Zurich to Milan",        desc: "Cross the Alps. Milan -- Duomo, Galleria and last supper." },
+      { day: 6,  title: "Zurich to Milan",        desc: "Cross the Alps. Milan -- Duomo, Galleria and last supper.", image: '/images/cities/milan.jpg' },
       { day: 7,  title: "Drive to Venice",        desc: "Arrive Venice by afternoon. Water taxi to the hotel." },
-      { day: 8,  title: "Venice",                 desc: "St Mark, Doge Palace and gondola through back canals." },
+      { day: 8,  title: "Venice",                 desc: "St Mark, Doge Palace and gondola through back canals.", image: '/images/cities/st-marks.jpg' },
       { day: 9,  title: "Drive to Florence",      desc: "Via Verona. Uffizi skip-the-line, Ponte Vecchio." },
-      { day: 10, title: "Tuscany Drive",          desc: "Val d Orcia cypress roads and Siena Piazza del Campo." },
+      { day: 10, title: "Tuscany Drive",          desc: "Val d Orcia cypress roads and Siena Piazza del Campo.", image: '/images/cities/siena.jpg' },
       { day: 11, title: "Rome",                   desc: "Colosseum, Forum Romanum and Trastevere dinner." },
       { day: 12, title: "Departure",              desc: "Transfer to Rome Fiumicino Airport." },
     ],
@@ -120,14 +194,14 @@ const routeData = {
     ],
     itinerary: [
       { day: 1,  title: "Arrive Vienna",          desc: "Private transfer. Ringstrasse and welcome dinner." },
-      { day: 2,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg and Sachertorte at Cafe Central." },
+      { day: 2,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg and Sachertorte at Cafe Central.", image: '/images/cities/schoenbrunn.jpg' },
       { day: 3,  title: "Salzburg",               desc: "Mozart, Hohensalzburg fortress and Sound-of-Music location drive." },
       { day: 4,  title: "Grossglockner",          desc: "Europe most scenic mountain pass -- glaciers and total silence." },
       { day: 5,  title: "Drive to Zurich",        desc: "Cross into Switzerland via Innsbruck. Lake Zurich evening." },
       { day: 6,  title: "Lucerne and Interlaken", desc: "Chapel Bridge, Jungfrau panorama and mountain village lunch." },
       { day: 7,  title: "Zermatt",               desc: "Car-free village under the Matterhorn. Gornergrat railway." },
-      { day: 8,  title: "Milan",                 desc: "Cross into Italy. Duomo, Brera and Aperol at sunset." },
-      { day: 9,  title: "Lake Como",             desc: "Bellagio, villa gardens and the most beautiful lake in Europe." },
+      { day: 8,  title: "Milan",                 desc: "Cross into Italy. Duomo, Brera and Aperol at sunset.", image: '/images/cities/milan.jpg' },
+      { day: 9,  title: "Lake Como",             desc: "Bellagio, villa gardens and the most beautiful lake in Europe.", image: '/images/cities/como.jpg' },
       { day: 10, title: "Departure",             desc: "Transfer to Milan Malpensa Airport." },
     ],
   },
@@ -147,16 +221,16 @@ const routeData = {
     ],
     itinerary: [
       { day: 1,  title: "Arrive Prague",          desc: "Transfer to Old Town. Evening river cruise on the Vltava." },
-      { day: 2,  title: "Prague",                 desc: "Castle, Charles Bridge and Jewish Quarter." },
+      { day: 2,  title: "Prague",                 desc: "Castle, Charles Bridge and Jewish Quarter.", image: '/images/cities/prague-castle.jpg' },
       { day: 3,  title: "Cesky Krumlov",          desc: "UNESCO Baroque town -- castle, rafting and medieval streets." },
       { day: 4,  title: "Prague to Vienna",       desc: "Drive south via Brno. Arrive Vienna evening." },
-      { day: 5,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg and Naschmarkt." },
-      { day: 6,  title: "Vienna to Bratislava",   desc: "Only 60km apart -- the world closest capital pair. Afternoon arrival." },
+      { day: 5,  title: "Imperial Vienna",        desc: "Schoenbrunn, Hofburg and Naschmarkt.", image: '/images/cities/schoenbrunn.jpg' },
+      { day: 6,  title: "Vienna to Bratislava",   desc: "Only 60km apart -- the world closest capital pair. Afternoon arrival.", image: '/images/cities/bratislava-castle.jpg' },
       { day: 7,  title: "Bratislava",             desc: "Old Town, castle and the best halusky of your life." },
       { day: 8,  title: "High Tatras Day Trip",   desc: "Slovakia alpine playground -- cable cars and glacial lakes." },
       { day: 9,  title: "Spis Castle",           desc: "Largest UNESCO castle complex in Central Europe." },
       { day: 10, title: "Drive to Budapest",      desc: "Follow the Danube south into Hungary." },
-      { day: 11, title: "Budapest",               desc: "Parliament, Fisherman Bastion and farewell thermal bath soak." },
+      { day: 11, title: "Budapest",               desc: "Parliament, Fisherman Bastion and farewell thermal bath soak.", image: '/images/cities/parliament-budapest.jpg' },
       { day: 12, title: "Departure",              desc: "Transfer to Budapest Airport." },
     ],
   },
@@ -208,11 +282,16 @@ const hotelOptions = [
 ]
 
 const carOptions = [
-  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 3, img: "/images/cars/sedan.webp"        },
-  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 4, img: "/images/cars/luxury-sedan.webp" },
-  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 7, img: "/images/cars/mpv.webp"          },
-  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 9, img: "/images/cars/std-van.webp"      },
-  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 8, img: "/images/cars/luxury-van.webp"   },
+  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 3,
+    imgs: ["/images/cars/sedan-ext.jpg", "/images/cars/sedan-int.jpg", "/images/cars/sedan-dash.jpg"] },
+  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 4,
+    imgs: ["/images/cars/luxury-sedan-ext.jpg", "/images/cars/luxury-sedan-int.jpg", "/images/cars/luxury-sedan-rear.jpg"] },
+  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 7,
+    imgs: ["/images/cars/mpv-ext.jpg", "/images/cars/mpv-int.jpg", "/images/cars/mpv-rear.jpg"] },
+  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 9,
+    imgs: ["/images/cars/std-van-ext.jpg", "/images/cars/std-van-int.jpg", "/images/cars/std-van-rear.jpg"] },
+  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 8,
+    imgs: ["/images/cars/luxury-van-ext.jpg", "/images/cars/luxury-van-int.jpg", "/images/cars/luxury-van-rear.jpg"] },
 ]
 
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -338,9 +417,20 @@ export default function TourPlannerMulti() {
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent-400/40 bg-stone-900 text-xs font-bold text-accent-400 sm:h-14 sm:w-14 sm:text-sm">
                     {String(day.day).padStart(2, "0")}
                   </div>
-                  <div className="flex-1 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] px-5 py-4 sm:px-6 transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5">
-                    <p className="font-semibold text-white">{day.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-stone-400">{day.desc}</p>
+                  <div className="flex-1 overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5 sm:flex sm:h-24">
+                    <div className="flex-1 min-w-0 px-5 py-4 sm:px-6 overflow-hidden">
+                      <p className="font-semibold text-white truncate">{day.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-stone-400 line-clamp-2">{day.desc}</p>
+                    </div>
+                    <div className="hidden sm:block sm:w-36 shrink-0 overflow-hidden">
+                      <img
+                        src={day.image || getCityImage(day.title)}
+                        alt={day.title}
+                        className="h-full w-full object-cover opacity-55 transition-opacity duration-300 hover:opacity-75"
+                        loading="lazy"
+                        onError={e => { e.currentTarget.parentElement.style.display = 'none' }}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -383,48 +473,15 @@ export default function TourPlannerMulti() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
 
-              {/* Hotel */}
+{/* Month */}
               <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
-                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {hotelOptions.map(h => (
-                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
-                      className={"rounded-xl border px-4 py-4 text-left transition-all duration-200 " + (hotel === h.id ? "border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10" : "border-white/10 bg-white/[0.03] hover:border-white/25")}>
-                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
-                      <p className="font-semibold text-white text-sm">{h.label}</p>
-                      <p className="text-[11px] text-stone-400">{h.sub}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Car */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
-                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                  {carOptions.map(c => (
-                    <button key={c.id} type="button" onClick={() => setCar(c.id)}
-                      className={"group relative overflow-hidden rounded-2xl border text-left transition-all duration-200 " + (car === c.id ? "border-accent-400 shadow-lg shadow-accent-400/15" : "border-white/10 hover:border-white/25")}>
-                      <div className="relative h-28 overflow-hidden bg-stone-800">
-                        <img src={c.img} alt={c.label}
-                          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'flex' }} />
-                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 text-3xl">🚗</div>
-                        {car === c.id && <div className="absolute inset-0 bg-accent-400/10" />}
-                        {car === c.id && (
-                          <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent-400">
-                            <svg className="h-3 w-3 text-stone-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-2.5">
-                        <p className="font-bold text-white text-xs leading-tight">{c.label}</p>
-                        <p className="mt-0.5 text-[10px] leading-tight text-stone-400">{c.sub}</p>
-                      </div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
+                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
+                  {months.map(m => (
+                    <button key={m} type="button" onClick={() => setMonth(m)}
+                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
+                      {m}
                     </button>
                   ))}
                 </div>
@@ -467,46 +524,6 @@ export default function TourPlannerMulti() {
                 ))}
               </div>
 
-              {/* Luggage */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">Luggage</p>
-                <p className="mb-6 text-base font-semibold text-white">How many luggages?</p>
-                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
-                  {[
-                    { key: 'boot',  label: 'Boot Luggage',  hint: 'Suitcases & check-in bags', value: bootLuggage,  dec: () => setBootLuggage(Math.max(0, bootLuggage - 1)),   inc: () => setBootLuggage(Math.min(20, bootLuggage + 1))   },
-                    { key: 'cabin', label: 'Cabin Luggage', hint: 'Hand bags & carry-ons',      value: cabinLuggage, dec: () => setCabinLuggage(Math.max(0, cabinLuggage - 1)), inc: () => setCabinLuggage(Math.min(20, cabinLuggage + 1)) },
-                  ].map(({ key, label, hint, value, dec, inc }) => (
-                    <div key={key} className="flex flex-col items-center gap-4 bg-white/[0.02] px-4 py-5">
-                      <div className="text-center">
-                        <p className="text-[11px] font-bold uppercase tracking-widest text-stone-300">{label}</p>
-                        <p className="mt-1 text-[11px] text-stone-500">{hint}</p>
-                      </div>
-                      <div className="flex items-center gap-5">
-                        <button type="button" onClick={dec}
-                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">−</button>
-                        <span className="w-8 text-center text-3xl font-bold text-white">{value}</span>
-                        <button type="button" onClick={inc}
-                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">+</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Month */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
-                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
-                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
-                  {months.map(m => (
-                    <button key={m} type="button" onClick={() => setMonth(m)}
-                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Budget */}
               <div>
                 <div className="mb-3 flex items-center justify-between">
@@ -536,6 +553,59 @@ export default function TourPlannerMulti() {
                   {currency === "EUR" && <><span>{"\u20AC"}500</span><span>{"\u20AC"}6k</span><span>{"\u20AC"}12k</span><span>{"\u20AC"}25k+</span></>}
                   {currency === "USD" && <><span>$540</span><span>$6.5k</span><span>$13k</span><span>$27k+</span></>}
                   {currency === "INR" && <><span>{"\u20B9"}45k</span><span>{"\u20B9"}5.4L</span><span>{"\u20B9"}10.8L</span><span>{"\u20B9"}22.5L+</span></>}
+                </div>
+              </div>
+
+              {/* Hotel */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
+                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {hotelOptions.map(h => (
+                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
+                      className={"rounded-xl border px-4 py-4 text-left transition-all duration-200 " + (hotel === h.id ? "border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10" : "border-white/10 bg-white/[0.03] hover:border-white/25")}>
+                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
+                      <p className="font-semibold text-white text-sm">{h.label}</p>
+                      <p className="text-[11px] text-stone-400">{h.sub}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Car */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
+                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
+                <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
+                  {carOptions.map(c => (
+                    <CarCard key={c.id} car={c} isSelected={car === c.id} onClick={() => setCar(c.id)} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Luggage */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">Luggage</p>
+                <p className="mb-6 text-base font-semibold text-white">How many luggages?</p>
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
+                  {[
+                    { key: 'boot',  label: 'Boot Luggage',  hint: 'Suitcases & check-in bags', value: bootLuggage,  dec: () => setBootLuggage(Math.max(0, bootLuggage - 1)),   inc: () => setBootLuggage(Math.min(20, bootLuggage + 1))   },
+                    { key: 'cabin', label: 'Cabin Luggage', hint: 'Hand bags & carry-ons',      value: cabinLuggage, dec: () => setCabinLuggage(Math.max(0, cabinLuggage - 1)), inc: () => setCabinLuggage(Math.min(20, cabinLuggage + 1)) },
+                  ].map(({ key, label, hint, value, dec, inc }) => (
+                    <div key={key} className="flex flex-col items-center gap-4 bg-white/[0.02] px-4 py-5">
+                      <div className="text-center">
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-stone-300">{label}</p>
+                        <p className="mt-1 text-[11px] text-stone-500">{hint}</p>
+                      </div>
+                      <div className="flex items-center gap-5">
+                        <button type="button" onClick={dec}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">−</button>
+                        <span className="w-8 text-center text-3xl font-bold text-white">{value}</span>
+                        <button type="button" onClick={inc}
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white hover:bg-white/10 transition-all">+</button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 

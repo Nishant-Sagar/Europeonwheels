@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import CarCard from '../components/CarCard'
 
 const highlights = [
   { icon: '🗺️', title: 'Any Destination', desc: 'One country or ten — we plan it all' },
@@ -17,11 +18,16 @@ const hotelOptions = [
 ]
 
 const carOptions = [
-  { id: 'sedan',        label: 'Sedan',        sub: 'Škoda Octavia or similar',        img: '/images/cars/sedan.webp'        },
-  { id: 'luxury-sedan', label: 'Luxury Sedan', sub: 'Mercedes E-Class or similar',     img: '/images/cars/luxury-sedan.webp' },
-  { id: 'mpv',          label: 'MPV',          sub: 'Volkswagen Touran or similar',    img: '/images/cars/mpv.webp'          },
-  { id: 'std-van',      label: 'Standard Van', sub: 'Volkswagen Caravelle or similar', img: '/images/cars/std-van.webp'      },
-  { id: 'luxury-van',   label: 'Luxury Van',   sub: 'Mercedes V-Class or similar',     img: '/images/cars/luxury-van.webp'   },
+  { id: 'sedan',        label: 'Sedan',        sub: 'Škoda Octavia or similar',        seats: 3,
+    imgs: ['/images/cars/sedan-ext.jpg', '/images/cars/sedan-int.jpg', '/images/cars/sedan-dash.jpg'] },
+  { id: 'luxury-sedan', label: 'Luxury Sedan', sub: 'Mercedes E-Class or similar',     seats: 4,
+    imgs: ['/images/cars/luxury-sedan-ext.jpg', '/images/cars/luxury-sedan-int.jpg', '/images/cars/luxury-sedan-rear.jpg'] },
+  { id: 'mpv',          label: 'MPV',          sub: 'Volkswagen Touran or similar',    seats: 7,
+    imgs: ['/images/cars/mpv-ext.jpg', '/images/cars/mpv-int.jpg', '/images/cars/mpv-rear.jpg'] },
+  { id: 'std-van',      label: 'Standard Van', sub: 'Volkswagen Caravelle or similar', seats: 9,
+    imgs: ['/images/cars/std-van-ext.jpg', '/images/cars/std-van-int.jpg', '/images/cars/std-van-rear.jpg'] },
+  { id: 'luxury-van',   label: 'Luxury Van',   sub: 'Mercedes V-Class or similar',     seats: 8,
+    imgs: ['/images/cars/luxury-van-ext.jpg', '/images/cars/luxury-van-int.jpg', '/images/cars/luxury-van-rear.jpg'] },
 ]
 
 const countryOptions = [
@@ -252,7 +258,7 @@ export default function CustomTour() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
 
-              {/* Destinations */}
+{/* Destinations */}
               <div>
                 <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Destinations *</p>
                 <p className="mb-4 text-lg font-semibold text-white">Which countries?</p>
@@ -281,6 +287,20 @@ export default function CustomTour() {
                     <button type="button" onClick={() => setSelectedCountries([])} className="ml-3 text-stone-600 hover:text-stone-400 underline">clear</button>
                   </p>
                 )}
+              </div>
+
+              {/* Month */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
+                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
+                  {months.map(m => (
+                    <button key={m} type="button" onClick={() => setMonth(m)}
+                      className={'rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center ' + (month === m ? 'border-accent-400 bg-accent-400 text-stone-950 font-bold' : 'border-white/15 text-stone-300 hover:border-white/35')}>
+                      {m}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Travel Dates */}
@@ -351,53 +371,6 @@ export default function CustomTour() {
                 </div>
               </div>
 
-              {/* Hotel */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
-                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {hotelOptions.map(h => (
-                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
-                      className={'rounded-xl border px-4 py-4 text-left transition-all duration-200 ' + (hotel === h.id ? 'border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10' : 'border-white/10 bg-white/[0.03] hover:border-white/25')}>
-                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
-                      <p className="font-semibold text-white text-sm">{h.label}</p>
-                      <p className="text-[11px] text-stone-400">{h.sub}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Car */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
-                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                  {carOptions.map(c => (
-                    <button key={c.id} type="button" onClick={() => setCar(c.id)}
-                      className={'group relative overflow-hidden rounded-2xl border text-left transition-all duration-200 ' + (car === c.id ? 'border-accent-400 shadow-lg shadow-accent-400/15' : 'border-white/10 hover:border-white/25')}>
-                      <div className="relative h-28 overflow-hidden bg-stone-800">
-                        <img src={c.img} alt={c.label}
-                          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'flex' }} />
-                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 text-3xl">🚗</div>
-                        {car === c.id && <div className="absolute inset-0 bg-accent-400/10" />}
-                        {car === c.id && (
-                          <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent-400">
-                            <svg className="h-3 w-3 text-stone-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-2.5">
-                        <p className="font-bold text-white text-xs leading-tight">{c.label}</p>
-                        <p className="mt-0.5 text-[10px] leading-tight text-stone-400">{c.sub}</p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Duration · Group size */}
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
@@ -433,6 +406,65 @@ export default function CustomTour() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Budget */}
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Total budget</p>
+                  <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 text-xs font-bold">
+                    {['EUR','USD','INR'].map(c => (
+                      <button key={c} type="button" onClick={() => setCurrency(c)}
+                        className={'rounded-full px-3 py-1 transition-all duration-200 ' + (currency === c ? 'bg-accent-400 text-stone-950' : 'text-stone-400 hover:text-white')}>
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="mb-3 flex items-end justify-between">
+                  <p className="text-lg font-semibold text-white">
+                    {currency === 'EUR' && <>{'€'}{budget.toLocaleString()}</>}
+                    {currency === 'USD' && <>${Math.round(budget * EUR_TO_USD).toLocaleString()}</>}
+                    {currency === 'INR' && <>{'₹'}{(budget * EUR_TO_INR).toLocaleString('en-IN')}</>}
+                    <span className="ml-2 text-sm font-normal text-stone-400">per person</span>
+                  </p>
+                  <span className="rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-0.5 text-xs font-bold text-accent-400">{budgetLabel(budget)}</span>
+                </div>
+                <input type="range" min={500} max={20000} step={250} value={budget}
+                  onChange={e => setBudget(Number(e.target.value))}
+                  className="w-full cursor-pointer" style={{ accentColor: '#f59e0b' }} />
+                <div className="mt-1 flex justify-between text-[10px] text-stone-500">
+                  {currency === 'EUR' && <><span>{'€'}500</span><span>{'€'}5,000</span><span>{'€'}10,000</span><span>{'€'}20,000+</span></>}
+                  {currency === 'USD' && <><span>$540</span><span>$5,400</span><span>$10,800</span><span>$21,600+</span></>}
+                  {currency === 'INR' && <><span>{'₹'}45k</span><span>{'₹'}4.5L</span><span>{'₹'}9L</span><span>{'₹'}18L+</span></>}
+                </div>
+              </div>
+
+              {/* Hotel */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
+                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {hotelOptions.map(h => (
+                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
+                      className={'rounded-xl border px-4 py-4 text-left transition-all duration-200 ' + (hotel === h.id ? 'border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10' : 'border-white/10 bg-white/[0.03] hover:border-white/25')}>
+                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
+                      <p className="font-semibold text-white text-sm">{h.label}</p>
+                      <p className="text-[11px] text-stone-400">{h.sub}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Car */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
+                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
+                <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
+                  {carOptions.map(c => (
+                    <CarCard key={c.id} car={c} isSelected={car === c.id} onClick={() => setCar(c.id)} />
+                  ))}
+                </div>
               </div>
 
               {/* Luggage */}
@@ -471,52 +503,6 @@ export default function CustomTour() {
                     {bootLuggage + cabinLuggage} {bootLuggage + cabinLuggage === 1 ? 'bag' : 'bags'} total
                   </p>
                 )}
-              </div>
-
-              {/* Month */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
-                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
-                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
-                  {months.map(m => (
-                    <button key={m} type="button" onClick={() => setMonth(m)}
-                      className={'rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center ' + (month === m ? 'border-accent-400 bg-accent-400 text-stone-950 font-bold' : 'border-white/15 text-stone-300 hover:border-white/35')}>
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Budget */}
-              <div>
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Total budget</p>
-                  <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 text-xs font-bold">
-                    {['EUR','USD','INR'].map(c => (
-                      <button key={c} type="button" onClick={() => setCurrency(c)}
-                        className={'rounded-full px-3 py-1 transition-all duration-200 ' + (currency === c ? 'bg-accent-400 text-stone-950' : 'text-stone-400 hover:text-white')}>
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-3 flex items-end justify-between">
-                  <p className="text-lg font-semibold text-white">
-                    {currency === 'EUR' && <>{'€'}{budget.toLocaleString()}</>}
-                    {currency === 'USD' && <>${Math.round(budget * EUR_TO_USD).toLocaleString()}</>}
-                    {currency === 'INR' && <>{'₹'}{(budget * EUR_TO_INR).toLocaleString('en-IN')}</>}
-                    <span className="ml-2 text-sm font-normal text-stone-400">per person</span>
-                  </p>
-                  <span className="rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-0.5 text-xs font-bold text-accent-400">{budgetLabel(budget)}</span>
-                </div>
-                <input type="range" min={500} max={20000} step={250} value={budget}
-                  onChange={e => setBudget(Number(e.target.value))}
-                  className="w-full cursor-pointer" style={{ accentColor: '#f59e0b' }} />
-                <div className="mt-1 flex justify-between text-[10px] text-stone-500">
-                  {currency === 'EUR' && <><span>{'€'}500</span><span>{'€'}5,000</span><span>{'€'}10,000</span><span>{'€'}20,000+</span></>}
-                  {currency === 'USD' && <><span>$540</span><span>$5,400</span><span>$10,800</span><span>$21,600+</span></>}
-                  {currency === 'INR' && <><span>{'₹'}45k</span><span>{'₹'}4.5L</span><span>{'₹'}9L</span><span>{'₹'}18L+</span></>}
-                </div>
               </div>
 
               {/* Contact details */}

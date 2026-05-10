@@ -1,6 +1,78 @@
 import { useState, lazy, Suspense } from "react"
 import { useParams, Link } from "react-router-dom"
+import CarCard from "../components/CarCard"
 const AnimatedRouteMap = lazy(() => import('../components/AnimatedRouteMap'))
+
+const CITY_PHOTOS = {
+  munich:        '/images/cities/munich.jpg',
+  neuschwanstein:'/images/cities/neuschwanstein.jpg',
+  rhine:         '/images/cities/rhine.jpg',
+  'black forest': '/images/cities/black-forest.jpg',
+  heidelberg:    '/images/cities/heidelberg.jpg',
+  cologne:       '/images/cities/cologne.jpg',
+  vienna:        '/images/cities/vienna.jpg',
+  hallstatt:     '/images/cities/hallstatt.jpg',
+  salzburg:      '/images/cities/salzburg.jpg',
+  grossglockner: '/images/cities/grossglockner.jpg',
+  innsbruck:     '/images/cities/innsbruck.jpg',
+  prague:        '/images/cities/prague.jpg',
+  'karlovy vary':'/images/cities/karlovy-vary.jpg',
+  'cesky krumlov':'/images/cities/cesky-krumlov.jpg',
+  'kutna hora':  '/images/cities/kutna-hora.jpg',
+  budapest:      '/images/cities/budapest.jpg',
+  balaton:       '/images/cities/balaton.jpg',
+  ljubljana:     '/images/cities/ljubljana.jpg',
+  bled:          '/images/cities/bled.jpg',
+  bohinj:        '/images/cities/bohinj.jpg',
+  soca:          '/images/cities/soca.jpg',
+  postojna:      '/images/cities/postojna.jpg',
+  piran:         '/images/cities/piran.jpg',
+  bratislava:    '/images/cities/bratislava.jpg',
+  tatras:        '/images/cities/tatras.jpg',
+  spis:          '/images/cities/spis.jpg',
+  karst:         '/images/cities/karst.jpg',
+  'banska':      '/images/cities/banska.jpg',
+  dubrovnik:     '/images/cities/dubrovnik.jpg',
+  split:         '/images/cities/split.jpg',
+  plitvice:      '/images/cities/plitvice.jpg',
+  hvar:          '/images/cities/hvar.jpg',
+  zagreb:        '/images/cities/zagreb.jpg',
+  warsaw:        '/images/cities/warsaw.jpg',
+  krakow:        '/images/cities/krakow.jpg',
+  gdansk:        '/images/cities/gdansk.jpg',
+  zakopane:      '/images/cities/zakopane.jpg',
+  frankfurt:     '/images/cities/frankfurt.jpg',
+  berlin:        '/images/cities/berlin.jpg',
+  amsterdam:     '/images/cities/amsterdam.jpg',
+  brussels:      '/images/cities/brussels.jpg',
+  paris:         '/images/cities/paris.jpg',
+  alps:          '/images/cities/alps.jpg',
+  venice:        '/images/cities/venice.jpg',
+  florence:      '/images/cities/florence.jpg',
+  rome:          '/images/cities/rome.jpg',
+  siena:         '/images/cities/siena.jpg',
+  amalfi:        '/images/cities/amalfi.jpg',
+  zurich:        '/images/cities/zurich.jpg',
+  lucerne:       '/images/cities/lucerne.jpg',
+  jungfrau:      '/images/cities/jungfrau.jpg',
+  interlaken:    '/images/cities/interlaken.jpg',
+  bern:          '/images/cities/bern.jpg',
+  zermatt:       '/images/cities/zermatt.jpg',
+  geneva:        '/images/cities/geneva.jpg',
+  departure:     '/images/cities/departure.jpg',
+  korcula:       '/images/cities/korcula.jpg',
+  rovinj:        '/images/cities/rovinj.jpg',
+}
+
+const FALLBACK_PHOTO = '/images/cities/fallback.jpg'
+
+function getCityImage(title) {
+  const lower = title.toLowerCase()
+  for (const [key, url] of Object.entries(CITY_PHOTOS)) {
+    if (lower.includes(key)) return url
+  }
+  return FALLBACK_PHOTO
+}
 
 const countryData = {
   germany: {
@@ -11,7 +83,7 @@ const countryData = {
     itinerary: [
       { day: 1, title: "Arrival in Munich",          coords: [48.1351, 11.5820], desc: "Land at MUC, private transfer to your boutique hotel. Evening stroll through Marienplatz and a welcome dinner at a local brewery." },
       { day: 2, title: "Neuschwanstein & Fuessen",   coords: [47.5576, 10.7498], desc: "Early drive to the fairy-tale castle. Beat the crowds with a guided morning entry, then scenic drive along the Romantic Road to Augsburg." },
-      { day: 3, title: "Munich Deep Dive",            coords: [48.3705, 10.8978], desc: "English Garden, BMW World, Viktualienmarkt. Afternoon free for Pinakothek museums or a beer garden at your own pace." },
+      { day: 3, title: "Munich Deep Dive",            coords: [48.3705, 10.8978], desc: "English Garden, BMW World, Viktualienmarkt. Afternoon free for Pinakothek museums or a beer garden at your own pace.", image: '/images/cities/marienplatz.jpg' },
       { day: 4, title: "Rhine Valley Drive",          coords: [49.9794,  7.9233], desc: "Head northwest through vineyards, medieval castles and river cruises. Overnight in a riverside wine village." },
       { day: 5, title: "Black Forest & Baden-Baden",  coords: [48.7605,  8.2401], desc: "Wind through forest roads, visit a cuckoo-clock workshop, and relax in the thermal baths of Baden-Baden." },
       { day: 6, title: "Heidelberg & Cologne",        coords: [49.3988,  8.6724], desc: "Explore the romantic Old Town of Heidelberg, then north to Cologne Cathedral and the old town." },
@@ -25,7 +97,7 @@ const countryData = {
     highlights: ["Vienna Old Town", "Hallstatt Village", "Salzburg", "Alpine Drives"],
     itinerary: [
       { day: 1, title: "Vienna Arrival",    coords: [48.2082, 16.3738], desc: "Private airport transfer. Check into a Ringstrasse hotel. Evening walk along the Danube Canal." },
-      { day: 2, title: "Imperial Vienna",   coords: [48.1859, 16.3122], desc: "Schoenbrunn Palace, Hofburg, Naschmarkt. Late afternoon Sachertorte at Cafe Central." },
+      { day: 2, title: "Imperial Vienna",   coords: [48.1859, 16.3122], desc: "Schoenbrunn Palace, Hofburg, Naschmarkt. Late afternoon Sachertorte at Cafe Central.", image: '/images/cities/schoenbrunn.jpg' },
       { day: 3, title: "Hallstatt",         coords: [47.5622, 13.6493], desc: "Drive through the Salzkammergut lake district. Hallstatt village at golden hour -- the most photographed place in Austria." },
       { day: 4, title: "Salzburg",          coords: [47.8095, 13.0550], desc: "Mozart birthplace, Getreidegasse, and the Hohensalzburg fortress. Sound-of-Music panorama drive." },
       { day: 5, title: "Grossglockner",     coords: [47.0749, 12.6994], desc: "Grossglockner High Alpine Road -- Europe most scenic mountain pass. Waterfalls, glaciers and total silence." },
@@ -40,12 +112,12 @@ const countryData = {
     highlights: ["Prague Old Town", "Charles Bridge", "Cesky Krumlov", "Karlovy Vary"],
     itinerary: [
       { day: 1, title: "Prague Arrival",          coords: [50.0755, 14.4378], desc: "Transfer to your Old Town hotel. Evening river cruise on the Vltava." },
-      { day: 2, title: "Prague Castle",            coords: [50.0923, 14.4000], desc: "St Vitus Cathedral, Golden Lane, then downhill to the charming Lesser Town." },
-      { day: 3, title: "Old Town & Jewish Quarter",coords: [50.0878, 14.4205], desc: "Astronomical Clock, Josefov cemetery, and the best svickova you will ever have." },
+      { day: 2, title: "Prague Castle",            coords: [50.0923, 14.4000], desc: "St Vitus Cathedral, Golden Lane, then downhill to the charming Lesser Town.", image: '/images/cities/prague-castle.jpg' },
+      { day: 3, title: "Old Town & Jewish Quarter",coords: [50.0878, 14.4205], desc: "Astronomical Clock, Josefov cemetery, and the best svickova you will ever have.", image: '/images/cities/old-town-prague.jpg' },
       { day: 4, title: "Karlovy Vary",             coords: [50.2304, 12.8710], desc: "Spa town, thermal springs, colonnades and a taste of the famous Becherovka liqueur." },
       { day: 5, title: "Cesky Krumlov",            coords: [48.8127, 14.3175], desc: "A UNESCO Baroque town wrapped by a river bend. Castle tour, rafting, medieval streets." },
       { day: 6, title: "Kutna Hora",               coords: [49.9473, 15.2682], desc: "The Bone Church (Sedlec Ossuary) and the silver-mining legacy of a once-great city." },
-      { day: 7, title: "Departure — Prague",       coords: [50.1008, 14.2600], desc: "Transfer to Prague Vaclav Havel Airport." },
+      { day: 7, title: "Departure — Prague",       coords: [50.1008, 14.2600], desc: "Transfer to Prague Vaclav Havel Airport.", image: '/images/cities/departure.jpg' },
     ],
   },
   hungary: {
@@ -55,10 +127,10 @@ const countryData = {
     highlights: ["Budapest Parliament", "Thermal Baths", "Danube Bend", "Castle Hill"],
     itinerary: [
       { day: 1, title: "Budapest Arrival",  coords: [47.4979, 19.0402], desc: "Private transfer. Evening walk along the Danube Promenade and dinner in the Jewish Quarter." },
-      { day: 2, title: "Buda Castle Hill",  coords: [47.4964, 19.0398], desc: "Buda Castle, Fisherman Bastion, Matthias Church. Lunch on the hilltop with panoramic views." },
-      { day: 3, title: "Pest City Centre",  coords: [47.5013, 19.0536], desc: "Parliament tour, Great Market Hall, ruin bars and chimney cake at Vorosmarty Square." },
-      { day: 4, title: "Thermal Baths",     coords: [47.5184, 19.0817], desc: "Szechenyi or Gellert -- soak in 100-year-old Neo-Baroque bathhouses. Afternoon free." },
-      { day: 5, title: "Danube Bend",       coords: [47.7878, 18.9768], desc: "Scenic loop through Szentendre, Visegrad hilltop castle and Esztergom Basilica." },
+      { day: 2, title: "Buda Castle Hill",  coords: [47.4964, 19.0398], desc: "Buda Castle, Fisherman Bastion, Matthias Church. Lunch on the hilltop with panoramic views.", image: '/images/cities/buda-castle.jpg' },
+      { day: 3, title: "Pest City Centre",  coords: [47.5013, 19.0536], desc: "Parliament tour, Great Market Hall, ruin bars and chimney cake at Vorosmarty Square.", image: '/images/cities/parliament-budapest.jpg' },
+      { day: 4, title: "Thermal Baths",     coords: [47.5184, 19.0817], desc: "Szechenyi or Gellert -- soak in 100-year-old Neo-Baroque bathhouses. Afternoon free.", image: '/images/cities/szechenyi.jpg' },
+      { day: 5, title: "Danube Bend",       coords: [47.7878, 18.9768], desc: "Scenic loop through Szentendre, Visegrad hilltop castle and Esztergom Basilica.", image: '/images/cities/danube-bend.jpg' },
       { day: 6, title: "Lake Balaton",      coords: [46.8900, 17.7300], desc: "Central Europe largest lake -- volcanic wine hills, lavender fields and lakeside villages." },
       { day: 7, title: "Departure",         coords: [47.4379, 19.2611], desc: "Transfer to Budapest Ferenc Liszt Airport." },
     ],
@@ -85,7 +157,7 @@ const countryData = {
     highlights: ["Bratislava Old Town", "Spis Castle", "High Tatras", "Slovak Karst"],
     itinerary: [
       { day: 1, title: "Bratislava Arrival",  coords: [48.1486, 17.1077], desc: "Stroll the compact Old Town, climb the castle for sunset views over the Danube." },
-      { day: 2, title: "Bratislava",          coords: [48.1443, 17.1098], desc: "Michael Gate, blue church, hidden courtyards and the best halusky of your life." },
+      { day: 2, title: "Bratislava",          coords: [48.1443, 17.1098], desc: "Michael Gate, blue church, hidden courtyards and the best halusky of your life.", image: '/images/cities/bratislava-castle.jpg' },
       { day: 3, title: "High Tatras",         coords: [49.1194, 20.0609], desc: "Drive to Slovakia mountain playground. Cable cars, alpine lakes and crisp mountain air." },
       { day: 4, title: "Spis Castle",         coords: [48.9975, 20.7683], desc: "The largest castle complex in Central Europe -- a UNESCO site rising from a volcanic hill." },
       { day: 5, title: "Slovak Karst",        coords: [48.5709, 20.5001], desc: "Domica cave system, karst plateaux and the wild Slovensky Raj canyon gorges." },
@@ -100,7 +172,7 @@ const countryData = {
     highlights: ["Dubrovnik Old City", "Split", "Plitvice Lakes", "Istrian Coast"],
     itinerary: [
       { day: 1, title: "Dubrovnik Arrival", coords: [42.6507, 18.0944], desc: "Private transfer to the Old City. Walk the ancient walls at sunset -- the best view in Europe." },
-      { day: 2, title: "Dubrovnik",         coords: [42.6400, 18.1100], desc: "Game of Thrones filming locations, Lokrum island, cable car to Mount Srd. Evening on Stradun." },
+      { day: 2, title: "Dubrovnik",         coords: [42.6400, 18.1100], desc: "Game of Thrones filming locations, Lokrum island, cable car to Mount Srd. Evening on Stradun.", image: '/images/cities/dubrovnik-walls.jpg' },
       { day: 3, title: "Korcula Island",    coords: [42.9611, 17.1326], desc: "Ferry to the island birthplace of Marco Polo. Wine, fresh fish and total calm." },
       { day: 4, title: "Split",             coords: [43.5081, 16.4402], desc: "Coastal road north to Split. Diocletian Palace -- a Roman emperor retirement home." },
       { day: 5, title: "Plitvice Lakes",    coords: [44.8654, 15.5820], desc: "16 cascading turquoise lakes and 90 waterfalls in a primeval forest. Book early -- it sells out." },
@@ -115,7 +187,7 @@ const countryData = {
     highlights: ["Venice Canals", "Florence & Uffizi", "Tuscany Roads", "Amalfi Coast"],
     itinerary: [
       { day: 1, title: "Venice Arrival", coords: [45.4408, 12.3155], desc: "Private water taxi to your canal-side hotel. Golden hour Rialto and a Bellini at Harry Bar." },
-      { day: 2, title: "Venice",         coords: [45.4341, 12.3388], desc: "St Mark Basilica, Doge Palace, gondola through the quiet back canals, Murano glass workshop." },
+      { day: 2, title: "Venice",         coords: [45.4341, 12.3388], desc: "St Mark Basilica, Doge Palace, gondola through the quiet back canals, Murano glass workshop.", image: '/images/cities/st-marks.jpg' },
       { day: 3, title: "Florence",       coords: [43.7696, 11.2558], desc: "Drive via Verona. Uffizi Gallery skip-the-line, Ponte Vecchio, Piazzale Michelangelo at sunset." },
       { day: 4, title: "Tuscany & Siena",coords: [43.3186, 11.3307], desc: "Val d Orcia cypress roads, Siena Piazza del Campo, wine tasting in Montalcino." },
       { day: 5, title: "Rome",           coords: [41.9028, 12.4964], desc: "Private transfer. Colosseum, Forum Romanum, Trastevere dinner. No queues -- we pre-book everything." },
@@ -150,11 +222,16 @@ const hotelOptions = [
 ]
 
 const carOptions = [
-  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",       seats: 3, img: "/images/cars/sedan.webp"        },
-  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",    seats: 4, img: "/images/cars/luxury-sedan.webp" },
-  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",   seats: 7, img: "/images/cars/mpv.webp"          },
-  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar",seats: 9, img: "/images/cars/std-van.webp"      },
-  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",    seats: 8, img: "/images/cars/luxury-van.webp"   },
+  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 3,
+    imgs: ["/images/cars/sedan-ext.jpg", "/images/cars/sedan-int.jpg", "/images/cars/sedan-dash.jpg"] },
+  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 4,
+    imgs: ["/images/cars/luxury-sedan-ext.jpg", "/images/cars/luxury-sedan-int.jpg", "/images/cars/luxury-sedan-rear.jpg"] },
+  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 7,
+    imgs: ["/images/cars/mpv-ext.jpg", "/images/cars/mpv-int.jpg", "/images/cars/mpv-rear.jpg"] },
+  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 9,
+    imgs: ["/images/cars/std-van-ext.jpg", "/images/cars/std-van-int.jpg", "/images/cars/std-van-rear.jpg"] },
+  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 8,
+    imgs: ["/images/cars/luxury-van-ext.jpg", "/images/cars/luxury-van-int.jpg", "/images/cars/luxury-van-rear.jpg"] },
 ]
 
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -312,9 +389,20 @@ export default function TourPlanner() {
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent-400/40 bg-stone-900 text-xs font-bold text-accent-400 sm:h-14 sm:w-14 sm:text-sm">
                     {String(day.day).padStart(2, "0")}
                   </div>
-                  <div className="flex-1 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] px-5 py-4 sm:px-6 transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5">
-                    <p className="font-semibold text-white">{day.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-stone-400">{day.desc}</p>
+                  <div className="flex-1 overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.02] transition-all duration-200 hover:border-accent-400/20 hover:from-accent-400/5 sm:flex sm:h-24">
+                    <div className="flex-1 min-w-0 px-5 py-4 sm:px-6 overflow-hidden">
+                      <p className="font-semibold text-white truncate">{day.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-stone-400 line-clamp-2">{day.desc}</p>
+                    </div>
+                    <div className="hidden sm:block sm:w-36 shrink-0 overflow-hidden">
+                      <img
+                        src={day.image || getCityImage(day.title)}
+                        alt={day.title}
+                        className="h-full w-full object-cover opacity-55 transition-opacity duration-300 hover:opacity-75"
+                        loading="lazy"
+                        onError={e => { e.currentTarget.parentElement.style.display = 'none' }}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -348,53 +436,15 @@ export default function TourPlanner() {
           ) : (
 <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
 
-              {/* Hotel */}
+{/* Month */}
               <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
-                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {hotelOptions.map(h => (
-                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
-                      className={"rounded-xl border px-4 py-4 text-left transition-all duration-200 " + (hotel === h.id ? "border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10" : "border-white/10 bg-white/[0.03] hover:border-white/25")}>
-                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
-                      <p className="font-semibold text-white text-sm">{h.label}</p>
-                      <p className="text-[11px] text-stone-400">{h.sub}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Car selection */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
-                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                  {carOptions.map(c => (
-                    <button key={c.id} type="button" onClick={() => setCar(c.id)}
-                      className={"group relative overflow-hidden rounded-2xl border text-left transition-all duration-200 " + (car === c.id ? "border-accent-400 shadow-lg shadow-accent-400/15" : "border-white/10 hover:border-white/25")}>
-                      {/* Car image \u2014 fixed height so all 5 are uniform */}
-                      <div className="relative h-28 overflow-hidden bg-stone-800">
-                        <img src={c.img} alt={c.label}
-                          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'flex' }} />
-                        {/* Fallback when image missing */}
-                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 text-3xl">
-                          \ud83d\ude97
-                        </div>
-                        {car === c.id && <div className="absolute inset-0 bg-accent-400/10" />}
-                        {car === c.id && (
-                          <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent-400">
-                            <svg className="h-3 w-3 text-stone-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
-                      </div>
-                      {/* Label */}
-                      <div className="p-2.5">
-                        <p className="font-bold text-white text-xs leading-tight">{c.label}</p>
-                        <p className="mt-0.5 text-[10px] leading-tight text-stone-400">{c.sub}</p>
-                      </div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
+                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
+                  {months.map(m => (
+                    <button key={m} type="button" onClick={() => setMonth(m)}
+                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
+                      {m}
                     </button>
                   ))}
                 </div>
@@ -435,6 +485,66 @@ export default function TourPlanner() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              
+              {/* Budget \u2014 below month */}
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Total budget</p>
+                  <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 text-xs font-bold">
+                    {["EUR","USD","INR"].map(c => (
+                      <button key={c} type="button" onClick={() => setCurrency(c)}
+                        className={"rounded-full px-3 py-1 transition-all duration-200 " + (currency === c ? "bg-accent-400 text-stone-950" : "text-stone-400 hover:text-white")}>
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="mb-3 flex items-end justify-between">
+                  <p className="text-lg font-semibold text-white">
+                    {currency === "EUR" && <>{"\u20AC"}{budget.toLocaleString()}</>}
+                    {currency === "USD" && <>${Math.round(budget * EUR_TO_USD).toLocaleString()}</>}
+                    {currency === "INR" && <>{"\u20B9"}{(budget * EUR_TO_INR).toLocaleString("en-IN")}</>}
+                    <span className="ml-2 text-sm font-normal text-stone-400">per person</span>
+                  </p>
+                  <span className="rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-0.5 text-xs font-bold text-accent-400">{budgetLabel(budget)}</span>
+                </div>
+                <input type="range" min={500} max={20000} step={250} value={budget}
+                  onChange={e => setBudget(Number(e.target.value))}
+                  className="w-full cursor-pointer" style={{ accentColor: "#f59e0b" }} />
+                <div className="mt-1 flex justify-between text-[10px] text-stone-500">
+                  {currency === "EUR" && <><span>{"\u20AC"}500</span><span>{"\u20AC"}5,000</span><span>{"\u20AC"}10,000</span><span>{"\u20AC"}20,000+</span></>}
+                  {currency === "USD" && <><span>$540</span><span>$5,400</span><span>$10,800</span><span>$21,600+</span></>}
+                  {currency === "INR" && <><span>{"\u20B9"}45k</span><span>{"\u20B9"}4.5L</span><span>{"\u20B9"}9L</span><span>{"\u20B9"}18L+</span></>}
+                </div>
+              </div>
+
+              {/* Hotel */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
+                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {hotelOptions.map(h => (
+                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
+                      className={"rounded-xl border px-4 py-4 text-left transition-all duration-200 " + (hotel === h.id ? "border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10" : "border-white/10 bg-white/[0.03] hover:border-white/25")}>
+                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
+                      <p className="font-semibold text-white text-sm">{h.label}</p>
+                      <p className="text-[11px] text-stone-400">{h.sub}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Car selection */}
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
+                <p className="mb-4 text-lg font-semibold text-white">Choose your ride</p>
+                <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
+                  {carOptions.map(c => (
+                    <CarCard key={c.id} car={c} isSelected={car === c.id} onClick={() => setCar(c.id)} />
+                  ))}
+                </div>
               </div>
 
               {/* Luggage \u2014 full-width card with Boot + Cabin sub-counters */}
@@ -487,52 +597,6 @@ export default function TourPlanner() {
                     {bootLuggage + cabinLuggage} {bootLuggage + cabinLuggage === 1 ? 'bag' : 'bags'} total
                   </p>
                 )}
-              </div>
-
-              {/* Month */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Travel month</p>
-                <p className="mb-4 text-lg font-semibold text-white">When are you planning to go?</p>
-                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-12">
-                  {months.map(m => (
-                    <button key={m} type="button" onClick={() => setMonth(m)}
-                      className={"rounded-lg border py-2 text-sm font-medium transition-all duration-200 text-center " + (month === m ? "border-accent-400 bg-accent-400 text-stone-950 font-bold" : "border-white/15 text-stone-300 hover:border-white/35")}>
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Budget \u2014 below month */}
-              <div>
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Total budget</p>
-                  <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 text-xs font-bold">
-                    {["EUR","USD","INR"].map(c => (
-                      <button key={c} type="button" onClick={() => setCurrency(c)}
-                        className={"rounded-full px-3 py-1 transition-all duration-200 " + (currency === c ? "bg-accent-400 text-stone-950" : "text-stone-400 hover:text-white")}>
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-3 flex items-end justify-between">
-                  <p className="text-lg font-semibold text-white">
-                    {currency === "EUR" && <>{"\u20AC"}{budget.toLocaleString()}</>}
-                    {currency === "USD" && <>${Math.round(budget * EUR_TO_USD).toLocaleString()}</>}
-                    {currency === "INR" && <>{"\u20B9"}{(budget * EUR_TO_INR).toLocaleString("en-IN")}</>}
-                    <span className="ml-2 text-sm font-normal text-stone-400">per person</span>
-                  </p>
-                  <span className="rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-0.5 text-xs font-bold text-accent-400">{budgetLabel(budget)}</span>
-                </div>
-                <input type="range" min={500} max={20000} step={250} value={budget}
-                  onChange={e => setBudget(Number(e.target.value))}
-                  className="w-full cursor-pointer" style={{ accentColor: "#f59e0b" }} />
-                <div className="mt-1 flex justify-between text-[10px] text-stone-500">
-                  {currency === "EUR" && <><span>{"\u20AC"}500</span><span>{"\u20AC"}5,000</span><span>{"\u20AC"}10,000</span><span>{"\u20AC"}20,000+</span></>}
-                  {currency === "USD" && <><span>$540</span><span>$5,400</span><span>$10,800</span><span>$21,600+</span></>}
-                  {currency === "INR" && <><span>{"\u20B9"}45k</span><span>{"\u20B9"}4.5L</span><span>{"\u20B9"}9L</span><span>{"\u20B9"}18L+</span></>}
-                </div>
               </div>
 
               {/* Details */}

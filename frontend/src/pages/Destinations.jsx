@@ -242,9 +242,12 @@ export default function Destinations() {
               Your Europe,<br />built from scratch.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-white/90">
-              No templates. No fixed packages. Tell us your travel dates, group size, interests and budget —
-              we design the entire journey around you. Luxury stays, golf courses, family-friendly pacing,
-              food trails — whatever your Europe looks like, we plan it privately.
+              No templates. No fixed packages. Share your travel dates, group size, interests and budget —
+              we design the entire journey around you. Local experiences like vineyard visits, cooking classes,
+              folk festivals, Christmas markets and authentic regional cuisine. Luxury stays,
+              family-friendly pacing, honeymoon escapes, food trails or adventure itineraries.
+              Hiking, cycling tours, skiing, water sports, golf &amp; tennis —
+              whatever your Europe looks like, we plan it privately.
             </p>
           </div>
 
