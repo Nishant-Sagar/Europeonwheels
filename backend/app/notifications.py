@@ -116,7 +116,7 @@ def notify_enquiry(data: dict) -> None:
             <h1 style="margin:10px 0 4px;font-size:24px;color:#ffffff;font-weight:800;">
               New {form_label}
             </h1>
-            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; europeonwheels.in</p>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; <a href="https://europeonwheels.in" style="color:#fbbf24;text-decoration:none;">europeonwheels.in</a></p>
           </td>
         </tr>
 
@@ -262,7 +262,7 @@ def notify_enquiry(data: dict) -> None:
                   <p style="margin:0;font-size:11px;color:#a8a29e;">Enquiry ID: <span style="color:#78716c;font-weight:600;">{enquiry_id}</span></p>
                 </td>
                 <td align="right">
-                  <p style="margin:0;font-size:11px;color:#a8a29e;">europeonwheels.in</p>
+                  <p style="margin:0;font-size:11px;"><a href="https://europeonwheels.in" style="color:#b45309;text-decoration:none;font-weight:600;">europeonwheels.in</a></p>
                 </td>
               </tr>
             </table>
@@ -316,7 +316,7 @@ def notify_contact(data: dict) -> None:
             <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:5px;
                       color:rgba(255,255,255,0.85);text-transform:uppercase;">&#x1f4e9; Europe on Wheels</p>
             <h1 style="margin:10px 0 4px;font-size:24px;color:#ffffff;font-weight:800;">New Contact Message</h1>
-            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; europeonwheels.in</p>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.7);">Received just now &middot; <a href="https://europeonwheels.in" style="color:#fbbf24;text-decoration:none;">europeonwheels.in</a></p>
           </td>
         </tr>
 
@@ -370,7 +370,7 @@ def notify_contact(data: dict) -> None:
         <!-- Footer -->
         <tr>
           <td style="padding:28px 36px;border-top:1px solid #e7e5e4;margin-top:24px;">
-            <p style="margin:0;font-size:11px;color:#a8a29e;text-align:center;">europeonwheels.in</p>
+            <p style="margin:0;font-size:11px;text-align:center;"><a href="https://europeonwheels.in" style="color:#b45309;text-decoration:none;font-weight:600;">europeonwheels.in</a></p>
           </td>
         </tr>
 
