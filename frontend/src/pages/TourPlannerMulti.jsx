@@ -466,9 +466,19 @@ export default function TourPlannerMulti() {
               <div className="mb-4 text-5xl">🎉</div>
               <h3 className="text-2xl font-bold text-white">You are all set, {name}!</h3>
               <p className="mt-3 text-stone-300">Your {data.name} enquiry has been saved. We will get back to you within 24 hours with a personalised itinerary.</p>
-              <Link to="/multi-country" className="mt-8 inline-flex items-center gap-2 rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
-                Explore other routes
-              </Link>
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href={`https://wa.me/919108116181?text=${encodeURIComponent(`Hi, I just submitted a multi-country tour enquiry for ${data.name}.\n\nName: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\nMonth: ${month} 2026\nDuration: ${duration} days\nGroup: ${groupSize} person${groupSize > 1 ? 's' : ''}\nHotel: ${hotel}${car ? `\nCar: ${car}` : ''}\nBudget: €${budget.toLocaleString()}${notes ? `\nNotes: ${notes}` : ''}`)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 text-sm font-semibold text-white hover:bg-green-500 transition-colors"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.609l4.525-1.468A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.344 0-4.508-.81-6.222-2.163l-.435-.346-2.836.919.946-2.792-.378-.458A9.955 9.955 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                  Send details on WhatsApp
+                </a>
+                <Link to="/multi-country" className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
+                  Explore other routes
+                </Link>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
@@ -587,7 +597,7 @@ export default function TourPlannerMulti() {
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                 <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-stone-400">Luggage</p>
                 <p className="mb-6 text-base font-semibold text-white">How many luggages?</p>
-                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.07]">
                   {[
                     { key: 'boot',  label: 'Boot Luggage',  hint: 'Suitcases & check-in bags', value: bootLuggage,  dec: () => setBootLuggage(Math.max(0, bootLuggage - 1)),   inc: () => setBootLuggage(Math.min(20, bootLuggage + 1))   },
                     { key: 'cabin', label: 'Cabin Luggage', hint: 'Hand bags & carry-ons',      value: cabinLuggage, dec: () => setCabinLuggage(Math.max(0, cabinLuggage - 1)), inc: () => setCabinLuggage(Math.min(20, cabinLuggage + 1)) },

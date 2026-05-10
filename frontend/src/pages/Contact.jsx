@@ -98,7 +98,7 @@ export default function Contact() {
                     <p className="text-xs font-medium text-white">info.europeonwheels@gmail.com</p>
                   </div>
                 </a>
-                <a href="https://wa.me/919108116181" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/919108116181?text=Hi%2C%20I%27m%20interested%20in%20a%20Europe%20tour.%20Could%20you%20share%20more%20details%3F" target="_blank" rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 transition-all duration-200 hover:bg-white/10">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-green-400 transition-all duration-200 group-hover:bg-[#25D366] group-hover:text-white">
                     <IconWhatsApp />

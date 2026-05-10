@@ -272,7 +272,7 @@ export default function Navbar() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/919108116181"
+                href="https://wa.me/919108116181?text=Hi%2C%20I%27m%20interested%20in%20a%20Europe%20tour.%20Could%20you%20share%20more%20details%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -381,7 +381,7 @@ export default function Navbar() {
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/919108116181"
+        href="https://wa.me/919108116181?text=Hi%2C%20I%27m%20interested%20in%20a%20Europe%20tour.%20Could%20you%20share%20more%20details%3F"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"

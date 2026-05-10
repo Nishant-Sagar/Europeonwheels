@@ -610,7 +610,7 @@ export default function Home() {
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Link to="/custom-tour" className="btn-accent justify-center px-8 py-4">Get Custom Plan</Link>
-            <a href="https://wa.me/919108116181" target="_blank" rel="noopener noreferrer" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
+            <a href="https://wa.me/919108116181?text=Hi%2C%20I%27m%20interested%20in%20a%20Europe%20tour.%20Could%20you%20share%20more%20details%3F" target="_blank" rel="noopener noreferrer" className="btn-outline justify-center border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4">Chat on WhatsApp</a>
           </div>
         </div>
       </section>
