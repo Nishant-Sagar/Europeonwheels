@@ -23,7 +23,7 @@ def send_email(subject: str, html_body: str) -> None:
             "html": html_body,
         })
         print(f"[notify] Email sent to {NOTIFY_EMAIL}")
-    except (OSError, ValueError, RuntimeError) as e:
+    except Exception as e:  # noqa: BLE001
         print(f"[notify] Email error: {e}")
 
 
@@ -48,7 +48,7 @@ def send_whatsapp(text: str) -> None:
         )
         with urllib.request.urlopen(req, timeout=10) as resp:
             print(f"[notify] WhatsApp sent via Green API, status={resp.status}")
-    except (OSError, ValueError, RuntimeError) as e:
+    except Exception as e:  # noqa: BLE001
         print(f"[notify] WhatsApp error: {e}")
 
 
