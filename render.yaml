@@ -5,8 +5,8 @@ services:
     rootDir: backend
     plan: free
     pythonVersion: "3.11.0"
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && find . -name '__pycache__' -exec rm -rf {} + || true
+    startCommand: PYTHONDONTWRITEBYTECODE=1 uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: FRONTEND_ORIGINS
