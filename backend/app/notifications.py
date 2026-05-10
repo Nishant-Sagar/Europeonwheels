@@ -297,6 +297,7 @@ def notify_enquiry(data: dict) -> None:
 def notify_contact(data: dict) -> None:
     name = data.get("name", "Someone")
     email = data.get("email", "—")
+    phone = data.get("phone", "")
     subject = data.get("subject", "—")
     message = data.get("message", "—")
 
@@ -330,6 +331,7 @@ def notify_contact(data: dict) -> None:
                   <p style="margin:0;font-size:20px;font-weight:700;color:#92400e;">&#x1f464; {name}</p>
                   <p style="margin:6px 0 0;font-size:14px;color:#b45309;">
                     <a href="mailto:{email}" style="color:#b45309;text-decoration:none;">&#x2709;&#xfe0f; {email}</a>
+                    {f'&nbsp;&nbsp;&#x1f4de; {phone}' if phone else ''}
                   </p>
                 </td>
               </tr>
@@ -386,6 +388,7 @@ def notify_contact(data: dict) -> None:
         f"📩 New Contact Message\n"
         f"From: {name}\n"
         f"Email: {email}\n"
+        f"Phone: {phone}\n"
         f"Subject: {subject}\n"
         f"Message: {message[:200]}"
     )

@@ -55,6 +55,7 @@ class Story(BaseModel):
 class ContactMessage(BaseModel):
     name: str
     email: EmailStr
+    phone: str = ""
     subject: str
     message: str
 
