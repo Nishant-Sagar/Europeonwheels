@@ -363,10 +363,10 @@ export default function Home() {
                     >
                       {item.route}
                     </h3>
-                    <p className="mt-1 text-xs leading-5 text-white/75 md:text-white/0 md:transition-colors md:duration-300 md:group-hover:text-white/80">
+                    <p className="mt-1 hidden text-xs leading-5 text-white/75 md:block md:text-white/0 md:transition-colors md:duration-300 md:group-hover:text-white/80">
                       {item.tagline}
                     </p>
-                    <div className="mt-3 max-h-28 overflow-hidden md:mt-0 md:max-h-0 md:transition-all md:duration-500 md:group-hover:mt-3 md:group-hover:max-h-28">
+                    <div className="hidden md:block md:mt-0 md:max-h-0 md:overflow-hidden md:transition-all md:duration-500 md:group-hover:mt-3 md:group-hover:max-h-28">
                       <div className="flex flex-wrap gap-1.5">
                         {item.cities.slice(0, 5).map((c) => (
                           <span

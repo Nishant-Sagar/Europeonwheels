@@ -110,21 +110,18 @@ export default function Footer() {
               </div>
 
               {/* Socials */}
-              <div className="mt-7 flex gap-3">
-                {[
-                  { Icon: IconInstagram, label: 'Instagram', href: '#' },
-                  { Icon: IconFacebook, label: 'Facebook', href: '#' },
-                  { Icon: IconYouTube, label: 'YouTube', href: '#' },
-                ].map(({ Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-800 text-stone-400 transition-all hover:bg-primary-700 hover:text-white"
-                  >
-                    <Icon />
-                  </a>
-                ))}
+              <div className="mt-3.5">
+                <a
+                  href="https://www.instagram.com/europeonwheels_journey/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm text-stone-400 transition-colors hover:text-white"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-stone-800 text-pink-500">
+                    <IconInstagram />
+                  </span>
+                  DM on Instagram
+                </a>
               </div>
             </div>
 

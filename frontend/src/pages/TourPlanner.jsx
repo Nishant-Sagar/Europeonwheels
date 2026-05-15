@@ -317,10 +317,10 @@ export default function TourPlanner() {
       <div className="pointer-events-none fixed inset-0 z-0" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
 
       {/* Hero */}
-      <section className="relative z-10 overflow-hidden" style={{ minHeight: "60vh" }}>
+      <section className="relative z-10 overflow-hidden" style={{ minHeight: "72vh" }}>
         <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-stone-950" />
-        <div className="relative z-10 flex flex-col items-center justify-center px-5 text-center pb-16 pt-24 sm:pt-32" style={{ minHeight: "60vh" }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-stone-950/70" />
+        <div className="relative z-10 flex flex-col items-center justify-center px-5 text-center pb-10 pt-20 sm:pb-16 sm:pt-32" style={{ minHeight: "72vh" }}>
           <Link to="/single-country" className="mb-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.38em] text-white/50 hover:text-accent-400 transition-colors">
             &larr; Single Country Tours
           </Link>
@@ -329,7 +329,7 @@ export default function TourPlanner() {
             {data.name}
           </h1>
           <p className="mt-3 text-base text-white/60 sm:text-lg">{data.tagline}</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <div className="mt-5 hidden flex-wrap justify-center gap-2 sm:flex">
             {data.highlights.map(h => (
               <span key={h} className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">{h}</span>
             ))}

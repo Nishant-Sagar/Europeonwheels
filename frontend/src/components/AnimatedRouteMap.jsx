@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const W = 1000
 const H = 580
 const PAD = 70
@@ -383,6 +385,7 @@ const STYLE = `
 `
 
 export default function AnimatedRouteMap({ stops, country = 'Europe', durationLabel = '7-Day Scenic Route' }) {
+  const [activePin, setActivePin] = useState(null)
   const outline = OUTLINES[country] || []
   const scale = getScale(stops, outline)
   const projectedPoints = separateClosePoints(project(stops, scale))
@@ -397,8 +400,9 @@ export default function AnimatedRouteMap({ stops, country = 'Europe', durationLa
   return (
     <>
       <style>{STYLE}</style>
+      <p className="mb-2 text-center text-[11px] text-stone-400 sm:hidden">Tap a pin to see stop details</p>
       <div className="relative overflow-hidden rounded-3xl border border-white/50 shadow-[0_28px_80px_rgba(0,0,0,0.24)]" style={{ background: 'linear-gradient(180deg,#c4edf2 0%,#86cbd5 58%,#69b3bf 100%)' }}>
-        <svg viewBox={`0 0 ${W} ${H}`} className="relative z-10 block w-full" style={{ height: 'clamp(300px,40vw,440px)' }} role="img" aria-label={`${country} route map`}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="relative z-10 block w-full" style={{ height: 'clamp(300px,40vw,440px)' }} role="img" aria-label={`${country} route map`} onClick={() => setActivePin(null)}>
           <defs>
             <filter id="sh1" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#1c1917" floodOpacity=".24" />
@@ -542,6 +546,7 @@ export default function AnimatedRouteMap({ stops, country = 'Europe', durationLa
               tabIndex="0"
               role="button"
               aria-label={`Day ${index + 1}: ${point.title}`}
+              onClick={(e) => { e.stopPropagation(); setActivePin(activePin === index ? null : index) }}
             >
               {point.sourceX !== point.x || point.sourceY !== point.y ? (
                 <line
@@ -570,7 +575,11 @@ export default function AnimatedRouteMap({ stops, country = 'Europe', durationLa
               {(() => {
                 const tip = tooltipPlacement(point)
                 return (
-                  <foreignObject x={tip.x} y={tip.y} width={tip.width} height={tip.height} className="eow-pin-detail">
+                  <foreignObject
+                    x={tip.x} y={tip.y} width={tip.width} height={tip.height}
+                    className={activePin === index ? '' : 'eow-pin-detail'}
+                    style={activePin === index ? { opacity: 1, pointerEvents: 'auto' } : {}}
+                  >
                     <div
                       xmlns="http://www.w3.org/1999/xhtml"
                       className="rounded-xl border border-stone-300 bg-[#fffaf0]/95 p-3 text-left shadow-2xl backdrop-blur-md"
@@ -601,6 +610,32 @@ export default function AnimatedRouteMap({ stops, country = 'Europe', durationLa
             </text>
           </g>
         </svg>
+      </div>
+
+      {/* Mobile info card — shows below map when a pin is tapped */}
+      <div
+        className={`mt-3 sm:hidden transition-all duration-300 ${activePin !== null ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none -translate-y-2'}`}
+      >
+        {activePin !== null && stops[activePin] && (
+          <div className="rounded-2xl border border-amber-200/60 bg-[#fffaf0] p-4 shadow-lg">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9a6a23]">Day {activePin + 1}</p>
+                <p className="mt-1 font-bold text-stone-900 leading-snug">{stops[activePin].title}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-stone-600">{stops[activePin].desc}</p>
+              </div>
+              <button
+                onClick={() => setActivePin(null)}
+                className="shrink-0 mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-stone-100 text-stone-400 hover:bg-stone-200"
+                aria-label="Close"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
