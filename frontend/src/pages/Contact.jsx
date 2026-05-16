@@ -39,7 +39,10 @@ export default function Contact() {
     try {
       const res = await api.post('/contact', form)
       setStatus({ ok: res.data.success, msg: res.data.message })
-      if (res.data.success) setForm({ name: '', email: '', phone: '', subject: '', message: '' })
+      if (res.data.success) {
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' })
+        window.gtag?.('event', 'conversion', { send_to: 'AW-18164788165/4hgaCMK-ka4cEMXX0tVD', value: 1.0, currency: 'INR' })
+      }
     } catch {
       setStatus({ ok: false, msg: 'Something went wrong. Please try again.' })
     } finally {

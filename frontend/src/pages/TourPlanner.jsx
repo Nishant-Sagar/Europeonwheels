@@ -302,6 +302,7 @@ export default function TourPlanner() {
       })
       if (!res.ok) throw new Error("Server error")
       setSubmitted(true)
+      window.gtag?.('event', 'conversion', { send_to: 'AW-18164788165/4hgaCMK-ka4cEMXX0tVD', value: 1.0, currency: 'INR' })
     } catch {
       setError("Something went wrong. Please try again or email us directly.")
     } finally {
