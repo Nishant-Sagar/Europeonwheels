@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const countries = [
   'Germany', 'Austria', 'Czech Republic', 'Hungary',
@@ -50,6 +51,15 @@ function Check() {
 export default function Destinations() {
   return (
     <>
+      <Helmet>
+        <title>Destinations — Europe on Wheels</title>
+        <meta name="description" content="Explore our hand-picked European destinations — Germany, Austria, Czech Republic, Hungary, Slovenia, Slovakia, Croatia, Italy and Switzerland. Private chauffeur tours." />
+        <meta property="og:title" content="Destinations — Europe on Wheels" />
+        <meta property="og:description" content="9 European countries. Private chauffeur tours tailored to your style and budget." />
+        <meta property="og:url" content="https://www.europeonwheels.in/destinations" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/destinations" />
+      </Helmet>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '62vh' }}>
         <img

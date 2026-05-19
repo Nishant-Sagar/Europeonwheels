@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet-async'
+
 const featured = [
   { url: '/images/swiss-alps.webp',     caption: 'Swiss Alps',            location: 'Switzerland' },
   { url: '/images/gallery-amalfi.webp', caption: 'Amalfi Coastline',      location: 'Italy' },
@@ -30,6 +32,16 @@ const photos = [
 export default function Gallery() {
   return (
     <>
+      <Helmet>
+        <title>Photo Gallery — Europe on Wheels</title>
+        <meta name="description" content="Browse our photo gallery — Swiss Alps, Amalfi coast, Neuschwanstein Castle, Dubrovnik and more. See Europe through the eyes of our travellers." />
+        <meta property="og:title" content="Photo Gallery — Europe on Wheels" />
+        <meta property="og:description" content="Stunning photos from private road trips across 9 European countries." />
+        <meta property="og:url" content="https://www.europeonwheels.in/gallery" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.europeonwheels.in/images/swiss-alps.webp" />
+        <link rel="canonical" href="https://www.europeonwheels.in/gallery" />
+      </Helmet>
       {/* Hero — compact so images are immediately visible below */}
       <section className="relative h-[40vh] overflow-hidden text-white">
         <img

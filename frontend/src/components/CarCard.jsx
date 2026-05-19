@@ -132,7 +132,7 @@ export default function CarCard({ car, isSelected, onClick }) {
         <p className="mt-0.5 text-[10px] leading-tight text-stone-400">{car.sub}</p>
         {car.seats && (
           <p className="mt-1 text-[9px] font-semibold uppercase tracking-widest text-accent-400/70">
-            Up to {car.seats} seats
+            Up to {car.seats} pax
           </p>
         )}
       </div>

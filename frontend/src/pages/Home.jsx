@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { useApi } from '../hooks/useApi'
 import TestimonialCard from '../components/TestimonialCard'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -221,6 +222,20 @@ export default function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>Europe on Wheels — Private Chauffeur-Driven Tours of Europe</title>
+        <meta name="description" content="Explore Europe with a private chauffeur across 9 countries — Germany, Austria, Italy, Croatia and more. Tailor-made road journeys, 500+ happy travellers, 4.9★ rating." />
+        <meta property="og:title" content="Europe on Wheels — Private Chauffeur-Driven Tours" />
+        <meta property="og:description" content="Tailor-made road journeys across Europe. 9 countries, 500+ trips, 4.9★ rating." />
+        <meta property="og:url" content="https://www.europeonwheels.in/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.europeonwheels.in/images/swiss-alps.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Europe on Wheels — Private Chauffeur-Driven Tours" />
+        <meta name="twitter:description" content="Tailor-made road journeys across Europe. 9 countries, 500+ trips, 4.9★ rating." />
+        <meta name="twitter:image" content="https://www.europeonwheels.in/images/swiss-alps.webp" />
+        <link rel="canonical" href="https://www.europeonwheels.in/" />
+      </Helmet>
       <section className="relative min-h-[100svh] overflow-visible text-white">
 
         {/* Single background image — infinite slow drift like macOS wallpaper */}
@@ -278,7 +293,7 @@ export default function Home() {
               {heroCountryCards.map((tour) => (
                 <Link key={tour.country} to={`/plan/${tour.country.toLowerCase().replace(/\s+/g, '-')}`} className="group h-[360px] w-[78vw] shrink-0 overflow-hidden rounded-2xl bg-stone-900 shadow-[0_24px_70px_rgba(0,0,0,0.34)] sm:w-[48vw] lg:w-[calc((100vw-180px)/4.25)]">
                   <div className="relative h-full">
-                    <img src={tour.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                    <img src={tour.image} alt={`${tour.country} private chauffeur tour`} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
                     <div className="absolute right-5 top-5 rounded-full bg-accent-400 px-5 py-2 text-xs font-bold uppercase tracking-wide text-stone-950">
                       {tour.tag}

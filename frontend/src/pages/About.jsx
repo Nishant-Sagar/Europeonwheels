@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const FRAME_STYLE = `
   @keyframes shimmerSweep {
@@ -58,6 +59,15 @@ const team = [
 export default function About() {
   return (
     <>
+      <Helmet>
+        <title>About Us — Europe on Wheels</title>
+        <meta name="description" content="Meet the team behind Europe on Wheels — passionate travellers who plan bespoke chauffeur-driven journeys across Germany, Italy, Croatia, Switzerland and more." />
+        <meta property="og:title" content="About Us — Europe on Wheels" />
+        <meta property="og:description" content="Passionate travellers behind bespoke chauffeur-driven European road journeys." />
+        <meta property="og:url" content="https://www.europeonwheels.in/about" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/about" />
+      </Helmet>
       {/* ── Hero ── full-screen, drifting image, stats band */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '78vh' }}>
         <img

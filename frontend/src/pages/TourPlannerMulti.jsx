@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useParams, Link } from "react-router-dom"
+import { Helmet } from 'react-helmet-async'
 import LeafletRouteMap from "../components/LeafletRouteMap"
 import CarCard from "../components/CarCard"
 
@@ -282,15 +283,15 @@ const hotelOptions = [
 ]
 
 const carOptions = [
-  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 3,
+  { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 2,
     imgs: ["/images/cars/sedan-ext.jpg", "/images/cars/sedan-int.jpg", "/images/cars/sedan-dash.jpg"] },
-  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 4,
+  { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 2,
     imgs: ["/images/cars/luxury-sedan-ext.jpg", "/images/cars/luxury-sedan-int.jpg", "/images/cars/luxury-sedan-rear.jpg"] },
-  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 7,
+  { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 3,
     imgs: ["/images/cars/mpv-ext.jpg", "/images/cars/mpv-int.jpg", "/images/cars/mpv-rear.jpg"] },
-  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 9,
+  { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 7,
     imgs: ["/images/cars/std-van-ext.jpg", "/images/cars/std-van-int.jpg", "/images/cars/std-van-rear.jpg"] },
-  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 8,
+  { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 6,
     imgs: ["/images/cars/luxury-van-ext.jpg", "/images/cars/luxury-van-int.jpg", "/images/cars/luxury-van-rear.jpg"] },
 ]
 
@@ -380,6 +381,11 @@ export default function TourPlannerMulti() {
 
   return (
     <div className="relative bg-stone-950 min-h-screen text-white">
+      <Helmet>
+        <title>{data ? `Plan ${data.label} Route — Europe on Wheels` : 'Multi-Country Tour Planner — Europe on Wheels'}</title>
+        <meta name="description" content={data ? `Plan a ${data.label} private chauffeur road trip across Europe. Choose your hotel, car, dates and budget — we handle the rest.` : 'Plan your bespoke multi-country European chauffeur tour with Europe on Wheels.'} />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <div className="pointer-events-none fixed inset-0 z-0" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
 
       {/* Hero */}

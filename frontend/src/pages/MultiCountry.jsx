@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const routes = [
   {
@@ -97,6 +98,15 @@ function Check() {
 export default function MultiCountry() {
   return (
     <>
+      <Helmet>
+        <title>Multi-Country Tours — Europe on Wheels</title>
+        <meta name="description" content="Travel across multiple European countries in one seamless road trip. Curated multi-country routes covering 4 to 9 countries, fully private and chauffeur-driven." />
+        <meta property="og:title" content="Multi-Country Tours — Europe on Wheels" />
+        <meta property="og:description" content="Seamless private road trips spanning multiple European countries in one journey." />
+        <meta property="og:url" content="https://www.europeonwheels.in/multi-country" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/multi-country" />
+      </Helmet>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '68vh' }}>
         <img

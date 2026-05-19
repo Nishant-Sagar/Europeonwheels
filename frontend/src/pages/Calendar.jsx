@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { useApi } from '../hooks/useApi'
 import LoadingSpinner from '../components/LoadingSpinner'
 
@@ -24,6 +25,15 @@ export default function Calendar() {
 
   return (
     <>
+      <Helmet>
+        <title>Tour Calendar & Best Time to Visit — Europe on Wheels</title>
+        <meta name="description" content="Find the best time to visit Europe. Month-by-month guide for weather, festivals and travel conditions across Germany, Italy, Croatia, Switzerland and more." />
+        <meta property="og:title" content="Tour Calendar — Europe on Wheels" />
+        <meta property="og:description" content="Month-by-month guide to the best time to visit Europe on a private chauffeur road trip." />
+        <meta property="og:url" content="https://www.europeonwheels.in/calendar" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/calendar" />
+      </Helmet>
       <section className="bg-primary-900 text-white pt-24 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-accent-400 font-medium uppercase tracking-widest text-sm mb-3">Plan ahead</p>

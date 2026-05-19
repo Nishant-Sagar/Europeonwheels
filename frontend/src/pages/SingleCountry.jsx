@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const countries = [
   {
@@ -88,6 +89,15 @@ function Check() {
 export default function SingleCountry() {
   return (
     <>
+      <Helmet>
+        <title>Single Country Tours — Europe on Wheels</title>
+        <meta name="description" content="Deep-dive into one European country with a private chauffeur. Choose from Germany, Austria, Italy, Croatia, Switzerland and more. Fully tailored itineraries." />
+        <meta property="og:title" content="Single Country Tours — Europe on Wheels" />
+        <meta property="og:description" content="Explore one European country in depth with a private chauffeur and fully tailored itinerary." />
+        <meta property="og:url" content="https://www.europeonwheels.in/single-country" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/single-country" />
+      </Helmet>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '68vh' }}>
         <img

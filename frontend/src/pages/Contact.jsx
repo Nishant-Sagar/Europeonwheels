@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { api } from '../hooks/useApi'
 
 const faqs = [
@@ -52,6 +53,15 @@ export default function Contact() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact Us — Europe on Wheels</title>
+        <meta name="description" content="Get in touch with Europe on Wheels. Tell us your travel dates, countries and budget — we reply within 24 hours. Offices in Bangalore, India and Croatia, Europe." />
+        <meta property="og:title" content="Contact Us — Europe on Wheels" />
+        <meta property="og:description" content="Plan your European road trip. Tell us your dates and budget — we reply within 24 hours." />
+        <meta property="og:url" content="https://www.europeonwheels.in/contact" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/contact" />
+      </Helmet>
       {/* Full-bleed animated background — matches landing page hero */}
       <section className="relative min-h-screen overflow-hidden bg-stone-950">
         <div className="absolute inset-0 overflow-hidden">

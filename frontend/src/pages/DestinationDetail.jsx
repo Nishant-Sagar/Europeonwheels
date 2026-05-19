@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { useApi } from '../hooks/useApi'
 import LoadingSpinner from '../components/LoadingSpinner'
 
@@ -23,6 +24,16 @@ export default function DestinationDetail() {
 
   return (
     <>
+      <Helmet>
+        <title>{dest.name} — Europe on Wheels</title>
+        <meta name="description" content={dest.description ? dest.description.slice(0, 155) : `Explore ${dest.name}, ${dest.country} on a private chauffeur tour with Europe on Wheels.`} />
+        <meta property="og:title" content={`${dest.name} — Europe on Wheels`} />
+        <meta property="og:description" content={dest.description ? dest.description.slice(0, 155) : `Explore ${dest.name} on a private chauffeur tour.`} />
+        <meta property="og:url" content={`https://www.europeonwheels.in/destinations/${slug}`} />
+        <meta property="og:type" content="website" />
+        {dest.image_url && <meta property="og:image" content={dest.image_url} />}
+        <link rel="canonical" href={`https://www.europeonwheels.in/destinations/${slug}`} />
+      </Helmet>
       {/* Hero image */}
       <section className="relative h-[70vh] overflow-hidden">
         <img src={dest.image_url} alt={dest.name} className="w-full h-full object-cover" loading="lazy" />

@@ -1,4 +1,6 @@
-﻿const countries = [
+﻿import { Helmet } from 'react-helmet-async'
+
+const countries = [
   {
     name: 'Germany',
     flag: '🇩🇪',
@@ -262,6 +264,15 @@ function Star() {
 export default function Stories() {
   return (
     <>
+      <Helmet>
+        <title>Travel Stories — Europe on Wheels</title>
+        <meta name="description" content="Read stories from our travellers — road trips through the Alps, Croatian coast, Bavarian castles and more. Real experiences from Europe on Wheels guests." />
+        <meta property="og:title" content="Travel Stories — Europe on Wheels" />
+        <meta property="og:description" content="Real stories from travellers who explored Europe with our private chauffeur service." />
+        <meta property="og:url" content="https://www.europeonwheels.in/stories" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://www.europeonwheels.in/stories" />
+      </Helmet>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden text-white" style={{ minHeight: '50vh' }}>
         <img
