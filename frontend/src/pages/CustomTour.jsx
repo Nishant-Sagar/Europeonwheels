@@ -9,15 +9,6 @@ const highlights = [
   { icon: '✏️', title: 'Fully Bespoke', desc: 'Every detail built around your preferences' },
 ]
 
-const hotelOptions = [
-  { id: 'budget',   label: 'Budget',   sub: 'Clean & central',   icon: '🏨' },
-  { id: '3star',    label: '3-Star',   sub: 'Comfort & value',   icon: '⭐⭐⭐' },
-  { id: '4star',    label: '4-Star',   sub: 'Superior style',    icon: '⭐⭐⭐⭐' },
-  { id: '5star',    label: '5-Star',   sub: 'Luxury & beyond',   icon: '⭐⭐⭐⭐⭐' },
-  { id: 'boutique', label: 'Boutique', sub: 'Unique & local',    icon: '🏡' },
-  { id: 'heritage', label: 'Heritage', sub: 'Historic palaces',  icon: '🏰' },
-]
-
 const carOptions = [
   { id: 'sedan',        label: 'Sedan',        sub: 'Škoda Octavia or similar',        seats: 2,
     imgs: ['/images/cars/sedan-ext.jpg', '/images/cars/sedan-int.jpg', '/images/cars/sedan-dash.jpg'] },
@@ -82,7 +73,6 @@ export default function CustomTour() {
   const [selecting,  setSelecting]  = useState(false)
   const calRef = useRef(null)
 
-  const [hotel,        setHotel]        = useState('')
   const [car,          setCar]          = useState('')
   const [bootLuggage,  setBootLuggage]  = useState(2)
   const [cabinLuggage, setCabinLuggage] = useState(1)
@@ -177,8 +167,8 @@ export default function CustomTour() {
   async function handleSubmit(e) {
     e.preventDefault()
     const destinationsStr = getDestinationsString()
-    if (!destinationsStr || !hotel || !month || !name || !email) {
-      setError('Please select at least one country, your name, email, hotel type and travel month.')
+    if (!destinationsStr || !month || !name || !email) {
+      setError('Please select at least one country, your name, email and travel month.')
       return
     }
     setError('')
@@ -192,7 +182,6 @@ export default function CustomTour() {
           name, email, phone,
           country: destinationsStr,
           form_type: 'custom_tour',
-          hotel_type: hotel,
           vehicle_type: car,
           budget_eur: budget,
           group_size: groupSize,
@@ -267,7 +256,7 @@ export default function CustomTour() {
               <p className="mt-3 text-stone-300">Your custom tour enquiry has been saved. We will get back to you within 24 hours with a personalised itinerary.</p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href={`https://wa.me/919108116181?text=${encodeURIComponent(`Hi, I just submitted a custom tour enquiry.\n\nDestinations: ${getDestinationsString()}\nName: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\nMonth: ${month} 2026\nDuration: ${duration} days\nGroup: ${groupSize} person${groupSize > 1 ? 's' : ''}\nHotel: ${hotel}${car ? `\nCar: ${car}` : ''}\nBudget: €${budget.toLocaleString()}${notes ? `\nNotes: ${notes}` : ''}`)}`}
+                  href={`https://wa.me/919108116181?text=${encodeURIComponent(`Hi, I just submitted a custom tour enquiry.\n\nDestinations: ${getDestinationsString()}\nName: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\nMonth: ${month} 2026\nDuration: ${duration} days\nGroup: ${groupSize} person${groupSize > 1 ? 's' : ''}${car ? `\nCar: ${car}` : ''}\nBudget: €${budget.toLocaleString()}${notes ? `\nNotes: ${notes}` : ''}`)}`}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 text-sm font-semibold text-white hover:bg-green-500 transition-colors"
                 >
@@ -461,22 +450,6 @@ export default function CustomTour() {
                 </div>
               </div>
 
-              {/* Hotel */}
-              <div>
-                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Hotel style</p>
-                <p className="mb-4 text-lg font-semibold text-white">Where do you like to stay?</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {hotelOptions.map(h => (
-                    <button key={h.id} type="button" onClick={() => setHotel(h.id)}
-                      className={'rounded-xl border px-4 py-4 text-left transition-all duration-200 ' + (hotel === h.id ? 'border-accent-400 bg-accent-400/10 shadow-lg shadow-accent-400/10' : 'border-white/10 bg-white/[0.03] hover:border-white/25')}>
-                      <div className="mb-1 text-lg leading-none">{h.icon}</div>
-                      <p className="font-semibold text-white text-sm">{h.label}</p>
-                      <p className="text-[11px] text-stone-400">{h.sub}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Car */}
               <div>
                 <p className="mb-1 text-xs font-bold uppercase tracking-widest text-stone-400">Vehicle</p>
@@ -561,7 +534,6 @@ export default function CustomTour() {
                 <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                   {selectedCountries.length > 0 && <div className="sm:col-span-2"><span className="text-stone-500">Destinations</span><br /><span className="font-semibold text-white">{getDestinationsString()}</span></div>}
                   {travelDatesStr && endDate && <div><span className="text-stone-500">Dates</span><br /><span className="font-semibold text-white">{travelDatesStr}</span></div>}
-                  {hotel && <div><span className="text-stone-500">Hotel</span><br /><span className="font-semibold text-white capitalize">{hotel}</span></div>}
                   {car   && <div><span className="text-stone-500">Vehicle</span><br /><span className="font-semibold text-white">{carOptions.find(c => c.id === car)?.label}</span></div>}
                   <div><span className="text-stone-500">Budget</span><br /><span className="font-semibold text-white">{currency === 'EUR' ? `€${budget.toLocaleString()}` : currency === 'USD' ? `$${Math.round(budget * EUR_TO_USD).toLocaleString()}` : `₹${(budget * EUR_TO_INR).toLocaleString('en-IN')}`}/person</span></div>
                   <div><span className="text-stone-500">Duration</span><br /><span className="font-semibold text-white">{duration} days</span></div>
