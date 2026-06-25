@@ -34,7 +34,6 @@ const sampleRoutes = [
 const customPerks = [
   { icon: '🗓️', label: 'Any duration' },
   { icon: '🌍', label: 'Any combination of countries' },
-  { icon: '🏨', label: 'Luxury or comfort stays' },
   { icon: '🎭', label: 'Food, culture or scenic focus' },
   { icon: '👨‍👩‍👧', label: 'Family, couple or group travel' },
   { icon: '📞', label: 'Dedicated planner, start to finish' },

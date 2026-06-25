@@ -5,7 +5,6 @@ import CarCard from '../components/CarCard'
 const highlights = [
   { icon: '🗺️', title: 'Any Destination', desc: 'One country or ten — we plan it all' },
   { icon: '🚘', title: 'Private Chauffeur', desc: 'Door-to-door in comfort, no driving stress' },
-  { icon: '🏨', title: 'Curated Stays', desc: 'Boutique hotels & hidden gems hand-picked' },
   { icon: '✏️', title: 'Fully Bespoke', desc: 'Every detail built around your preferences' },
 ]
 
