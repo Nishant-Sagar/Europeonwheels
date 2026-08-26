@@ -4,7 +4,11 @@ services:
     runtime: python
     rootDir: backend
     plan: free
-    pythonVersion: "3.11.0"
+    # Note: `pythonVersion` is not a field in Render's Blueprint spec, so the
+    # line that used to sit here never pinned anything — it only made the
+    # Blueprint fail validation. To actually pin the version, add a
+    # PYTHON_VERSION env var or a backend/.python-version file; be aware that
+    # doing so changes the interpreter the service currently builds against.
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt && find . -name '__pycache__' -exec rm -rf {} + || true
     startCommand: PYTHONDONTWRITEBYTECODE=1 uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
