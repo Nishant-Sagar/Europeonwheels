@@ -13,3 +13,5 @@ __pycache__/
 .DS_Store
 *.log
 .vscode/
+# Local lead log (see backend/app/storage.py)
+backend/data/

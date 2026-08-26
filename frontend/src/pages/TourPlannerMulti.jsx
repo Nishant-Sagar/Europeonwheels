@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 import { Helmet } from 'react-helmet-async'
 import LeafletRouteMap from "../components/LeafletRouteMap"
 import CarCard from "../components/CarCard"
+import { postJson } from "../lib/apiClient"
 
 const CITY_PHOTOS = {
   munich:        '/images/cities/munich.jpg',
@@ -275,15 +276,15 @@ const routeData = {
 
 const carOptions = [
   { id: "sedan",        label: "Sedan",        sub: "Škoda Octavia or similar",        seats: 2,
-    imgs: ["/images/cars/sedan-ext.jpg", "/images/cars/sedan-int.jpg", "/images/cars/sedan-dash.jpg"] },
+    imgs: ["/images/cars/sedan-ext.webp", "/images/cars/sedan-int.webp", "/images/cars/sedan-dash.webp"] },
   { id: "luxury-sedan", label: "Luxury Sedan", sub: "Mercedes E-Class or similar",     seats: 2,
-    imgs: ["/images/cars/luxury-sedan-ext.jpg", "/images/cars/luxury-sedan-int.jpg", "/images/cars/luxury-sedan-rear.jpg"] },
+    imgs: ["/images/cars/luxury-sedan-ext.webp", "/images/cars/luxury-sedan-int.webp", "/images/cars/luxury-sedan-rear.webp"] },
   { id: "mpv",          label: "MPV",          sub: "Volkswagen Touran or similar",    seats: 3,
-    imgs: ["/images/cars/mpv-ext.jpg", "/images/cars/mpv-int.jpg", "/images/cars/mpv-rear.jpg"] },
+    imgs: ["/images/cars/mpv-ext.webp", "/images/cars/mpv-int.webp", "/images/cars/mpv-rear.webp"] },
   { id: "std-van",      label: "Standard Van", sub: "Volkswagen Caravelle or similar", seats: 7,
-    imgs: ["/images/cars/std-van-ext.jpg", "/images/cars/std-van-int.jpg", "/images/cars/std-van-rear.jpg"] },
+    imgs: ["/images/cars/std-van-ext.webp", "/images/cars/std-van-int.webp", "/images/cars/std-van-rear.webp"] },
   { id: "luxury-van",   label: "Luxury Van",   sub: "Mercedes V-Class or similar",     seats: 6,
-    imgs: ["/images/cars/luxury-van-ext.jpg", "/images/cars/luxury-van-int.jpg", "/images/cars/luxury-van-rear.jpg"] },
+    imgs: ["/images/cars/luxury-van-ext.webp", "/images/cars/luxury-van-int.webp", "/images/cars/luxury-van-rear.webp"] },
 ]
 
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -316,6 +317,7 @@ export default function TourPlannerMulti() {
   const [phone,      setPhone]      = useState("")
   const [notes,      setNotes]      = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const [waking,     setWaking]     = useState(false)
   const [error,      setError]      = useState("")
 
   if (!data) {
@@ -336,27 +338,22 @@ export default function TourPlannerMulti() {
       return
     }
     setError("")
+    setWaking(false)
     setSubmitting(true)
     try {
-      const apiBase = import.meta.env.VITE_API_URL || '';
-      const res = await fetch(`${apiBase}/api/enquiries/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name, email, phone,
-          country: data.name,
-          form_type: "multi_country",
-          vehicle_type: car,
-          luggage_boot: bootLuggage,
-          luggage_cabin: cabinLuggage,
-          budget_eur: budget,
-          group_size: groupSize,
-          travel_month: month + " 2026",
-          duration_days: duration,
-          special_requests: notes,
-        }),
-      })
-      if (!res.ok) throw new Error("Server error")
+      await postJson("/enquiries/", {
+        name, email, phone,
+        country: data.name,
+        form_type: "multi_country",
+        vehicle_type: car,
+        luggage_boot: bootLuggage,
+        luggage_cabin: cabinLuggage,
+        budget_eur: budget,
+        group_size: groupSize,
+        travel_month: month + " 2026",
+        duration_days: duration,
+        special_requests: notes,
+      }, { onSlow: () => setWaking(true) })
       navigate('/thank-you', {
         state: {
           lead: true,
@@ -375,9 +372,10 @@ export default function TourPlannerMulti() {
         },
       })
     } catch {
-      setError("Something went wrong. Please try again or email us directly.")
+      setError("We couldn't reach our server just now — it may still be waking up. Please try once more, or message us with the green WhatsApp button on this page and we'll pick your enquiry up straight away.")
     } finally {
       setSubmitting(false)
+      setWaking(false)
     }
   }
 
@@ -394,7 +392,7 @@ export default function TourPlannerMulti() {
 
       {/* Hero */}
       <section className="relative z-10 overflow-hidden" style={{ minHeight: "60vh" }}>
-        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" loading="lazy" />
+        <img src={data.image} alt={data.name} className="absolute inset-0 h-full w-full object-cover ken-burns" loading="eager" fetchpriority="high" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-stone-950" />
         <div className="relative z-10 flex flex-col items-center justify-center px-5 text-center pb-16 pt-24 sm:pt-32" style={{ minHeight: "60vh" }}>
           <Link to="/multi-country" className="mb-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.38em] text-white/50 hover:text-accent-400 transition-colors">
@@ -644,7 +642,7 @@ export default function TourPlannerMulti() {
 
               <button type="submit" disabled={submitting}
                 className="group w-full rounded-xl bg-accent-400 px-8 py-4 text-base font-bold text-stone-950 transition-all duration-300 hover:bg-accent-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent-400/25 disabled:opacity-60 disabled:cursor-not-allowed">
-                {submitting ? "Sending your enquiry..." : "Save & send my " + data.name + " enquiry \u2192"}
+                {submitting ? (waking ? "Almost there \u2014 waking up our server\u2026" : "Sending your enquiry...") : "Save & send my " + data.name + " enquiry \u2192"}
               </button>
 
               <p className="text-center text-xs text-stone-500">No payment required. We will get back within 24 hours with a personalised itinerary.</p>

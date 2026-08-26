@@ -15,19 +15,30 @@ export default function CarCard({ car, isSelected, onClick }) {
   const [slide, setSlide] = useState(0)
   const total = car.imgs.length
 
+  // Only slides the visitor has actually reached get mounted. Rendering all of
+  // them up front made every card download its whole filmstrip on page load —
+  // with five cards on the page that was 15 images for 5 visible thumbnails.
+  // Once a slide has been seen it stays mounted, so the crossfade still works.
+  const [seen, setSeen] = useState(() => new Set([0]))
+
+  function show(i) {
+    setSlide(i)
+    setSeen(prevSeen => (prevSeen.has(i) ? prevSeen : new Set(prevSeen).add(i)))
+  }
+
   function goTo(i, e) {
     e.stopPropagation()
-    setSlide(i)
+    show(i)
   }
 
   function prev(e) {
     e.stopPropagation()
-    setSlide(s => (s - 1 + total) % total)
+    show((slide - 1 + total) % total)
   }
 
   function next(e) {
     e.stopPropagation()
-    setSlide(s => (s + 1) % total)
+    show((slide + 1) % total)
   }
 
   return (
@@ -45,18 +56,22 @@ export default function CarCard({ car, isSelected, onClick }) {
       <div className="relative h-28 overflow-hidden bg-stone-900 select-none">
 
         {/* Slides */}
-        {car.imgs.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={`${car.label} — ${SLIDE_LABELS[i] ?? ''}`}
-            className={
-              'absolute inset-0 h-full w-full object-contain object-center transition-opacity duration-500 ' +
-              (i === slide ? 'opacity-100' : 'opacity-0')
-            }
-            draggable={false}
-          />
-        ))}
+        {car.imgs.map((src, i) =>
+          seen.has(i) ? (
+            <img
+              key={i}
+              src={src}
+              alt={`${car.label} — ${SLIDE_LABELS[i] ?? ''}`}
+              className={
+                'absolute inset-0 h-full w-full object-contain object-center transition-opacity duration-500 ' +
+                (i === slide ? 'opacity-100' : 'opacity-0')
+              }
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
+          ) : null
+        )}
 
         {/* Fallback icon (shown when all images fail) */}
         <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 text-4xl">

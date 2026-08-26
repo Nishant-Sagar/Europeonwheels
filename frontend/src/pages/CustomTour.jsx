@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import CarCard from '../components/CarCard'
+import { postJson } from '../lib/apiClient'
 
 const highlights = [
   { icon: '🗺️', title: 'Any Destination', desc: 'One country or ten — we plan it all' },
@@ -11,15 +12,15 @@ const highlights = [
 
 const carOptions = [
   { id: 'sedan',        label: 'Sedan',        sub: 'Škoda Octavia or similar',        seats: 2,
-    imgs: ['/images/cars/sedan-ext.jpg', '/images/cars/sedan-int.jpg', '/images/cars/sedan-dash.jpg'] },
+    imgs: ['/images/cars/sedan-ext.webp', '/images/cars/sedan-int.webp', '/images/cars/sedan-dash.webp'] },
   { id: 'luxury-sedan', label: 'Luxury Sedan', sub: 'Mercedes E-Class or similar',     seats: 2,
-    imgs: ['/images/cars/luxury-sedan-ext.jpg', '/images/cars/luxury-sedan-int.jpg', '/images/cars/luxury-sedan-rear.jpg'] },
+    imgs: ['/images/cars/luxury-sedan-ext.webp', '/images/cars/luxury-sedan-int.webp', '/images/cars/luxury-sedan-rear.webp'] },
   { id: 'mpv',          label: 'MPV',          sub: 'Volkswagen Touran or similar',    seats: 3,
-    imgs: ['/images/cars/mpv-ext.jpg', '/images/cars/mpv-int.jpg', '/images/cars/mpv-rear.jpg'] },
+    imgs: ['/images/cars/mpv-ext.webp', '/images/cars/mpv-int.webp', '/images/cars/mpv-rear.webp'] },
   { id: 'std-van',      label: 'Standard Van', sub: 'Volkswagen Caravelle or similar', seats: 7,
-    imgs: ['/images/cars/std-van-ext.jpg', '/images/cars/std-van-int.jpg', '/images/cars/std-van-rear.jpg'] },
+    imgs: ['/images/cars/std-van-ext.webp', '/images/cars/std-van-int.webp', '/images/cars/std-van-rear.webp'] },
   { id: 'luxury-van',   label: 'Luxury Van',   sub: 'Mercedes V-Class or similar',     seats: 6,
-    imgs: ['/images/cars/luxury-van-ext.jpg', '/images/cars/luxury-van-int.jpg', '/images/cars/luxury-van-rear.jpg'] },
+    imgs: ['/images/cars/luxury-van-ext.webp', '/images/cars/luxury-van-int.webp', '/images/cars/luxury-van-rear.webp'] },
 ]
 
 const countryOptions = [
@@ -87,6 +88,7 @@ export default function CustomTour() {
   const [phone,        setPhone]        = useState('')
   const [notes,        setNotes]        = useState('')
   const [submitting,   setSubmitting]   = useState(false)
+  const [waking,       setWaking]       = useState(false)
   const [error,        setError]        = useState('')
 
   const groupLabel = groupSize === 1 ? 'Solo traveller' : groupSize <= 2 ? 'Couple' : groupSize <= 4 ? 'Small group' : 'Large group'
@@ -172,27 +174,22 @@ export default function CustomTour() {
       return
     }
     setError('')
+    setWaking(false)
     setSubmitting(true)
     try {
-      const apiBase = import.meta.env.VITE_API_URL || ''
-      const res = await fetch(`${apiBase}/api/enquiries/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name, email, phone,
-          country: destinationsStr,
-          form_type: 'custom_tour',
-          vehicle_type: car,
-          budget_eur: budget,
-          group_size: groupSize,
-          luggage_boot: bootLuggage,
-          luggage_cabin: cabinLuggage,
-          travel_month: month + ' 2026',
-          duration_days: duration,
-          special_requests: [travelDatesStr ? `Travel dates: ${travelDatesStr}` : '', notes].filter(Boolean).join('\n'),
-        }),
-      })
-      if (!res.ok) throw new Error('Server error')
+      await postJson('/enquiries/', {
+        name, email, phone,
+        country: destinationsStr,
+        form_type: 'custom_tour',
+        vehicle_type: car,
+        budget_eur: budget,
+        group_size: groupSize,
+        luggage_boot: bootLuggage,
+        luggage_cabin: cabinLuggage,
+        travel_month: month + ' 2026',
+        duration_days: duration,
+        special_requests: [travelDatesStr ? `Travel dates: ${travelDatesStr}` : '', notes].filter(Boolean).join('\n'),
+      }, { onSlow: () => setWaking(true) })
       navigate('/thank-you', {
         state: {
           lead: true,
@@ -211,9 +208,10 @@ export default function CustomTour() {
         },
       })
     } catch {
-      setError('Something went wrong. Please try again or email us directly.')
+      setError("We couldn't reach our server just now — it may still be waking up. Please try once more, or message us with the green WhatsApp button on this page and we'll pick your enquiry up straight away.")
     } finally {
       setSubmitting(false)
+      setWaking(false)
     }
   }
 
@@ -548,7 +546,7 @@ export default function CustomTour() {
 
               <button type="submit" disabled={submitting}
                 className="group w-full rounded-xl bg-accent-400 px-8 py-4 text-base font-bold text-stone-950 transition-all duration-300 hover:bg-accent-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent-400/25 disabled:opacity-60 disabled:cursor-not-allowed">
-                {submitting ? 'Sending your enquiry…' : 'Send my custom tour enquiry →'}
+                {submitting ? (waking ? 'Almost there — waking up our server…' : 'Sending your enquiry…') : 'Send my custom tour enquiry →'}
               </button>
 
               <p className="text-center text-xs text-stone-500">No payment required. We will get back within 24 hours with a personalised itinerary.</p>

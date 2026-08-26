@@ -1,0 +1,37 @@
+# Render's free tier spins an instance down after ~15 minutes without traffic,
+# and the next visitor then waits out a 30-60s cold boot — which is how enquiry
+# submissions were being lost. Pinging /health keeps it up.
+#
+# Two things worth knowing:
+#   * GitHub's scheduled runners are best-effort and can be delayed by 5-15
+#     minutes under load, so this reduces cold starts rather than eliminating
+#     them. The frontend retry in src/lib/apiClient.js covers the rest.
+#   * GitHub disables scheduled workflows in a repo with no commits for 60 days.
+#     If enquiries start failing again, check this workflow is still enabled.
+name: Keep API awake
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping /health
+        run: |
+          for attempt in 1 2 3; do
+            code=$(curl -sS -o /tmp/health.json -w '%{http_code}' \
+                     --max-time 90 https://europe-on-wheels-api.onrender.com/health) && \
+            if [ "$code" = "200" ]; then
+              echo "API is awake (HTTP $code)"
+              cat /tmp/health.json
+              exit 0
+            fi
+            echo "Attempt $attempt returned HTTP ${code:-none}; retrying..."
+            sleep 15
+          done
+          echo "API did not respond after 3 attempts"
+          exit 1

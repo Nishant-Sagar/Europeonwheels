@@ -1,4 +1,7 @@
+import json
 import os
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -8,12 +11,46 @@ WHATSAPP_PHONE = os.getenv("WHATSAPP_PHONE")
 GREEN_API_INSTANCE = os.getenv("GREEN_API_INSTANCE")
 GREEN_API_TOKEN    = os.getenv("GREEN_API_TOKEN")
 
+EMAIL_CONFIGURED    = bool(RESEND_API_KEY and NOTIFY_EMAIL)
+WHATSAPP_CONFIGURED = bool(WHATSAPP_PHONE and GREEN_API_INSTANCE and GREEN_API_TOKEN)
 
-def send_email(subject: str, html_body: str) -> None:
-    if not RESEND_API_KEY or not NOTIFY_EMAIL:
-        print("[notify] Email env vars missing — skipping.")
-        return
-    try:
+# A notification is often the only lasting copy of a lead, so a single flaky
+# call to Resend or Green API should not be the end of it.
+_ATTEMPTS = 3
+_BACKOFF_SECONDS = (1, 2)
+
+
+class PermanentNotificationError(Exception):
+    """A failure that retrying cannot fix — bad or expired credentials."""
+
+
+def _with_retry(label: str, send) -> bool:
+    """Run `send` up to _ATTEMPTS times. Returns True on the first success."""
+    for attempt in range(1, _ATTEMPTS + 1):
+        try:
+            send()
+            print(f"[notify] {label} sent (attempt {attempt})", flush=True)
+            return True
+        except PermanentNotificationError as e:
+            # Retrying a rejected credential just adds seconds to every single
+            # form submission, so stop after the first one.
+            print(f"[notify] {label} FAILED permanently: {e} — check the credentials.",
+                  flush=True)
+            return False
+        except Exception as e:  # noqa: BLE001
+            print(f"[notify] {label} attempt {attempt}/{_ATTEMPTS} failed: {e}", flush=True)
+            if attempt < _ATTEMPTS:
+                time.sleep(_BACKOFF_SECONDS[attempt - 1])
+    print(f"[notify] {label} FAILED after {_ATTEMPTS} attempts", flush=True)
+    return False
+
+
+def send_email(subject: str, html_body: str) -> bool:
+    if not EMAIL_CONFIGURED:
+        print("[notify] Email env vars missing — skipping.", flush=True)
+        return False
+
+    def _send():
         import resend
         resend.api_key = RESEND_API_KEY
         resend.Emails.send({
@@ -22,34 +59,40 @@ def send_email(subject: str, html_body: str) -> None:
             "subject": subject,
             "html": html_body,
         })
-        print(f"[notify] Email sent to {NOTIFY_EMAIL}")
-    except Exception as e:  # noqa: BLE001
-        print(f"[notify] Email error: {e}")
+
+    return _with_retry("Email", _send)
 
 
-def send_whatsapp(text: str) -> None:
-    if not WHATSAPP_PHONE or not GREEN_API_INSTANCE or not GREEN_API_TOKEN:
-        print("[notify] WhatsApp env vars missing — skipping.")
-        return
-    try:
-        import json
-        url = (
-            f"https://api.green-api.com/waInstance{GREEN_API_INSTANCE}"
-            f"/sendMessage/{GREEN_API_TOKEN}"
-        )
-        payload = json.dumps({
-            "chatId": f"{WHATSAPP_PHONE}@c.us",
-            "message": text,
-        }).encode("utf-8")
+def send_whatsapp(text: str) -> bool:
+    if not WHATSAPP_CONFIGURED:
+        print("[notify] WhatsApp env vars missing — skipping.", flush=True)
+        return False
+
+    url = (
+        f"https://api.green-api.com/waInstance{GREEN_API_INSTANCE}"
+        f"/sendMessage/{GREEN_API_TOKEN}"
+    )
+    payload = json.dumps({
+        "chatId": f"{WHATSAPP_PHONE}@c.us",
+        "message": text,
+    }).encode("utf-8")
+
+    def _send():
         req = urllib.request.Request(
             url, data=payload,
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            print(f"[notify] WhatsApp sent via Green API, status={resp.status}")
-    except Exception as e:  # noqa: BLE001
-        print(f"[notify] WhatsApp error: {e}")
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                if resp.status >= 400:
+                    raise RuntimeError(f"Green API returned {resp.status}")
+        except urllib.error.HTTPError as e:
+            if e.code in (400, 401, 403, 404):
+                raise PermanentNotificationError(f"Green API returned {e.code}") from e
+            raise
+
+    return _with_retry("WhatsApp", _send)
 
 
 HOTEL_LABELS = {
@@ -76,7 +119,8 @@ FORM_TYPE_LABELS = {
 }
 
 
-def notify_enquiry(data: dict) -> None:
+def notify_enquiry(data: dict) -> bool:
+    """Send both notifications. Returns True if at least one got through."""
     name        = data.get("name", "Someone")
     email       = data.get("email", "—")
     phone       = data.get("phone") or "—"
@@ -276,7 +320,7 @@ def notify_enquiry(data: dict) -> None:
 </html>
 """
 
-    send_email(f"New {form_label} from {name} — Europe on Wheels", html)
+    emailed = send_email(f"New {form_label} from {name} — Europe on Wheels", html)
 
     # ── WhatsApp ───────────────────────────────────────────────────────────
     wa_text = (
@@ -291,10 +335,12 @@ def notify_enquiry(data: dict) -> None:
         f"Luggage: {luggage}\n"
         f"Budget: {currency} {budget}"
     )
-    send_whatsapp(wa_text)
+    whatsapped = send_whatsapp(wa_text)
+    return emailed or whatsapped
 
 
-def notify_contact(data: dict) -> None:
+def notify_contact(data: dict) -> bool:
+    """Send both notifications. Returns True if at least one got through."""
     name = data.get("name", "Someone")
     email = data.get("email", "—")
     phone = data.get("phone", "")
@@ -382,7 +428,7 @@ def notify_contact(data: dict) -> None:
 </body>
 </html>
 """
-    send_email(f"Contact: {subject} — from {name}", html)
+    emailed = send_email(f"Contact: {subject} — from {name}", html)
 
     wa_text = (
         f"📩 New Contact Message\n"
@@ -392,4 +438,5 @@ def notify_contact(data: dict) -> None:
         f"Subject: {subject}\n"
         f"Message: {message[:200]}"
     )
-    send_whatsapp(wa_text)
+    whatsapped = send_whatsapp(wa_text)
+    return emailed or whatsapped
