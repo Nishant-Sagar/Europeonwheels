@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { api } from '../hooks/useApi'
 
@@ -27,6 +28,7 @@ function IconWhatsApp() {
 }
 
 export default function Contact() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -39,11 +41,23 @@ export default function Contact() {
     setLoading(true)
     try {
       const res = await api.post('/contact', form)
-      setStatus({ ok: res.data.success, msg: res.data.message })
       if (res.data.success) {
+        const { name, email, phone, subject, message } = form
         setForm({ name: '', email: '', phone: '', subject: '', message: '' })
-        window.gtag?.('event', 'conversion', { send_to: 'AW-18164788165/4hgaCMK-ka4cEMXX0tVD', value: 1.0, currency: 'INR' })
+        navigate('/thank-you', {
+          state: {
+            lead: true,
+            formType: 'contact',
+            name,
+            summary: 'Your message has been received. We will get back to you within 24 hours with a personalised itinerary.',
+            whatsappText: `Hi, I just sent an enquiry through europeonwheels.in.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nSubject: ${subject}\n\n${message}`,
+            backTo: '/destinations',
+            backLabel: 'Explore destinations',
+          },
+        })
+        return
       }
+      setStatus({ ok: false, msg: res.data.message })
     } catch {
       setStatus({ ok: false, msg: 'Something went wrong. Please try again.' })
     } finally {
@@ -172,10 +186,10 @@ export default function Contact() {
             {/* Right — form */}
             <div className="flex flex-col bg-white/88 p-5 sm:p-8 backdrop-blur-md">
               {status ? (
-                <div className={`flex flex-1 flex-col items-center justify-center rounded-xl p-6 text-center ${status.ok ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
-                  <p className="text-3xl mb-2">{status.ok ? '✉️' : '⚠️'}</p>
+                <div className="flex flex-1 flex-col items-center justify-center rounded-xl bg-red-50 p-6 text-center text-red-800">
+                  <p className="text-3xl mb-2">⚠️</p>
                   <p className="font-semibold">{status.msg}</p>
-                  {!status.ok && <button onClick={() => setStatus(null)} className="mt-3 text-sm underline">Try again</button>}
+                  <button onClick={() => setStatus(null)} className="mt-3 text-sm underline">Try again</button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-4">
@@ -183,7 +197,7 @@ export default function Contact() {
                     {[
                       { name: 'name',  label: 'Your name',     type: 'text',  placeholder: 'Jane Smith',          required: true  },
                       { name: 'email', label: 'Email address', type: 'email', placeholder: 'jane@example.com',    required: true  },
-                      { name: 'phone', label: 'Mobile number', type: 'tel',   placeholder: '+91 98765 43210',     required: false },
+                      { name: 'phone', label: 'Mobile number', type: 'tel',   placeholder: '+91 98765 43210',     required: true  },
                       { name: 'subject', label: 'Subject',     type: 'text',  placeholder: 'e.g. 10-day Italy tour', required: true },
                     ].map(({ name, label, type, placeholder, required }) => (
                       <div key={name}>
